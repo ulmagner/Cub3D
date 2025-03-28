@@ -6,7 +6,7 @@
 /*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:35:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 17:35:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:19:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,18 @@ void	ft_freeinfo(t_info *info)
 {
 	if (info->map)
 		free(info->map);
-	if (info->nbr_i)
+	/*if (info->nbr_i)
 		free(info->nbr_i);
 	if (info->nbr_a)
 		free(info->nbr_a);
 	if (info->path_texture)
-		ft_tabfree(info->path_texture);
+		ft_tabfree(info->path_texture);*/
 }
 
 void	ft_freeplayer(t_player *player)
 {
-	if (player->animation)
-		free(player->animation);
+	(void) player;
+	/*if (player->animation)
+		free(player->animation);*/
 }
 

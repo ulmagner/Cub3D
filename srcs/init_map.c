@@ -6,11 +6,11 @@
 /*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 17:11:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:16:17 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 static t_map	**init_row_lst(t_info *info)
 {
@@ -104,8 +104,8 @@ void	print_map(t_map **head, t_info *info)
 
 int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 {
-	int	i;
-	int	j;
+	//int	i;
+	//int	j;
 
 	if (!get_info(info))
 		return (0);

@@ -6,12 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 17:40:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:18:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -23,6 +24,7 @@
 # include "libft.h"
 # include "mlx.h"
 # include <X11/keysym.h>
+# define TILE_SIZE 64
 
 typedef struct s_map
 {
@@ -78,6 +80,8 @@ typedef struct s_all
 	char		**av;
 }	t_all;
 
+int		empty_string(t_info *info);
+int		get_map(t_info *info, int *l, int *c);
 void	ft_clearall(t_all *all);
 void	ft_freeplayer(t_player *player);
 void	ft_freeinfo(t_info *info);

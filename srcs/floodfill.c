@@ -6,7 +6,7 @@
 /*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 17:29:28 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:20:14 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	get_c_p_info(t_map *curr, t_all *all)
 
 static int	start_floodfill(t_map *curr, t_all *all)
 {
-	int	i;
+	//int	i;
 
-	i = -1;
+	//i = -1;
 	if (curr->i == 'P')
 	{
 		all->player.x = curr->x * 64;
@@ -85,6 +85,7 @@ static int	start_floodfill(t_map *curr, t_all *all)
 
 int	check_close_map(t_map **map, t_info *info, t_all *all)
 {
+	(void) info;
 	t_map	*curr;
 
 	curr = *map;

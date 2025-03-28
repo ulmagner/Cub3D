@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#              #
-#    Updated: 2025/03/28 17:52:10 by ulmagner         ###   ########.fr        #
+#    Updated: 2025/03/28 18:21:02 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ LFT_NAME	= libft.a
 MLX_NAME	= libmlx.a
 
 SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
+get_info.c \
 
 SRCS_B		=
 
@@ -32,7 +33,7 @@ IDIRS		= includes
 IDIRS_B		= includesb
 IDIRS_LFT	= includes/libfts/includes
 IDIRS_MLX	= includes/minilibx-linux
-ODIRS		= objis
+ODIRS		= objs
 ODIRS_B		= objs_b
 DIRS_LFT	= includes/libfts
 DIRS_MLX	= includes/minilibx-linux
@@ -49,9 +50,9 @@ A_LFT		= $(addprefix $(DIRS_LFT)/,$(LFT_NAME))
 A_MLX		= $(addprefix $(DIRS_MLX)/,$(MLX_NAME))
 
 CC			= cc -O3 -ggdb
-MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes #-lasound
+MLX_FLAGS	= -lXext -lX11 -lz -lm -pthread -ldl -lpthread #-lXfixes #-lasound
 CFLAGS		= -Wall -Wextra -Werror -std=c99
-OPTION		= -I$(IDIRS) -I$(IDIRS_LFT) -I$(IDIRS_MLX) -I$(IDIRS_MA)
+OPTION		= -I$(IDIRS) -I$(IDIRS_LFT) -I$(IDIRS_MLX)
 MAKEFLAGS 	+= -s
 MAKE		= make
 

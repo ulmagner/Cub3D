@@ -6,7 +6,7 @@
 /*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 17:15:59 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:17:50 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 static int	get_dynamique_info(t_map *node, t_map **h, t_info *info, t_all *all)
 {
-	int		j;
+	//int	j;
 
-	j = -1;
+	(void) all;
+	(void) info;
+	//j = -1;
 	if (node->i == 'P')
 		*h = node;
 	/*

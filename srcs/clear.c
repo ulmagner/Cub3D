@@ -6,12 +6,13 @@
 /*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 17:51:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:13:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
 static void	ft_freewindow(t_window *window, t_all *all)
 {
 	if (all->ground.img)
@@ -52,13 +53,13 @@ static void	ft_freeimage(t_all *all, int i)
 		free(all->tile[i]);
 	}
 	free(all->tile);
-}
+}*/
 
 void	ft_clearall(t_all *all)
 {
-	int	i;
+	//int	i;
 
-	i = -1;
+	//i = -1;
 	ft_freemap(&all->map);
 	//ft_freeplayer(&all->player);
 	/*
