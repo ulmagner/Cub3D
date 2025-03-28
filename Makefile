@@ -6,23 +6,19 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#              #
-#    Updated: 2025/03/18 22:45:31 by ulmagner         ###   ########.fr        #
+#    Updated: 2025/03/28 17:52:10 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
 
 BONUS_NAME	= cub3D_bonus
-
+	
 LFT_NAME	= libft.a
 
 MLX_NAME	= libmlx.a
 
-SRCS		= main.c error_handling.c map_handling.c free.c lst.c get_info.c \
-map_xpm.c tileset.c copy_bg.c launcher.c clear.c player.c get_path.c \
-action.c direction.c oeil.c slime.c trap.c hitbox.c hooks.c \
-get_textures.c get_textures_bis.c build_image.c fog.c distance.c init.c \
-view.c floodfill.c teleportation.c minimap.c copy.c \
+SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
 
 SRCS_B		=
 
@@ -36,7 +32,7 @@ IDIRS		= includes
 IDIRS_B		= includesb
 IDIRS_LFT	= includes/libfts/includes
 IDIRS_MLX	= includes/minilibx-linux
-ODIRS		= objs
+ODIRS		= objis
 ODIRS_B		= objs_b
 DIRS_LFT	= includes/libfts
 DIRS_MLX	= includes/minilibx-linux
@@ -100,4 +96,5 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all bonus fclean clean re
+.PHONY: all bonus fclean clean re test
+
