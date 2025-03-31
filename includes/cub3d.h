@@ -41,6 +41,14 @@ typedef struct s_map
 	struct s_map	*player;
 }	t_map;
 
+typedef struct s_color
+{
+	unsigned char	a;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}	t_color;
+
 typedef struct s_info
 {
 	int		i_x;
@@ -60,6 +68,8 @@ typedef struct s_player
 	double		dy;
 	double		planex;
 	double		planey;
+	int			mapx;
+	int			mapy;
 	t_map	*h;
 }	t_player;
 
@@ -73,10 +83,25 @@ typedef struct s_window
 
 typedef struct s_raycasting
 {
+	double	x_pxl;
+	double	y_pxl;
+	int		x;
+	int		y;
 	double	camerax;
 	double	raydirx;
 	double	raydiry;
-
+	double	sidedistx;
+	double	sidedisty;
+	double	deltadistx;
+	double	deltadisty;
+	double	perpwalldist;
+	int		stepx;
+	int		stepy;
+	int		hit;
+	int		side;
+	int		lineheight;
+	int		drawstart;
+	int		drawend;
 }	t_raycasting;
 
 typedef struct s_all
@@ -86,6 +111,7 @@ typedef struct s_all
 	t_player	player;
 	t_map		*map;
 	t_raycasting	ray;
+	t_color		argb;
 	int			i;
 	int			step;
 	int			ac;
