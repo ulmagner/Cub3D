@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 18:20:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:19:02 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,19 @@ int	empty_string(t_info *info)
 static int	check_ep_doubles(t_info *info)
 {
 	int	i;
-	int	e;
 	int	p;
 
-	e = 0;
 	p = 0;
 	i = -1;
 	while (info->map[++i])
 	{
+		if (info->map[i] == 'N')
+			p++;
+		if (info->map[i] == 'S')
+			p++;
 		if (info->map[i] == 'E')
-			e++;
-		if (info->map[i] == 'P')
+			p++;
+		if (info->map[i] == 'W')
 			p++;
 		/*
 		if (info->map[i] == 'C')
@@ -44,7 +46,7 @@ static int	check_ep_doubles(t_info *info)
 		if (info->map[i] == 'O')
 			info->oeil++;*/
 	}
-	if (e > 1 || !e || p > 1 || !p)
+	if (p > 1 || !p)
 		return (0);
 	return (1);
 }
@@ -62,7 +64,7 @@ int	get_map(t_info *info, int *l, int *c)
 	{
 		i = -1;
 		while (line[++i])
-			if (!ft_isstrchr("01CEPOF\n", line[i]))
+			if (!ft_isstrchr("01NSEWO\n", line[i]))
 				return (free(line), ft_printf(2, "Error\nplan\n"), 0);
 		tmp = ft_strjoin(info->map, line);
 		if (!tmp)
@@ -74,7 +76,7 @@ int	get_map(t_info *info, int *l, int *c)
 		line = ft_get_next_line(info->fd);
 	}
 	if (!check_ep_doubles(info))
-		return (ft_printf(2, "Error\nplan\n"), 0);
+		return (ft_printf(2, "Error\nplanS\n"), 0);
 	return (1);
 }
 

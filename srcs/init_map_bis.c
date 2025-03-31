@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 18:17:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:15:31 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_dynamique_info(t_map *node, t_map **h, t_info *info, t_all *all)
 	(void) all;
 	(void) info;
 	//j = -1;
-	if (node->i == 'P')
+	if (node->i == 'N' || node->i == 'W' || node->i == 's' || node->i == 'E')
 		*h = node;
 	/*
 	if (node->i == 'O')

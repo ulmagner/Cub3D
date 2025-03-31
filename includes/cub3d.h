@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 18:18:24 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:03:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ typedef struct s_info
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	double		x;
+	double		y;
+	double		dx;
+	double		dy;
+	double		planex;
+	double		planey;
 	t_map	*h;
 }	t_player;
 
@@ -67,19 +71,32 @@ typedef struct s_window
 	int		main_h;
 }	t_window;
 
+typedef struct s_raycasting
+{
+	double	camerax;
+	double	raydirx;
+	double	raydiry;
+
+}	t_raycasting;
+
 typedef struct s_all
 {
 	t_window	window;
 	t_info		info;
 	t_player	player;
 	t_map		*map;
+	t_raycasting	ray;
 	int			i;
 	int			step;
 	int			ac;
 	float		vision;
 	char		**av;
+	double		time;
+	double		oldtime;
 }	t_all;
 
+int		launcher(t_all *all);
+int		error_handling(int ac, char **av, t_info *info);
 int		empty_string(t_info *info);
 int		get_map(t_info *info, int *l, int *c);
 void	ft_clearall(t_all *all);

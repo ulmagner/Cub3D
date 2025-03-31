@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#              #
-#    Updated: 2025/03/28 18:21:02 by ulmagner         ###   ########.fr        #
+#    Updated: 2025/03/31 10:54:30 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LFT_NAME	= libft.a
 MLX_NAME	= libmlx.a
 
 SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
-get_info.c \
+get_info.c error_handling.c launcher.c \
 
 SRCS_B		=
 
