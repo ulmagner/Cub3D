@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/31 12:03:01 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:18:45 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,21 @@ typedef struct s_player
 	double		planey;
 	int			mapx;
 	int			mapy;
+	double			ms;
+	// int			i;
 	t_map	*h;
 }	t_player;
+
+typedef struct s_image {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char	*img_path;
+	int		w;
+	int		h;
+}	t_image;
 
 typedef struct s_window
 {
@@ -79,6 +92,7 @@ typedef struct s_window
 	void	*main;
 	int		main_w;
 	int		main_h;
+	t_image	image;
 }	t_window;
 
 typedef struct s_raycasting
@@ -104,6 +118,13 @@ typedef struct s_raycasting
 	int		drawend;
 }	t_raycasting;
 
+typedef struct s_movement
+{
+	bool	move[65535];
+	int		keycode;
+	bool	i_move[4];
+}	t_movement;
+
 typedef struct s_all
 {
 	t_window	window;
@@ -112,6 +133,8 @@ typedef struct s_all
 	t_map		*map;
 	t_raycasting	ray;
 	t_color		argb;
+	t_image		image;
+	t_movement	movement;
 	int			i;
 	int			step;
 	int			ac;
@@ -121,6 +144,15 @@ typedef struct s_all
 	double		oldtime;
 }	t_all;
 
+void	dir_up(t_player *player, t_movement *movement, t_all *all);
+void	dir_down(t_player *player, t_movement *movement, t_all *all);
+void	dir_left(t_player *player, t_movement *movement, t_all *all);
+void	dir_right(t_player *player, t_movement *movement, t_all *all);
+int		movement_handling(t_all *all);
+int 	movement_p(int keycode, t_all *all);
+int 	movement_r(int keycode, t_all *all);
+void	ft_pixel_put(t_window *window, int x, int y, int color);
+unsigned int	get_pixel_color(t_image *image, int x, int y);
 int		launcher(t_all *all);
 int		error_handling(int ac, char **av, t_info *info);
 int		empty_string(t_info *info);

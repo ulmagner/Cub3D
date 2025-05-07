@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/31 11:19:02 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/04/06 12:23:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,8 @@ static int	check_ep_doubles(t_info *info)
 	i = -1;
 	while (info->map[++i])
 	{
-		if (info->map[i] == 'N')
-			p++;
-		if (info->map[i] == 'S')
-			p++;
-		if (info->map[i] == 'E')
-			p++;
-		if (info->map[i] == 'W')
+		if (info->map[i] == 'N' || info->map[i] == 'S' || info->map[i] == 'E' \
+			|| info->map[i] == 'W')
 			p++;
 		/*
 		if (info->map[i] == 'C')

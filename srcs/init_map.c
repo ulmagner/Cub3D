@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 18:16:17 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/07 22:28:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static int	fill_map(t_info *info, t_map **head, t_map **h, t_all *all)
 	}
 	if (*head)
 	{
-		curr->right = NULL;
-		(*head)->left = curr;
+		curr->left = NULL;
+		(*head)->right = curr;
 	}
 	return (free(row), 1);
 }
@@ -93,12 +93,12 @@ void	print_map(t_map **head, t_info *info)
 			ft_printf(1, "%c", col->i);
 			if (col->x == info->column - 1)
 				break ;
-			col = col->right;
+			col = col->left;
 		}
 		ft_printf(1, "\n");
 		if (col->y == info->line - 1)
 			break ;
-		row = row->down;
+		row = row->up;
 	}
 }
 

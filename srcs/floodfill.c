@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/31 11:32:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/07 22:27:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	floodfill(t_map *player, t_all *all)
 			&& player->i != '1'))
 		exit(((ft_clearall(all)), EXIT_FAILURE));
 	player->is_visited = 1;
-	if (player->right->i != '1' \
-		&& player->right != NULL && !player->right->is_visited)
-		floodfill(player->right, all);
+	if (player->left->i != '1' \
+		&& player->left != NULL && !player->left->is_visited)
+		floodfill(player->left, all);
 	if (player->left->i != '1' \
 		&& player->left != NULL && !player->left->is_visited)
 		floodfill(player->left, all);
@@ -60,8 +60,8 @@ static int	start_floodfill(t_map *curr, t_all *all)
 	//i = -1;
 	if (curr->i == 'E' || curr->i == 'W' || curr->i == 'S' || curr->i == 'N')
 	{
-		all->player.x = curr->x * 64;
-		all->player.y = curr->y * 64;
+		all->player.x = curr->x;
+		all->player.y = curr->y;
 		//all->player.r = 31.0;
 		floodfill(curr, all);
 	}
@@ -120,7 +120,7 @@ int	check_close_map(t_map **map, t_info *info, t_all *all)
 	while (curr)
 	{
 		start_floodfill(curr, all);
-		curr = curr->right;
+		curr = curr->left;
 	}
 	return (1);
 }
