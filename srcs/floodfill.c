@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/07 22:27:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:36:51 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	floodfill(t_map *player, t_all *all)
 			&& player->i != '1'))
 		exit(((ft_clearall(all)), EXIT_FAILURE));
 	player->is_visited = 1;
-	if (player->left->i != '1' \
-		&& player->left != NULL && !player->left->is_visited)
-		floodfill(player->left, all);
+	if (player->right->i != '1' \
+		&& player->right != NULL && !player->right->is_visited)
+		floodfill(player->right, all);
 	if (player->left->i != '1' \
 		&& player->left != NULL && !player->left->is_visited)
 		floodfill(player->left, all);
@@ -69,30 +69,24 @@ static int	start_floodfill(t_map *curr, t_all *all)
 	{
 		all->player.dx = -1;
 		all->player.dy = 0;
-		all->player.planex = 0;
-		all->player.planey = 0.66;
 	}
 	if (curr->i == 'W')
 	{
 		all->player.dx = 1;
 		all->player.dy = 0;
-		all->player.planex = 0;
-		all->player.planey = -0.66;
 	}
 	if (curr->i == 'N')
 	{
 		all->player.dx = 0;
-		all->player.dy = 1;
-		all->player.planex = 0.66;
-		all->player.planey = 0;
+		all->player.dy = -1;
 	}
 	if (curr->i == 'S')
 	{
 		all->player.dx = 0;
-		all->player.dy = -1;
-		all->player.planex = -0.66;
-		all->player.planey = 0;
+		all->player.dy = 1;
 	}
+	all->player.planex = -all->player.dy * 0.66;
+	all->player.planey =  all->player.dx * 0.66;
 	/*
 	if (curr->i == 'O').
 	{
@@ -120,7 +114,7 @@ int	check_close_map(t_map **map, t_info *info, t_all *all)
 	while (curr)
 	{
 		start_floodfill(curr, all);
-		curr = curr->left;
+		curr = curr->right;
 	}
 	return (1);
 }

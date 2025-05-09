@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:35:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 18:19:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:35 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ void	ft_freeinfo(t_info *info)
 {
 	if (info->map)
 		free(info->map);
-	/*if (info->nbr_i)
-		free(info->nbr_i);
-	if (info->nbr_a)
-		free(info->nbr_a);
-	if (info->path_texture)
-		ft_tabfree(info->path_texture);*/
 }
 
 void	ft_freeplayer(t_player *player)
@@ -64,3 +58,12 @@ void	ft_freeplayer(t_player *player)
 		free(player->animation);*/
 }
 
+void	ft_freetex(t_texture *tex)
+{
+	if (tex->nbr_i)
+		free(tex->nbr_i);
+	if (tex->nbr_a)
+		free(tex->nbr_a);
+	if (tex->path_texture)
+		ft_tabfree(tex->path_texture);
+}

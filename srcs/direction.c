@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:02:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/07 22:24:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:54:33 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	dir_up(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_w] && ((player->h->up->i != '1' \
-		&& player->h->up->i != 'F') \
-		|| player->y - 64 >= player->h->up->y_pxl))
+	if (movement->move[XK_w] && player->h->up->i != '1')
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[0] = true;
@@ -28,8 +26,7 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 		// 	player->animation[0] = (player->animation[0] + 1) % 6;
 		// }
 		player->y -= player->ms;
-		printf("player y: %f --- player ms: %f\n", player->y, player->ms);
-		if (player->y <= player->h->up->y_pxl)
+		if (player->y <= player->h->up->y + player->ms)
 		{
 			ft_printf(2, "up: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->h = player->h->up;
@@ -40,9 +37,7 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 
 void	dir_down(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_s] && ((player->h->down->i != '1' \
-		&& player->h->down->i != 'F') \
-		|| player->y + 64 <= player->h->down->y_pxl))
+	if (movement->move[XK_s] && player->h->down->i != '1')
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[1] = true;
@@ -54,7 +49,7 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all)
 		// 	player->animation[1] = (player->animation[1] + 1) % 6;
 		// }
 		player->y += player->ms;
-		if (player->y >= player->h->down->y_pxl)
+		if (player->y >= player->h->down->y)
 		{
 			ft_printf(2, "down: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->h = player->h->down;
@@ -65,9 +60,7 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all)
 
 void	dir_left(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_a] && ((player->h->left->i != '1' \
-		&& player->h->left->i != 'F') \
-		|| player->x - 64 >= player->h->left->x_pxl))
+	if (movement->move[XK_a] && player->h->left->i != '1')
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[2] = true;
@@ -79,7 +72,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 		// 	player->animation[2] = (player->animation[2] + 1) % 6;
 		// }
 		player->x -= player->ms;
-		if (player->x <= player->h->left->x_pxl)
+		if (player->x <= player->h->left->x)
 		{
 			ft_printf(2, "left: [x:y] [%d %d] pxl\n", player->x, player->y);
 			all->step++;
@@ -90,9 +83,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 
 void	dir_right(t_player *player, t_movement *movement, t_all *all)
 {
-	if (movement->move[XK_d] && (((player->h->right->i != '1' \
-		&& player->h->right->i != 'F') \
-		|| player->x + 64 <= player->h->right->x_pxl)))
+	if (movement->move[XK_d] && player->h->right->i != '1')
 	{
 		ft_memset(movement->i_move, 0, sizeof(movement->i_move));
 		movement->i_move[3] = 1;
@@ -105,7 +96,7 @@ void	dir_right(t_player *player, t_movement *movement, t_all *all)
 		// }
 		player->x += player->ms;
 
-		if (player->x >= player->h->right->x_pxl)
+		if (player->x >= player->h->right->x)
 		{
 			ft_printf(2, "right: [x:y] [%d %d] pxl\n", player->x, player->y);
 			player->h = player->h->right;

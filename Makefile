@@ -6,7 +6,7 @@
 #    By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 22:22:35 by ulmagner          #+#    #+#              #
-#    Updated: 2025/05/07 17:27:50 by ulmagner         ###   ########.fr        #
+#    Updated: 2025/05/09 00:02:10 by ulmagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ MLX_NAME	= libmlx.a
 
 SRCS		= main.c clear.c init_map.c init_map_bis.c free.c floodfill.c \
 get_info.c error_handling.c launcher.c pixel_put.c movement.c direction.c \
+tileset.c path_texture.c get_tex.c display_map.c \
 
 SRCS_B		=
 

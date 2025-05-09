@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/07 22:00:57 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:25:21 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,14 @@ int	init_window(t_all *all)
 	return (1);
 }
 
-void	vertical_line(t_window *win, t_color *color, t_raycasting *ray, int x)
-{
-	int	y;
-	int	tmp;
-
-	if (ray->drawstart > ray->drawend)
-	{
-		tmp = ray->drawstart;
-		ray->drawstart = ray->drawend;
-		ray->drawend = tmp;
-	}
-
-	y = ray->drawstart;
-	// printf("x: %d", x);
-	// printf("y: %d\n", y);
-	// printf("drawstart: %d drawend: %d\n", ray->drawstart, ray->drawend);
-	int (col) = (color->r << 16) | (color->g << 8) | color->b;
-	while (y <= ray->drawend)
-	{
-		ft_pixel_put(win, x, y, col);
-		y++;
-	}
-}
-
 void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w)
 {
 	r->camerax = 2 * x / (double)w - 1;
 	r->raydirx = p->dx + p->planex * r->camerax;
 	r->raydiry = p->dy + p->planey * r->camerax;
 
-	r->x = (int)r->x_pxl;
-	r->y = (int)r->y_pxl;
+	r->mapx = (int)r->x;
+	r->mapy = (int)r->y;
 }
 
 void	dda_function(t_raycasting *r, t_all *all)
@@ -70,16 +46,16 @@ void	dda_function(t_raycasting *r, t_all *all)
 		if (r->sidedistx < r->sidedisty)
 		{
 			r->sidedistx += r->deltadistx;
-			r->x += r->stepx;
+			r->mapx += r->stepx;
 			r->side = 0;
 		}
 		else
 		{
 			r->sidedisty += r->deltadisty;
-			r->y += r->stepy;
+			r->mapy += r->stepy;
 			r->side = 1;
 		}
-		if (all->info.map[r->y * all->info.column + r->x] == '1')
+		if (all->info.map[r->mapy * all->info.column + r->mapx] == '1')
 			r->hit = 1;
 	}
 }
@@ -88,12 +64,12 @@ int	looping(t_all *all)
 {
 	t_player *(p) = &all->player;
 	t_raycasting *(r) = &all->ray;
-	t_color	color = all->argb;
+	// t_color	color = all->argb;
 
 	int (x) = 0;
 	int (w) = all->window.main_w;
-	r->x_pxl = p->x;
-	r->y_pxl = p->y;
+	r->x = p->x;
+	r->y = p->y;
 	p->ms = 0.01;
 	ft_bzero(all->window.image.addr, \
 		(all->window.main_w * all->window.main_h * all->window.image.bits_per_pixel / 8));
@@ -101,30 +77,31 @@ int	looping(t_all *all)
 	{
 		r->hit = 0;
 		set_playerpos_and_fov(p, r, x, w);
-		if (r->raydirx < 0)
-		{
+		if (r->raydirx == 0)
 			r->deltadistx = 1e30;
-			r->stepx = -1;
-			r->sidedistx = (r->x_pxl - r->x) * r->deltadistx;
-		}
 		else
-		{
 			r->deltadistx = fabs(1 / r->raydirx);
-			r->stepx = 1;
-			r->sidedistx = (r->x + 1.0 - r->x_pxl) * r->deltadistx;
-		}
-		if (r->raydiry < 0)
-		{
+		if (r->raydiry == 0)
 			r->deltadisty = 1e30;
-			r->stepy = -1;
-			r->sidedisty = (r->y_pxl - r->y) * r->deltadisty;
-		}
 		else
-		{
 			r->deltadisty = fabs(1 / r->raydiry);
+		if (r->raydirx < 0)
+			r->stepx = -1;
+		else
+			r->stepx = 1;
+		if (r->stepx < 0)
+			r->sidedistx = (r->x - r->mapx) * r->deltadistx;
+		else
+			r->sidedistx = (r->mapx + 1.0 - r->x) * r->deltadistx;
+
+		if (r->raydiry < 0)
+			r->stepy = -1;
+		else
 			r->stepy = 1;
-			r->sidedisty = (r->y + 1.0 - r->y_pxl) * r->deltadisty;
-		}
+		if (r->stepy < 0)
+			r->sidedisty = (r->y - r->mapy) * r->deltadisty;
+		else
+			r->sidedisty = (r->mapy + 1.0 - r->y) * r->deltadisty;
 		dda_function(r, all);
 
 		if(r->side == 0)
@@ -134,27 +111,25 @@ int	looping(t_all *all)
 
 		r->lineheight = (int)(all->window.main_h / r->perpwalldist);
 		r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
-		// printf("perpwalldist: %f lineheight: %d\n", r->perpwalldist, r->lineheight);
 		if (r->drawstart < 0)
 			r->drawstart = 0;
 		r->drawend = r->lineheight / 2 + all->window.main_h / 2;
 		if (r->drawend < 0)
-			r->drawend = all->window.main_h - 1;
+			r->drawend = 0;
 		if (r->drawend >= all->window.main_h)
 			r->drawend = all->window.main_h - 1;
-		// printf("%d %d\n", r->drawstart, r->drawend);
-		if (all->info.map[r->y * all->info.column + r->x] == '1')
-			color = (t_color){255, 255, 0, 0};
-		if (r->side == 1)
-		{
-			color.r /= 2;
-			color.g /= 2;
-			color.b /= 2;
-		}
-		vertical_line(&all->window, &color, &all->ray, x);
+
+		t_map *(wall) = get_node_at(all->map, r->mapx, r->mapy);
+
+		if (r->side == 0)
+			r->tex_x = r->y + r->perpwalldist * r->raydiry;
+		else
+			r->tex_x = r->x + r->perpwalldist * r->raydirx;
+		r->tex_x -= floor(r->tex_x);
+		if (wall && wall->i == '1')
+			rendering_image(&all->tex.tiles[0][0][0], all, x);
 		x++;
 	}
-	//FPScounter
 	all->oldtime = all->time;
 
 	movement_handling(all);
@@ -200,8 +175,8 @@ int	launcher(t_all *all)
 {
 	if (!init_window(all))
 		return (0);
-	// if (!split_tile(all, &all->info, &all->fail))
-	// 	return (0);
+	if (!split_tile(&all->tex, all))
+		return (0);
 	// if (!init_bg(&all->ground, &all->plan, all, &all->window))
 	// 	return (0);
 	// if (!init_game(&all->game, &all->window, all))

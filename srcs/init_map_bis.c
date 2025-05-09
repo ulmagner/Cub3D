@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/07 22:25:21 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:29:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **h, t_all *all)
 	node->is_visited = 0;
 	node->x = info->i_x;
 	node->y = info->i_y;
-	node->x_pxl = node->x + 64;
-	node->y_pxl = node->y + 64;
+	node->x_pxl = node->x * 64;
+	node->y_pxl = node->y * 64;
 	node->right = NULL;
 	node->left = NULL;
 	node->up = NULL;
@@ -65,8 +65,8 @@ void	chain_map(t_map **curr, t_map **head, t_map *node)
 	}
 	else
 	{
-		(*curr)->left = node;
-		node->right = *curr;
+		(*curr)->right = node;
+		node->left = *curr;
 		*curr = node;
 	}
 }
@@ -76,16 +76,16 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 	t_map	*temp;
 
 	if (info->i_y == 0)
-		node->down = NULL;
+		node->up = NULL;
 	else
 	{
 		temp = *head;
 		while (temp && (temp->x != node->x || temp->y != node->y - 1))
-			temp = temp->left;
+			temp = temp->right;
 		if (temp)
 		{
-			node->down = temp;
-			temp->up = node;
+			node->up = temp;
+			temp->down = node;
 		}
 	}
 	*curr = node;

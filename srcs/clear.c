@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <magneronulysse@gmail.com>        +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/03/28 18:13:06 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:43:08 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*
 static void	ft_freewindow(t_window *window, t_all *all)
 {
-	if (all->ground.img)
-		mlx_destroy_image(all->window.mlx, all->ground.img);
-	if (all->plan.img)
-		mlx_destroy_image(all->window.mlx, all->plan.img);
-	if (all->game.img)
-		mlx_destroy_image(all->window.mlx, all->game.img);
+	// if (all->ground.img)
+	// 	mlx_destroy_image(all->window.mlx, all->ground.img);
+	// if (all->plan.img)
+	// 	mlx_destroy_image(all->window.mlx, all->plan.img);
+	// if (all->game.img)
+	// 	mlx_destroy_image(all->window.mlx, all->game.img);
+	(void) all;
+	if (window->image.img)
+		mlx_destroy_image(all->window.mlx, window->image.img);
 	if (window->mlx)
 	{
 		if (window->main)
@@ -30,38 +32,37 @@ static void	ft_freewindow(t_window *window, t_all *all)
 	}
 }
 
+
 static void	ft_freeimage(t_all *all, int i)
 {
 	int	j;
 	int	a;
 
 	int (b) = 0;
-	if (!all->tile || !*all->tile)
+	if (!all->tex.tiles || !*all->tex.tiles)
 		return ;
-	while (++i < all->info.nbr_image)
+	while (++i < all->tex.nbr_image)
 	{
 		j = -1;
-		while (++j < all->info.nbr_i[i])
+		while (++j < all->tex.nbr_i[i])
 		{
 			a = -1;
-			while (++a < all->info.nbr_a[b])
+			while (++a < all->tex.nbr_a[b])
 				mlx_destroy_image(all->window.mlx,
-					all->tile[i][j][a].img);
+					all->tex.tiles[i][j][a].img);
 			b++;
-			free(all->tile[i][j]);
+			free(all->tex.tiles[i][j]);
 		}
-		free(all->tile[i]);
+		free(all->tex.tiles[i]);
 	}
-	free(all->tile);
-}*/
+	free(all->tex.tiles);
+}
 
 void	ft_clearall(t_all *all)
 {
-	//int	i;
-
-	//i = -1;
+	int	(i) = -1;
 	ft_freemap(&all->map);
-	//ft_freeplayer(&all->player);
+	// ft_freeplayer(&all->player);
 	/*
 	if (all->trap)
 		free(all->trap);
@@ -77,10 +78,11 @@ void	ft_clearall(t_all *all)
 	i = -1;
 	free(all->dist.p_c);
 	free(all->dist.p_t);
-	free(all->dist.p_o);
-	ft_freeimage(all, i);*/
+	free(all->dist.p_o);*/
+	ft_freeimage(all, i);
 	ft_freeinfo(&all->info);
-	//ft_freewindow(&all->window, all);
+	ft_freetex(&all->tex);
+	ft_freewindow(&all->window, all);
 	close(all->info.fd);
 }
 

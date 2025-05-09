@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/07 18:18:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:29:17 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,11 @@ typedef struct s_window
 
 typedef struct s_raycasting
 {
-	double	x_pxl;
-	double	y_pxl;
-	int		x;
-	int		y;
+	double	x;
+	double	y;
+	double	tex_x;
+	int		mapx;
+	int		mapy;
 	double	camerax;
 	double	raydirx;
 	double	raydiry;
@@ -125,6 +126,25 @@ typedef struct s_movement
 	bool	i_move[4];
 }	t_movement;
 
+typedef struct s_fail
+{
+	int	a;
+	int	b;
+	int	k;
+	int	j;
+	int	i;
+}	t_fail;
+
+typedef struct s_texture
+{
+	int			*nbr_a;
+	int			*nbr_i;
+	int			nbr_image;
+	char		**path_texture;
+	t_image		***tiles;
+	t_fail		fail;
+}	t_texture;
+
 typedef struct s_all
 {
 	t_window	window;
@@ -135,6 +155,7 @@ typedef struct s_all
 	t_color		argb;
 	t_image		image;
 	t_movement	movement;
+	t_texture	tex;
 	int			i;
 	int			step;
 	int			ac;
@@ -144,6 +165,11 @@ typedef struct s_all
 	double		oldtime;
 }	t_all;
 
+void	rendering_image(t_image *image, t_all *all, int xscreen);
+t_map	*get_node_at(t_map *head, int x, int y);
+void	check_wall(char *line, t_texture *tex);
+int		get_paths(char *file, t_texture *tex);
+int		split_tile(t_texture *tex, t_all *all);
 void	dir_up(t_player *player, t_movement *movement, t_all *all);
 void	dir_down(t_player *player, t_movement *movement, t_all *all);
 void	dir_left(t_player *player, t_movement *movement, t_all *all);
@@ -157,6 +183,7 @@ int		launcher(t_all *all);
 int		error_handling(int ac, char **av, t_info *info);
 int		empty_string(t_info *info);
 int		get_map(t_info *info, int *l, int *c);
+void	ft_freetex(t_texture *tex);
 void	ft_clearall(t_all *all);
 void	ft_freeplayer(t_player *player);
 void	ft_freeinfo(t_info *info);
