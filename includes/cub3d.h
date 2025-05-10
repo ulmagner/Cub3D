@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 18:29:17 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:07:41 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ typedef struct s_all
 
 void	rendering_image(t_image *image, t_all *all, int xscreen);
 t_map	*get_node_at(t_map *head, int x, int y);
+void	check_floor(char *line, t_texture *tex);
 void	check_wall(char *line, t_texture *tex);
 int		get_paths(char *file, t_texture *tex);
 int		split_tile(t_texture *tex, t_all *all);
@@ -192,8 +193,8 @@ void	ft_freemap(t_map **map);
 int		check_close_map(t_map **map, t_info *info, t_all *all);
 void	chain_map(t_map **curr, t_map **head, t_map *node);
 void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr);
-int		make_list(int *i, t_map **node, t_map **h, t_all *all);
+int		make_list(int *i, t_map **node, t_all *all);
 void	print_map(t_map **head, t_info *info);
-int	    map_handling(t_info *info, t_map **map, t_player *player, t_all *all);
+int	    map_handling(t_info *info, t_map **map, t_all *all);
 int	    main(int ac, char **av);
 #endif //CUB3D

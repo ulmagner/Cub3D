@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:02:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 15:54:33 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:16:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 		player->y -= player->ms;
 		if (player->y <= player->h->up->y + player->ms)
 		{
-			ft_printf(2, "up: [x:y] [%d %d] pxl\n", player->x, player->y);
+			printf("[x:y] [%f %f] case\n", all->player.x, all->player.y);
 			player->h = player->h->up;
 			all->step++;
 		}
@@ -49,9 +49,9 @@ void	dir_down(t_player *player, t_movement *movement, t_all *all)
 		// 	player->animation[1] = (player->animation[1] + 1) % 6;
 		// }
 		player->y += player->ms;
-		if (player->y >= player->h->down->y)
+		if (player->y >= player->h->down->y - player->ms)
 		{
-			ft_printf(2, "down: [x:y] [%d %d] pxl\n", player->x, player->y);
+			printf("down [x:y] [%f %f] case\n", player->x, player->y);
 			player->h = player->h->down;
 			all->step++;
 		}
@@ -72,9 +72,9 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 		// 	player->animation[2] = (player->animation[2] + 1) % 6;
 		// }
 		player->x -= player->ms;
-		if (player->x <= player->h->left->x)
+		if (player->x <= player->h->left->x + player->ms)
 		{
-			ft_printf(2, "left: [x:y] [%d %d] pxl\n", player->x, player->y);
+			printf("left: [x:y] [%f %f] pxl\n", player->x, player->y);
 			all->step++;
 			player->h = player->h->left;
 		}
@@ -96,9 +96,9 @@ void	dir_right(t_player *player, t_movement *movement, t_all *all)
 		// }
 		player->x += player->ms;
 
-		if (player->x >= player->h->right->x)
+		if (player->x >= player->h->right->x - player->ms)
 		{
-			ft_printf(2, "right: [x:y] [%d %d] pxl\n", player->x, player->y);
+			printf("right [x:y] [%f %f] case\n", player->x, player->y);
 			player->h = player->h->right;
 			all->step++;
 		}

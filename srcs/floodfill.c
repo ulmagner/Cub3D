@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 13:36:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:31:42 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,35 +58,36 @@ static int	start_floodfill(t_map *curr, t_all *all)
 	//int	i;
 
 	//i = -1;
+	t_map	*p;
+
 	if (curr->i == 'E' || curr->i == 'W' || curr->i == 'S' || curr->i == 'N')
 	{
-		all->player.x = curr->x;
-		all->player.y = curr->y;
-		//all->player.r = 31.0;
-		floodfill(curr, all);
+		p = curr;
+		floodfill(p, all);
+		if (curr->i == 'E')
+		{
+			all->player.dx = -1;
+			all->player.dy = 0;
+		}
+		if (curr->i == 'W')
+		{
+			all->player.dx = 1;
+			all->player.dy = 0;
+		}
+		if (curr->i == 'N')
+		{
+			all->player.dx = 0;
+			all->player.dy = -1;
+		}
+		if (curr->i == 'S')
+		{
+			all->player.dx = 0;
+			all->player.dy = 1;
+		}
+		all->player.planex = -all->player.dy * 0.66;
+		all->player.planey =  all->player.dx * 0.66;
+		return (1);
 	}
-	if (curr->i == 'E')
-	{
-		all->player.dx = -1;
-		all->player.dy = 0;
-	}
-	if (curr->i == 'W')
-	{
-		all->player.dx = 1;
-		all->player.dy = 0;
-	}
-	if (curr->i == 'N')
-	{
-		all->player.dx = 0;
-		all->player.dy = -1;
-	}
-	if (curr->i == 'S')
-	{
-		all->player.dx = 0;
-		all->player.dy = 1;
-	}
-	all->player.planex = -all->player.dy * 0.66;
-	all->player.planey =  all->player.dx * 0.66;
 	/*
 	if (curr->i == 'O').
 	{
@@ -102,7 +103,7 @@ static int	start_floodfill(t_map *curr, t_all *all)
 		all->info.o++;
 	}
 	get_c_p_info(curr, all);*/
-	return (1);
+	return (0);
 }
 
 int	check_close_map(t_map **map, t_info *info, t_all *all)
@@ -113,7 +114,8 @@ int	check_close_map(t_map **map, t_info *info, t_all *all)
 	curr = *map;
 	while (curr)
 	{
-		start_floodfill(curr, all);
+		if (start_floodfill(curr, all))
+			break ;
 		curr = curr->right;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:51 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 18:25:37 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 00:59:30 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	parse_file(char **line, t_texture *tex, char **path)
 	char	*tmp;
 
 	check_wall(*line, tex);
-	// check_floor(*line, tex);
+	check_floor(*line, tex);
 	// check_deco(*line, tex);
 	// check_exit(*line, tex);
 	// check_slime(*line, tex);
@@ -48,10 +48,10 @@ static int	parse_file(char **line, t_texture *tex, char **path)
 static int	init_i(t_texture *tex)
 {
 	tex->nbr_image = 0;
-	tex->nbr_i = ft_calloc(1, sizeof(int));
+	tex->nbr_i = ft_calloc(2, sizeof(int));
 	if (!tex->nbr_i)
 		return (0);
-	tex->nbr_a = ft_calloc(1, sizeof(int));
+	tex->nbr_a = ft_calloc(2, sizeof(int));
 	if (!tex->nbr_a)
 		return (free(tex->nbr_i), 0);
 	return (tex->nbr_i && tex->nbr_a);
@@ -76,7 +76,7 @@ int	get_paths(char *file, t_texture *tex)
 		nbr_line++;
 		line = ft_get_next_line(fd);
 	}
-	if (nbr_line != 1)
+	if (nbr_line != 2)
 		return (close(fd), free(path), free(line), 0);
 	tex->path_texture = ft_split(path, '\n');
 	if (!tex->path_texture)

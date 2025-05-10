@@ -6,13 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 13:29:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:32:03 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	get_dynamique_info(t_map *node, t_map **h, t_info *info, t_all *all)
+static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 {
 	//int	j;
 
@@ -20,7 +20,11 @@ static int	get_dynamique_info(t_map *node, t_map **h, t_info *info, t_all *all)
 	(void) info;
 	//j = -1;
 	if (node->i == 'N' || node->i == 'W' || node->i == 'S' || node->i == 'E')
-		*h = node;
+	{
+		all->player.h = node;
+		all->player.x = all->player.h->x;
+		all->player.y = all->player.h->y;
+	}
 	/*
 	if (node->i == 'O')
 	{
@@ -35,7 +39,7 @@ static int	get_dynamique_info(t_map *node, t_map **h, t_info *info, t_all *all)
 	return (1);
 }
 
-static t_map	*ft_newnode(t_info *info, int *i, t_map **h, t_all *all)
+static t_map	*ft_newnode(t_info *info, int *i, t_all *all)
 {
 	t_map	*node;
 
@@ -52,7 +56,7 @@ static t_map	*ft_newnode(t_info *info, int *i, t_map **h, t_all *all)
 	node->left = NULL;
 	node->up = NULL;
 	node->down = NULL;
-	get_dynamique_info(node, h, info, all);
+	get_dynamique_info(node, info, all);
 	return (node);
 }
 
@@ -91,7 +95,7 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 	*curr = node;
 }
 
-int	make_list(int *i, t_map **node, t_map **h, t_all *all)
+int	make_list(int *i, t_map **node, t_all *all)
 {
 	if (all->info.i_x == all->info.column)
 	{
@@ -99,7 +103,7 @@ int	make_list(int *i, t_map **node, t_map **h, t_all *all)
 		all->info.i_y++;
 		(*i)++;
 	}
-	*node = ft_newnode(&all->info, i, h, all);
+	*node = ft_newnode(&all->info, i, all);
 	all->info.i_x++;
 	if (!*node)
 		return (0);

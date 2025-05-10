@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 18:25:21 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:32:14 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	looping(t_all *all)
 {
 	t_player *(p) = &all->player;
 	t_raycasting *(r) = &all->ray;
-	// t_color	color = all->argb;
 
 	int (x) = 0;
 	int (w) = all->window.main_w;
@@ -128,6 +127,51 @@ int	looping(t_all *all)
 		r->tex_x -= floor(r->tex_x);
 		if (wall && wall->i == '1')
 			rendering_image(&all->tex.tiles[0][0][0], all, x);
+
+		int y = r->drawend + 1;
+		while (y < all->window.main_h)
+		{
+			float current_dist = all->window.main_h / (2.0 * y - all->window.main_h);
+		
+			float weight = current_dist / r->perpwalldist;
+		
+			float floor_x, floor_y;
+		
+			if (r->side == 0 && r->raydirx > 0)
+			{
+				floor_x = r->mapx;
+				floor_y = r->mapy + r->tex_x;
+			}
+			else if (r->side == 0 && r->raydirx < 0)
+			{
+				floor_x = r->mapx + 1.0;
+				floor_y = r->mapy + r->tex_x;
+			}
+			else if (r->side == 1 && r->raydiry > 0)
+			{
+				floor_x = r->mapx + r->tex_x;
+				floor_y = r->mapy;
+			}
+			else
+			{
+				floor_x = r->mapx + r->tex_x;
+				floor_y = r->mapy + 1.0;
+			}
+		
+			float cur_floor_x = weight * floor_x + (1.0 - weight) * p->x;
+			float cur_floor_y = weight * floor_y + (1.0 - weight) * p->y;
+		
+			int tex_x = (int)(cur_floor_x * TILE_SIZE) % TILE_SIZE;
+			int tex_y = (int)(cur_floor_y * TILE_SIZE) % TILE_SIZE;
+		
+			int color_floor = get_pixel_color(&all->tex.tiles[1][0][0], tex_x, tex_y);
+			ft_pixel_put(&all->window, x, y, color_floor);
+
+			int color_ceiling = get_pixel_color(&all->tex.tiles[1][0][0], tex_x, tex_y);
+			ft_pixel_put(&all->window, x, all->window.main_h - y, color_ceiling);
+
+			y++;
+		}
 		x++;
 	}
 	all->oldtime = all->time;

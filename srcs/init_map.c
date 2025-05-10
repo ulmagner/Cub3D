@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 13:28:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:31:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	get_info(t_info *info)
 	return (1);
 }
 
-static int	fill_map(t_info *info, t_map **head, t_map **h, t_all *all)
+static int	fill_map(t_info *info, t_map **head, t_all *all)
 {
 	t_map	*curr;
 	t_map	*node;
@@ -66,7 +66,7 @@ static int	fill_map(t_info *info, t_map **head, t_map **h, t_all *all)
 		return (0);
 	while (++i < info->size_map - 1)
 	{
-		if (!make_list(&i, &node, h, all))
+		if (!make_list(&i, &node, all))
 			return (free(row), 0);
 		chain_map(&curr, head, node);
 		chain_map_updown(node, info, head, &curr);
@@ -102,7 +102,7 @@ void	print_map(t_map **head, t_info *info)
 	}
 }
 
-int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
+int	map_handling(t_info *info, t_map **map, t_all *all)
 {
 	//int	i;
 	//int	j;
@@ -120,8 +120,9 @@ int	map_handling(t_info *info, t_map **map, t_player *player, t_all *all)
 			all->oeil[j][i].anim = get_randoms(0, 5, 7);     ----->     for independent entities randomize \
 																		their animation for a better visualization.
 	}*/
-	if (!fill_map(info, map, &player->h, all))
+	if (!fill_map(info, map, all))
 		return (0);
+
 	if (!check_close_map(map, info, all))
 		return (0);
 	print_map(map, info);
