@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 11:38:58 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:23:16 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,59 @@ void	dda_function(t_raycasting *r, t_all *all)
 		}
 		if (all->info.map[r->mapy * all->info.column + r->mapx] == '1')
 			r->hit = 1;
+	}
+}
+
+
+void	copy_to_ground(t_window *window, int x_ref, int y_ref, t_color *color)
+{
+	int		c;
+	int		x;
+	int		y;
+
+	y = -1;
+	while (++y < 20)
+	{
+		x = -1;
+		while (++x < 20)
+		{
+			c = (color->r << 16) | (color->g << 8) | (color->b);
+			ft_pixel_put(window, x + x_ref, y + y_ref, c);
+		}
+	}
+}
+
+void	minimap(t_all *all)
+{
+	int		x;
+	int		y;
+	t_map	*row;
+	t_map	*col;
+	t_color	color;
+
+	row = all->map;
+	y = 0;
+	while (row)
+	{
+		col = row;
+		x = 0;
+		while (col)
+		{
+			color = (t_color){254, 254, 254, 254};
+			if (col->i == '1')
+				color = (t_color){0, 0, 0, 0};
+			if (col->i == 'N' || col->i == 'S' || col->i == 'E' || col->i == 'W')
+				color = (t_color){0, 0, 0, 255};
+			copy_to_ground(&all->window, x, y, &color);
+			x += 20;
+			if (col->x == all->info.column - 1)
+				break ;
+			col = col->right;
+		}
+		if (col->y == all->info.line - 1)
+			break ;
+		y += 20;
+		row = row->down;
 	}
 }
 
@@ -193,7 +246,7 @@ int	looping(t_all *all)
 	// all->window.last_mouse_x = all->window.mouse.x;
 
 	int (delta_x) = all->window.mouse.x - all->window.last_mouse_x;
-	double (rot_speed) = 0.07;
+	double (rot_speed) = 0.04;
 	double (angle) = delta_x * rot_speed;
 
 	if (delta_x != 0)
@@ -202,6 +255,8 @@ int	looping(t_all *all)
 	all->window.last_mouse_x = all->window.main_w / 2;
 	// all->window.last_mouse_x = all->window.mouse.x;
 	movement_handling(all);
+	if (all->movement.move[XK_m])
+		minimap(all);
 	mlx_put_image_to_window(all->window.mlx, all->window.main, all->window.image.img, 0, 0);
 	// if (++(all->i) - all->frame < (int)(100 / 60))
 	// 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 13:58:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:35:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	direction(t_player *player, double dirx, double diry)
 	double (new_y) = player->y + diry * player->ms;
 	double (old_x) = player->x;
 	double (old_y) = player->y;
+	char (tmp);
 	if (diry < 0 && new_y < player->h->y && player->h->up->i == '1')
 			new_y = old_y;
 	if (diry > 0 && new_y > player->h->y + 0.9 && player->h->down->i == '1')
@@ -44,13 +45,33 @@ static void	direction(t_player *player, double dirx, double diry)
 	player->x = new_x;
 	player->y = new_y;
 	if (player->y < player->h->y && player->h->i != '1')
+	{
+		tmp = player->h->i;
+		player->h->i = player->h->up->i;
+		player->h->up->i = tmp;
 		player->h = player->h->up;
+	}
 	else if (player->y > player->h->y + 0.9 && player->h->i != '1')
+	{
+		tmp = player->h->i;
+		player->h->i = player->h->down->i;
+		player->h->down->i = tmp;
 		player->h = player->h->down;
+	}
 	if (player->x < player->h->x && player->h->i != '1')
+	{
+		tmp = player->h->i;
+		player->h->i = player->h->left->i;
+		player->h->left->i = tmp;
 		player->h = player->h->left;
+	}
 	else if (player->x > player->h->x + 0.9 && player->h->i != '1')
+	{	
+		tmp = player->h->i;
+		player->h->i = player->h->right->i;
+		player->h->right->i = tmp;
 		player->h = player->h->right;
+	}
 }
 
 int	movement_handling(t_all *all)
