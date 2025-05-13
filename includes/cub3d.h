@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 11:32:17 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:11:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,10 +179,6 @@ void	check_floor(char *line, t_texture *tex);
 void	check_wall(char *line, t_texture *tex);
 int		get_paths(char *file, t_texture *tex);
 int		split_tile(t_texture *tex, t_all *all);
-void	dir_up(t_player *player, t_movement *movement, t_all *all);
-void	dir_down(t_player *player, t_movement *movement, t_all *all);
-void	dir_left(t_player *player, t_movement *movement, t_all *all);
-void	dir_right(t_player *player, t_movement *movement, t_all *all);
 int		movement_handling(t_all *all);
 int 	movement_p(int keycode, t_all *all);
 int 	movement_r(int keycode, t_all *all);
