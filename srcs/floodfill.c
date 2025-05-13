@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:31:42 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:14:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ static void	get_c_p_info(t_map *curr, t_all *all)
 
 static int	start_floodfill(t_map *curr, t_all *all)
 {
-	//int	i;
-
-	//i = -1;
 	t_map	*p;
 
 	if (curr->i == 'E' || curr->i == 'W' || curr->i == 'S' || curr->i == 'N')
@@ -85,7 +82,7 @@ static int	start_floodfill(t_map *curr, t_all *all)
 			all->player.dy = 1;
 		}
 		all->player.planex = -all->player.dy * 0.66;
-		all->player.planey =  all->player.dx * 0.66;
+		all->player.planey = all->player.dx * 0.66;
 		return (1);
 	}
 	/*
@@ -106,9 +103,8 @@ static int	start_floodfill(t_map *curr, t_all *all)
 	return (0);
 }
 
-int	check_close_map(t_map **map, t_info *info, t_all *all)
+int	check_close_map(t_map **map, t_all *all)
 {
-	(void) info;
 	t_map	*curr;
 
 	curr = *map;

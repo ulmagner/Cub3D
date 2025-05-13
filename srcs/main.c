@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:41:48 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:05:32 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:27:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av)
 {
 	t_all	all;
 
-	all = (t_all) {0};
+	all = (t_all){0};
 	if (!error_handling(ac, av, &all.info))
 		return (ft_clearall(&all), EXIT_FAILURE);
 	if (!get_paths(av[ac - 1], &all.tex))

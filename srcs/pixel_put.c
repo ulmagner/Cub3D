@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:54:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 17:27:22 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:17:13 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	ft_pixel_put(t_window *win, int x, int y, int color)
 {
 	char	*dst;
 
-	// if (x < 0 || y < 0 || x >= win->main_w || y >= win->main_h)
-	// 	return ;
-	(void) x;
-	(void) y;
+	if (x < 0 || y < 0 || x >= win->main_w || y >= win->main_h)
+		return ;
 	dst = win->image.addr \
 		+ (y * win->image.line_length + x * (win->image.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:31:57 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:15:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	map_handling(t_info *info, t_map **map, t_all *all)
 {
 	//int	i;
 	//int	j;
-
 	if (!get_info(info))
 		return (0);
 	/* if (!init_char(all, info))       --->    initiation of entities using calloc \
@@ -122,10 +121,8 @@ int	map_handling(t_info *info, t_map **map, t_all *all)
 	}*/
 	if (!fill_map(info, map, all))
 		return (0);
-
-	if (!check_close_map(map, info, all))
+	if (!check_close_map(map, all))
 		return (0);
 	print_map(map, info);
 	return (1);
 }
-
