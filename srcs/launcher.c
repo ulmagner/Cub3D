@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:32:14 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:38:58 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w)
 
 	r->mapx = (int)r->x;
 	r->mapy = (int)r->y;
+}
+
+void	rotate_player(t_player *p, int angle)
+{
+	double (old_dx) = p->dx;
+	double (old_planex) = p->planex;
+	p->dx = p->dx * cos(angle) - p->dy * sin(angle);
+	p->dy = old_dx * sin(angle) + p->dy * cos(angle);
+	p->planex = p->planex * cos(angle) - p->planey * sin(angle);
+	p->planey = old_planex * sin(angle) + p->planey * cos(angle);
 }
 
 void	dda_function(t_raycasting *r, t_all *all)
@@ -71,7 +81,9 @@ int	looping(t_all *all)
 	r->y = p->y;
 	p->ms = 0.01;
 	ft_bzero(all->window.image.addr, \
-		(all->window.main_w * all->window.main_h * all->window.image.bits_per_pixel / 8));
+		(all->window.main_w * all->window.main_h \
+		* all->window.image.bits_per_pixel / 8));
+
 	while (x < w)
 	{
 		r->hit = 0;
@@ -164,7 +176,7 @@ int	looping(t_all *all)
 			int tex_x = (int)(cur_floor_x * TILE_SIZE) % TILE_SIZE;
 			int tex_y = (int)(cur_floor_y * TILE_SIZE) % TILE_SIZE;
 		
-			int color_floor = get_pixel_color(&all->tex.tiles[1][0][0], tex_x, tex_y);
+			int color_floor = get_pixel_color(&all->tex.tiles[1][1][0], tex_x, tex_y);
 			ft_pixel_put(&all->window, x, y, color_floor);
 
 			int color_ceiling = get_pixel_color(&all->tex.tiles[1][0][0], tex_x, tex_y);
@@ -176,6 +188,19 @@ int	looping(t_all *all)
 	}
 	all->oldtime = all->time;
 
+	mlx_mouse_get_pos(all->window.mlx, all->window.main, \
+		&all->window.mouse.x, &all->window.mouse.y);
+	// all->window.last_mouse_x = all->window.mouse.x;
+
+	int (delta_x) = all->window.mouse.x - all->window.last_mouse_x;
+	double (rot_speed) = 0.07;
+	double (angle) = delta_x * rot_speed;
+
+	if (delta_x != 0)
+		rotate_player(p, angle);
+	mlx_mouse_move(all->window.mlx, all->window.main, all->window.main_w / 2, all->window.main_h / 2);
+	all->window.last_mouse_x = all->window.main_w / 2;
+	// all->window.last_mouse_x = all->window.mouse.x;
 	movement_handling(all);
 	mlx_put_image_to_window(all->window.mlx, all->window.main, all->window.image.img, 0, 0);
 	// if (++(all->i) - all->frame < (int)(100 / 60))

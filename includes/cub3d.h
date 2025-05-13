@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:07:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:32:17 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ typedef struct s_player
 	double		planey;
 	int			mapx;
 	int			mapy;
-	double			ms;
-	// int			i;
-	t_map	*h;
+	double		ms;
+	double		rs;
+	t_map		*h;
 }	t_player;
 
 typedef struct s_image {
@@ -86,6 +86,12 @@ typedef struct s_image {
 	int		h;
 }	t_image;
 
+typedef struct s_mouse
+{
+	int	x;
+	int	y;
+}	t_mouse;
+
 typedef struct s_window
 {
 	void	*mlx;
@@ -93,6 +99,8 @@ typedef struct s_window
 	int		main_w;
 	int		main_h;
 	t_image	image;
+	t_mouse	mouse;
+	int		last_mouse_x;
 }	t_window;
 
 typedef struct s_raycasting

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:43:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 00:57:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:08:53 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	check_floor(char *line, t_texture *tex)
 {
 	if (ft_strnstr(line, "floor", ft_strlen(line)))
 	{
-		tex->nbr_a[1]++;
+		if (ft_strnstr(line, "white", ft_strlen(line)))
+			tex->nbr_a[1]++;
+		if (ft_strnstr(line, "green", ft_strlen(line)))
+			tex->nbr_a[2]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[1]++;
 	}

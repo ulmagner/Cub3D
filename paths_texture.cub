@@ -1,2 +1,3 @@
 .textures/wall/wallN.xpm
-.textures/floor/floor.xpm
+.textures/floor/white.xpm
+-textures/floor/green.xpm

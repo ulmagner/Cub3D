@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:02:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:16:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:41:02 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	dir_up(t_player *player, t_movement *movement, t_all *all)
 		player->y -= player->ms;
 		if (player->y <= player->h->up->y + player->ms)
 		{
-			printf("[x:y] [%f %f] case\n", all->player.x, all->player.y);
+			printf("up [x:y] [%f %f] case\n", all->player.x, all->player.y);
 			player->h = player->h->up;
 			all->step++;
 		}
@@ -74,7 +74,7 @@ void	dir_left(t_player *player, t_movement *movement, t_all *all)
 		player->x -= player->ms;
 		if (player->x <= player->h->left->x + player->ms)
 		{
-			printf("left: [x:y] [%f %f] pxl\n", player->x, player->y);
+			printf("left: [x:y] [%f %f] case\n", player->x, player->y);
 			all->step++;
 			player->h = player->h->left;
 		}
