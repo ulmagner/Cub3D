@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 15:23:16 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:04:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,6 @@ int	init_window(t_all *all)
 	return (1);
 }
 
-void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w)
-{
-	r->camerax = 2 * x / (double)w - 1;
-	r->raydirx = p->dx + p->planex * r->camerax;
-	r->raydiry = p->dy + p->planey * r->camerax;
-
-	r->mapx = (int)r->x;
-	r->mapy = (int)r->y;
-}
-
 void	rotate_player(t_player *p, int angle)
 {
 	double (old_dx) = p->dx;
@@ -48,28 +38,6 @@ void	rotate_player(t_player *p, int angle)
 	p->planex = p->planex * cos(angle) - p->planey * sin(angle);
 	p->planey = old_planex * sin(angle) + p->planey * cos(angle);
 }
-
-void	dda_function(t_raycasting *r, t_all *all)
-{
-	while (r->hit == 0)
-	{
-		if (r->sidedistx < r->sidedisty)
-		{
-			r->sidedistx += r->deltadistx;
-			r->mapx += r->stepx;
-			r->side = 0;
-		}
-		else
-		{
-			r->sidedisty += r->deltadisty;
-			r->mapy += r->stepy;
-			r->side = 1;
-		}
-		if (all->info.map[r->mapy * all->info.column + r->mapx] == '1')
-			r->hit = 1;
-	}
-}
-
 
 void	copy_to_ground(t_window *window, int x_ref, int y_ref, t_color *color)
 {
@@ -126,6 +94,7 @@ void	minimap(t_all *all)
 int	looping(t_all *all)
 {
 	t_player *(p) = &all->player;
+	t_map *(cp) = p->h;
 	t_raycasting *(r) = &all->ray;
 
 	int (x) = 0;
@@ -139,58 +108,13 @@ int	looping(t_all *all)
 
 	while (x < w)
 	{
+		cp = p->h;
 		r->hit = 0;
 		set_playerpos_and_fov(p, r, x, w);
-		if (r->raydirx == 0)
-			r->deltadistx = 1e30;
-		else
-			r->deltadistx = fabs(1 / r->raydirx);
-		if (r->raydiry == 0)
-			r->deltadisty = 1e30;
-		else
-			r->deltadisty = fabs(1 / r->raydiry);
-		if (r->raydirx < 0)
-			r->stepx = -1;
-		else
-			r->stepx = 1;
-		if (r->stepx < 0)
-			r->sidedistx = (r->x - r->mapx) * r->deltadistx;
-		else
-			r->sidedistx = (r->mapx + 1.0 - r->x) * r->deltadistx;
-
-		if (r->raydiry < 0)
-			r->stepy = -1;
-		else
-			r->stepy = 1;
-		if (r->stepy < 0)
-			r->sidedisty = (r->y - r->mapy) * r->deltadisty;
-		else
-			r->sidedisty = (r->mapy + 1.0 - r->y) * r->deltadisty;
-		dda_function(r, all);
-
-		if(r->side == 0)
-			r->perpwalldist = (r->sidedistx - r->deltadistx);
-		else
-			r->perpwalldist = (r->sidedisty - r->deltadisty);
-
-		r->lineheight = (int)(all->window.main_h / r->perpwalldist);
-		r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
-		if (r->drawstart < 0)
-			r->drawstart = 0;
-		r->drawend = r->lineheight / 2 + all->window.main_h / 2;
-		if (r->drawend < 0)
-			r->drawend = 0;
-		if (r->drawend >= all->window.main_h)
-			r->drawend = all->window.main_h - 1;
-
-		t_map *(wall) = get_node_at(all->map, r->mapx, r->mapy);
-
-		if (r->side == 0)
-			r->tex_x = r->y + r->perpwalldist * r->raydiry;
-		else
-			r->tex_x = r->x + r->perpwalldist * r->raydirx;
-		r->tex_x -= floor(r->tex_x);
-		if (wall && wall->i == '1')
+		init_dda(r, p);
+		cp = dda_function(r, cp);
+		line_height_calculation(all, r, p);
+		if (cp->i == '1')
 			rendering_image(&all->tex.tiles[0][0][0], all, x);
 
 		int y = r->drawend + 1;
