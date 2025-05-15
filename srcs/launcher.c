@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/15 14:49:08 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:23:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,8 @@ int	looping(t_all *all)
 		while (y < all->window.main_h)
 		{
 			float current_dist = all->window.main_h / (2.0 * y - all->window.main_h);
-		
 			float weight = current_dist / r->perpwalldist;
-		
 			float floor_x, floor_y;
-		
 			if (r->side == 0 && r->raydirx > 0)
 			{
 				floor_x = r->mapx;
@@ -163,19 +160,14 @@ int	looping(t_all *all)
 				floor_x = r->mapx + r->tex_x;
 				floor_y = r->mapy + 1.0;
 			}
-		
 			float cur_floor_x = weight * floor_x + (1.0 - weight) * p->x;
 			float cur_floor_y = weight * floor_y + (1.0 - weight) * p->y;
-		
 			int tex_x = (int)(cur_floor_x * TILE_SIZE) % TILE_SIZE;
 			int tex_y = (int)(cur_floor_y * TILE_SIZE) % TILE_SIZE;
-		
 			int color_floor = get_pixel_color(&all->tex.tiles[1][1][0], tex_x, tex_y);
 			ft_pixel_put(&all->window, x, y, color_floor);
-
 			int color_ceiling = get_pixel_color(&all->tex.tiles[1][0][0], tex_x, tex_y);
 			ft_pixel_put(&all->window, x, all->window.main_h - y, color_ceiling);
-
 			y++;
 		}
 		x++;

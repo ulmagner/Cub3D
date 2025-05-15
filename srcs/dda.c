@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/15 09:59:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:25:23 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_map	*dda_function(t_raycasting *r, t_map *tmp)
 				tmp = tmp->right;
 			else
 				tmp = tmp->left;
+			r->mapx += r->stepx;
 			r->side = 0;
 		}
 		else
@@ -67,6 +68,7 @@ t_map	*dda_function(t_raycasting *r, t_map *tmp)
 				tmp = tmp->down;
 			else
 				tmp = tmp->up;
+			r->mapy += r->stepy;
 			r->side = 1;
 		}
 		if (tmp->i == '1')
