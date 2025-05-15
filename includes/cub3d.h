@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 15:02:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:40:03 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 typedef struct s_map
 {
 	char			i;
-	int				x;
-	int				y;
+	double			x;
+	double			y;
 	int				x_pxl;
 	int				y_pxl;
 	int				is_visited;
@@ -68,8 +68,8 @@ typedef struct s_player
 	double		dy;
 	double		planex;
 	double		planey;
-	int			mapx;
-	int			mapy;
+	double		mapx;
+	double		mapy;
 	double		ms;
 	double		rs;
 	t_map		*h;
@@ -88,8 +88,8 @@ typedef struct s_image {
 
 typedef struct s_mouse
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_mouse;
 
 typedef struct s_window
@@ -101,6 +101,7 @@ typedef struct s_window
 	t_image	image;
 	t_mouse	mouse;
 	int		last_mouse_x;
+	int		last_mouse_y;
 }	t_window;
 
 typedef struct s_raycasting
@@ -173,6 +174,11 @@ typedef struct s_all
 	double			oldtime;
 }	t_all;
 
+void			line_height_calculation(t_all *all, t_raycasting *r,\
+					t_player *p);
+t_map			*dda_function(t_raycasting *r, t_map *tmp);
+void			init_dda(t_raycasting *r, t_player *p);
+void			set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w);
 void			rendering_image(t_image *image, t_all *all, int xscreen);
 t_map			*get_node_at(t_map *head, int x, int y);
 void			check_floor(char *line, t_texture *tex);

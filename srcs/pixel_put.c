@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:54:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/14 17:57:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:40:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	rendering_image(t_image *tex, t_all *all, int xscreen)
 		return ;
 	if ((r->side == 0 && r->raydirx > 0) || (r->side == 1 && r->raydiry < 0))
 		col_tex_x = tex->w - col_tex_x - 1;
-	int (step) = 1.0 * tex->w / r->lineheight;
-	int (tex_pos) = (r->drawstart - all->window.main_h / 2 + r->lineheight / 2) * step;
+	double (step) = 1.0 * tex->w / r->lineheight;
+	double (tex_pos) = (r->drawstart - all->window.main_h / 2 + r->lineheight / 2) * step;
 	int (y) = r->drawstart;
 	while (y <= r->drawend)
 	{

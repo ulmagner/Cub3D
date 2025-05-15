@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/10 16:32:03 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:41:58 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 {
-	//int	j;
-
 	(void) all;
 	(void) info;
 	//j = -1;
 	if (node->i == 'N' || node->i == 'W' || node->i == 'S' || node->i == 'E')
 	{
 		all->player.h = node;
-		all->player.x = all->player.h->x;
-		all->player.y = all->player.h->y;
+		all->player.x = info->i_x;
+		all->player.y = info->i_y;
 	}
 	/*
 	if (node->i == 'O')

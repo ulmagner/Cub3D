@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/14 18:04:41 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:59:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w)
 	r->camerax = 2 * x / (double)w - 1;
 	r->raydirx = p->dx + p->planex * r->camerax;
 	r->raydiry = p->dy + p->planey * r->camerax;
-	r->mapx = (int)p->x;
-	r->mapy = (int)p->y;
+	r->mapx = p->x;
+	r->mapy = p->y;
 	r->deltadistx = fabs(1 / r->raydirx);
 	r->deltadisty = fabs(1 / r->raydiry);
 }

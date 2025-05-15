@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/14 18:04:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:49:08 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	init_window(t_all *all)
 	return (1);
 }
 
-void	rotate_player(t_player *p, int angle)
+void	rotate_player(t_player *p, double angle)
 {
 	double (old_dx) = p->dx;
 	double (old_planex) = p->planex;
@@ -91,21 +91,38 @@ void	minimap(t_all *all)
 	}
 }
 
+int	mouse_move(int x, int y, t_all *all)
+{
+	t_player *(p) = &all->player;
+	all->window.last_mouse_x = all->window.main_w / 2;
+	all->window.last_mouse_y = all->window.main_h / 2;
+	if (x != all->window.last_mouse_x && y != all->window.last_mouse_y)
+	{
+		int (delta_x) = x - all->window.last_mouse_x;
+		int (delta_y) = y - all->window.last_mouse_y;
+		all->window.mouse.x = (double)delta_x / (double)all->window.main_w * 20.0;
+		all->window.mouse.y = (double)delta_y / (double)all->window.main_h * 10.0;
+		double (rot_speed) = 0.003;
+		double (angle) = all->window.mouse.x * rot_speed;
+		if (x < all->window.mouse.x)
+			angle = -angle;
+		rotate_player(p, angle);
+		mlx_mouse_move(all->window.mlx, all->window.main, all->window.main_w / 2, all->window.main_h / 2);
+	}
+	return (1);
+}
+
 int	looping(t_all *all)
 {
 	t_player *(p) = &all->player;
 	t_map *(cp) = p->h;
 	t_raycasting *(r) = &all->ray;
-
 	int (x) = 0;
 	int (w) = all->window.main_w;
-	r->x = p->x;
-	r->y = p->y;
-	p->ms = 0.01;
+	p->ms = 0.1;
 	ft_bzero(all->window.image.addr, \
 		(all->window.main_w * all->window.main_h \
 		* all->window.image.bits_per_pixel / 8));
-
 	while (x < w)
 	{
 		cp = p->h;
@@ -164,20 +181,6 @@ int	looping(t_all *all)
 		x++;
 	}
 	all->oldtime = all->time;
-
-	mlx_mouse_get_pos(all->window.mlx, all->window.main, \
-		&all->window.mouse.x, &all->window.mouse.y);
-	// all->window.last_mouse_x = all->window.mouse.x;
-
-	int (delta_x) = all->window.mouse.x - all->window.last_mouse_x;
-	double (rot_speed) = 0.04;
-	double (angle) = delta_x * rot_speed;
-
-	if (delta_x != 0)
-		rotate_player(p, angle);
-	mlx_mouse_move(all->window.mlx, all->window.main, all->window.main_w / 2, all->window.main_h / 2);
-	all->window.last_mouse_x = all->window.main_w / 2;
-	// all->window.last_mouse_x = all->window.mouse.x;
 	movement_handling(all);
 	if (all->movement.move[XK_m])
 		minimap(all);
@@ -214,6 +217,7 @@ int	hook_handling(t_all *all)
 	// mlx_hook(all->window.main, 4, 1L << 2, action_p, all);
 	// mlx_hook(all->window.main, 5, 1L << 3, action_r, all);
 	mlx_hook(all->window.main, 17, 1L << 17, close_window, all);
+	mlx_hook(all->window.main, 6, 1L << 6, mouse_move, all);
 	mlx_loop_hook(all->window.mlx, looping, all);
 	mlx_loop(all->window.mlx);
 	return (1);
