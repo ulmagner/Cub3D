@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:43:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 12:14:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:42:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,40 @@ void	check_floor(char *line, t_texture *tex)
 			tex->nbr_a[2]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[1]++;
+	}
+}
+
+void	check_card(char *line, t_texture *tex)
+{
+	if (ft_strnstr(line, "card", ft_strlen(line)))
+	{
+		if (ft_strnstr(line, "card", ft_strlen(line)))
+			tex->nbr_a[3]++;
+		if (line[0] == '-' || line[0] == '.')
+			tex->nbr_i[2]++;
+	}
+}
+
+void	check_knife(char *line, t_texture *tex)
+{
+	if (ft_strnstr(line, "knife", ft_strlen(line)))
+	{
+		// if (ft_strnstr(line, "aspect", ft_strlen(line)))
+		// 	tex->nbr_a[5]++;
+		// else
+			tex->nbr_a[4]++;
+		if (line[0] == '-' || line[0] == '.')
+			tex->nbr_i[3]++;
+	}
+}
+
+void	check_decor(char *line, t_texture *tex)
+{
+	if (ft_strnstr(line, "decor", ft_strlen(line)))
+	{
+		if (ft_strnstr(line, "box", ft_strlen(line)))
+			tex->nbr_a[5]++;
+		if (line[0] == '-' || line[0] == '.')
+			tex->nbr_i[4]++;
 	}
 }

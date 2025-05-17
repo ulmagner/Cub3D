@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 12:14:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:28:07 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int	start_floodfill(t_map *curr, t_all *all)
 		}
 		all->player.planex = -all->player.dy * 0.66;
 		all->player.planey = all->player.dx * 0.66;
+		all->player.access.c = NULL;
 		return (1);
 	}
 	/*

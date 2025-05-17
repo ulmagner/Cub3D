@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/15 10:41:58 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:15:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,27 @@ static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 {
 	(void) all;
 	(void) info;
-	//j = -1;
 	if (node->i == 'N' || node->i == 'W' || node->i == 'S' || node->i == 'E')
 	{
 		all->player.h = node;
 		all->player.x = info->i_x;
 		all->player.y = info->i_y;
+		all->player.knife.i = 0;
+		all->player.knife.animation = malloc(sizeof(int) * 2);
+		if (!all->player.knife.animation)
+			return (0);
+		all->player.knife.normal = false;
+		all->player.knife.lim = 0;
 	}
 	/*
-	if (node->i == 'O')
-	{
-		while (++j < info->ennemies)
-				(all->oeil[all->info.o][j]).o = node;         ------->      identities positions on the lst_map.
-		all->info.o++;
-	}
-	if (node->i == 'C')
-		(all->slime[info->slime++]).c = node;
 	if (node->i == 'F')
 		(all->trap[info->fire++]).t = node;*/
+	if (node->i == 'C')
+	{
+		all->player.access.c = node;
+		all->player.access.x = info->i_x;
+		all->player.access.y = info->i_y;
+	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/04/06 12:23:24 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:33:20 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	get_map(t_info *info, int *l, int *c)
 	{
 		i = -1;
 		while (line[++i])
-			if (!ft_isstrchr("01NSEWO\n", line[i]))
+			if (!ft_isstrchr("01CBNSEWO\n", line[i]))
 				return (free(line), ft_printf(2, "Error\nplan\n"), 0);
 		tmp = ft_strjoin(info->map, line);
 		if (!tmp)

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/15 10:40:03 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:48:39 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,34 @@ typedef struct s_info
 	char	*map;
 }	t_info;
 
+typedef struct s_image {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char	*img_path;
+	int		w;
+	int		h;
+}	t_image;
+
+typedef struct s_card
+{
+	double	x;
+	double	y;
+	t_map	*c;
+	t_image	img;
+}	t_card;
+
+typedef struct s_knife
+{
+	int		*animation;
+	int		i;
+	int		lim;
+	bool	aspect;
+	bool	normal;
+}	t_knife;
+
 typedef struct s_player
 {
 	double		x;
@@ -73,18 +101,9 @@ typedef struct s_player
 	double		ms;
 	double		rs;
 	t_map		*h;
+	t_card		access;
+	t_knife		knife;
 }	t_player;
-
-typedef struct s_image {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	char	*img_path;
-	int		w;
-	int		h;
-}	t_image;
 
 typedef struct s_mouse
 {
@@ -172,15 +191,21 @@ typedef struct s_all
 	char			**av;
 	double			time;
 	double			oldtime;
+	double			zbuffer[1920];
 }	t_all;
 
 void			line_height_calculation(t_all *all, t_raycasting *r,\
 					t_player *p);
 t_map			*dda_function(t_raycasting *r, t_map *tmp);
 void			init_dda(t_raycasting *r, t_player *p);
-void			set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w);
-void			rendering_image(t_image *image, t_all *all, int xscreen);
+void			set_playerpos_and_fov(t_player *p, t_raycasting *r, int x,\
+					int w);
+void			rendering_image(t_image *tex, t_all *all, int xscreen,\
+					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
+void			check_decor(char *line, t_texture *tex);
+void			check_knife(char *line, t_texture *tex);
+void			check_card(char *line, t_texture *tex);
 void			check_floor(char *line, t_texture *tex);
 void			check_wall(char *line, t_texture *tex);
 int				get_paths(char *file, t_texture *tex);
