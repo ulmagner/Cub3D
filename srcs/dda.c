@@ -6,15 +6,15 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:34:12 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:49:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int x, int w)
+void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int w)
 {
-	r->camerax = 2 * x / (double)w - 1;
+	r->camerax = 2 * r->x / (double)w - 1;
 	r->raydirx = p->dx + p->planex * r->camerax;
 	r->raydiry = p->dy + p->planey * r->camerax;
 	r->mapx = p->x;
@@ -47,42 +47,13 @@ void	init_dda(t_raycasting *r, t_player *p)
 	}
 }
 
-t_map	*dda_function(t_raycasting *r, t_map *tmp)
-{
-	while (r->hit == 0)
-	{
-		if (r->sidedistx < r->sidedisty)
-		{
-			r->sidedistx += r->deltadistx;
-			if (r->stepx > 0)
-				tmp = tmp->right;
-			else
-				tmp = tmp->left;
-			r->mapx += r->stepx;
-			r->side = 0;
-		}
-		else
-		{
-			r->sidedisty += r->deltadisty;
-			if (r->stepy > 0)
-				tmp = tmp->down;
-			else
-				tmp = tmp->up;
-			r->mapy += r->stepy;
-			r->side = 1;
-		}
-		if (tmp->i == '1' || tmp->i == 'B')
-			r->hit = 1;
-	}
-	return (tmp);
-}
-
 void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 {
 	r->perpwalldist = (r->sidedisty - r->deltadisty);
 	if(r->side == 0)
 		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	r->lineheight = (int)(all->window.main_h / r->perpwalldist);
+	double corrected_dist = fmax(r->perpwalldist, 1);
+	r->lineheight = (int)(all->window.main_h / corrected_dist);
 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawstart < 0)
 		r->drawstart = 0;
@@ -94,4 +65,34 @@ void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 	else
 		r->tex_x = p->x + r->perpwalldist * r->raydirx;
 	r->tex_x -= floor(r->tex_x);
+}
+
+t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
+{
+	while (!r->hit && tmp)
+	{
+		if (r->sidedistx < r->sidedisty)
+		{
+			r->sidedistx += r->deltadistx;
+			if (r->stepx > 0)
+				tmp = tmp->right;
+			else
+				tmp = tmp->left;
+			r->side = 0;
+		}
+		else
+		{
+			r->sidedisty += r->deltadisty;
+			if (r->stepy > 0)
+				tmp = tmp->down;
+			else
+				tmp = tmp->up;
+			r->side = 1;
+		}
+		if (!tmp)
+			break ;
+		if (tmp && tmp->i == c)
+			r->hit = true;
+	}
+	return (tmp);
 }

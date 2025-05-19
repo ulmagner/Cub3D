@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:48:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,66 +186,69 @@ int	looping(t_all *all)
 	t_player *(p) = &all->player;
 	t_map *(cp) = p->h;
 	t_raycasting *(r) = &all->ray;
-	int (x) = 0;
+	r->x = 0;
 	int (w) = all->window.main_w;
 	p->ms = 0.2;
 	ft_bzero(all->window.image.addr, \
 		(all->window.main_w * all->window.main_h \
 		* all->window.image.bits_per_pixel / 8));
-	while (x < w)
+	while (r->x < w)
 	{
 		cp = p->h;
-		r->hit = 0;
-		set_playerpos_and_fov(p, r, x, w);
+		r->hit = false;
+		set_playerpos_and_fov(p, r, w);
 		init_dda(r, p);
-		cp = dda_function(r, cp);
+		cp = dda_function(r, cp, '1');
 		line_height_calculation(all, r, p);
-		all->zbuffer[x] = r->perpwalldist;
+		all->zbuffer[r->x] = r->perpwalldist;
 		if (cp->i == '1')
-			rendering_image(&all->tex.tiles[1][0][0], all, x, 1);
-		if (cp->i == 'B')
+			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 1);
+		r->y = r->drawend + 1;
+		while (r->y < all->window.main_h)
 		{
-			rendering_image(&all->tex.tiles[4][0][0], all, x, 0.5);
-		}
-		int y = r->drawend + 1;
-		while (y < all->window.main_h)
-		{
-			float current_dist = all->window.main_h / (2.0 * y - all->window.main_h);
+			float current_dist = all->window.main_h / (2.0 * r->y - all->window.main_h);
 			float weight = current_dist / r->perpwalldist;
 			float floor_x, floor_y;
 			if (r->side == 0 && r->raydirx > 0)
 			{
-				floor_x = r->mapx;
-				floor_y = r->mapy + r->tex_x;
+				floor_x = cp->x;
+				floor_y = cp->y + r->tex_x;
 			}
 			else if (r->side == 0 && r->raydirx < 0)
 			{
-				floor_x = r->mapx + 1.0;
-				floor_y = r->mapy + r->tex_x;
+				floor_x = cp->x + 1.0;
+				floor_y = cp->y + r->tex_x;
 			}
 			else if (r->side == 1 && r->raydiry > 0)
 			{
-				floor_x = r->mapx + r->tex_x;
-				floor_y = r->mapy;
+				floor_x = cp->x + r->tex_x;
+				floor_y = cp->y;
 			}
 			else
 			{
-				floor_x = r->mapx + r->tex_x;
-				floor_y = r->mapy + 1.0;
+				floor_x = cp->x + r->tex_x;
+				floor_y = cp->y + 1.0;
 			}
 			float (cur_floor_x) = weight * floor_x + (1.0 - weight) * p->x;
 			float (cur_floor_y) = weight * floor_y + (1.0 - weight) * p->y;
 			int (tex_x) = (int)(cur_floor_x * TILE_SIZE) % TILE_SIZE;
 			int (tex_y) = (int)(cur_floor_y * TILE_SIZE) % TILE_SIZE;
 			int (color_floor) = get_pixel_color(&all->tex.tiles[1][1][0], tex_x, tex_y);
-			ft_pixel_put(&all->window, x, y, color_floor);
+			ft_pixel_put(&all->window, r->x, r->y, color_floor);
 			int (color_ceiling) = get_pixel_color(&all->tex.tiles[1][0][0], tex_x, tex_y);
-			ft_pixel_put(&all->window, x, all->window.main_h - y, color_ceiling);
-			y++;
+			ft_pixel_put(&all->window, r->x, all->window.main_h - r->y, color_ceiling);
+			r->y++;
 		}
-		x++;
+		cp = p->h;
+		r->hit = false;
+		init_dda(r, p);
+		cp = dda_function(r, cp, 'B');
+		line_height_calculation(all, r, p);
+		if (cp && cp->i == 'B' && r->perpwalldist < all->zbuffer[r->x])
+			rendering_image(&all->tex.tiles[4][0][0], all, r->x, 0.5);
+		r->x++;
 	}
-	render_3dsprite(all, &all->player.access, &all->player.access.img);
+	// render_3dsprite(all, &all->player.access, &all->player.access.img);
 
 	if (!all->player.knife.normal)
 		all->player.knife.animation[all->player.knife.i] = (all->player.knife.animation[all->player.knife.i] + 1) % 37;

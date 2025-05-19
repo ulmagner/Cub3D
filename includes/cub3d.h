@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:48:39 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ typedef struct s_window
 
 typedef struct s_raycasting
 {
-	double	x;
-	double	y;
+	int	x;
+	int	y;
 	double	tex_x;
 	int		mapx;
 	int		mapy;
@@ -140,8 +140,12 @@ typedef struct s_raycasting
 	double	perpwalldist;
 	int		stepx;
 	int		stepy;
-	int		hit;
+	bool	hit;
+	bool	box_hit;
+	double	sidedistx_box;
+	double	sidedisty_box;
 	int		side;
+	int		side_box;
 	int		lineheight;
 	int		drawstart;
 	int		drawend;
@@ -196,10 +200,9 @@ typedef struct s_all
 
 void			line_height_calculation(t_all *all, t_raycasting *r,\
 					t_player *p);
-t_map			*dda_function(t_raycasting *r, t_map *tmp);
+t_map			*dda_function(t_raycasting *r, t_map *tmp, char c);
 void			init_dda(t_raycasting *r, t_player *p);
-void			set_playerpos_and_fov(t_player *p, t_raycasting *r, int x,\
-					int w);
+void			set_playerpos_and_fov(t_player *p, t_raycasting *r,	int w);
 void			rendering_image(t_image *tex, t_all *all, int xscreen,\
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
