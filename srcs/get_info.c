@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:33:20 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:17:42 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,8 @@ static int	check_ep_doubles(t_info *info)
 		if (info->map[i] == 'N' || info->map[i] == 'S' || info->map[i] == 'E' \
 			|| info->map[i] == 'W')
 			p++;
-		/*
-		if (info->map[i] == 'C')
-			info->coin++;
-		if (info->map[i] == 'F')
-			info->trap++;
-		if (info->map[i] == 'O')
-			info->oeil++;*/
+		if (info->map[i] == 'B')
+			info->box++;
 	}
 	if (p > 1 || !p)
 		return (0);
@@ -59,7 +54,7 @@ int	get_map(t_info *info, int *l, int *c)
 	{
 		i = -1;
 		while (line[++i])
-			if (!ft_isstrchr("01CBNSEWO\n", line[i]))
+			if (!ft_isstrchr("01CBNSEWD\n", line[i]))
 				return (free(line), ft_printf(2, "Error\nplan\n"), 0);
 		tmp = ft_strjoin(info->map, line);
 		if (!tmp)

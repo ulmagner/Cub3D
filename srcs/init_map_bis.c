@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 22:22:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:51:27 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,34 @@
 
 static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 {
-	(void) all;
-	(void) info;
 	if (node->i == 'N' || node->i == 'W' || node->i == 'S' || node->i == 'E')
 	{
 		all->player.h = node;
 		all->player.x = info->i_x;
 		all->player.y = info->i_y;
 		all->player.knife.i = 0;
-		all->player.knife.animation = ft_calloc(2, sizeof(int));
-		if (!all->player.knife.animation)
-			return (0);
 		all->player.knife.normal = false;
 		all->player.knife.lim = 0;
 		all->player.knife.aspect = false;
 	}
-	/*
-	if (node->i == 'F')
-		(all->trap[info->fire++]).t = node;*/
+	if (node->i == 'B')
+	{
+		all->boxes[info->box].x = node->x;
+		all->boxes[info->box].y = node->y;
+		all->boxes[info->box].status = 0;
+		all->boxes[info->box++].m = node;
+	}
 	if (node->i == 'C')
 	{
-		all->player.access.c = node;
+		all->player.access.status = 0;
+		all->player.access.m = node;
 		all->player.access.x = info->i_x;
 		all->player.access.y = info->i_y;
+	}
+	if (node->i == 'D')
+	{
+		all->door.m = node;
+		all->door.status = 0;
 	}
 	return (1);
 }

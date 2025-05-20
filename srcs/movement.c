@@ -6,26 +6,11 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:36:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:08:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	movement_p(int keycode, t_all *all)
-{
-	all->movement.move[keycode] = true;
-	if (keycode == XK_Escape)
-		exit((ft_clearall(all), EXIT_SUCCESS));
-	return (0);
-}
-
-int	movement_r(int keycode, t_all *all)
-{
-	all->movement.move[keycode] = false;
-	// check_mouvment(&all->player);
-	return (0);
-}
 
 static void	walk(t_player *player, double dirx, double diry)
 {
@@ -33,19 +18,33 @@ static void	walk(t_player *player, double dirx, double diry)
 	double (old_y) = player->y;
 	double (new_x) = old_x + dirx * player->ms;
 	double (new_y) = old_y + diry * player->ms;
-	if (dirx > 0 && player->h->right && (player->h->right->i == '1' || player->h->right->i == 'B') && new_x > player->h->x + 0.9)
+	if (dirx > 0 && player->h->right \
+		&& (player->h->right->i == '1' || player->h->right->i == 'B' \
+		|| player->h->right->i == 'D' || player->h->right->i == 'C') \
+		&& new_x >= player->h->x + 1)
 		new_x = old_x;
-	else if (dirx < 0 && player->h->left && (player->h->left->i == '1' || player->h->left->i == 'B') && new_x < player->h->x)
+	else if (dirx < 0 && player->h->left \
+		&& (player->h->left->i == '1' || player->h->left->i == 'B' \
+		|| player->h->left->i == 'D' || player->h->left->i == 'C') \
+		&& new_x <= player->h->x)
 		new_x = old_x;
-	if (diry > 0 && player->h->down && (player->h->down->i == '1' || player->h->down->i == 'B') && new_y > player->h->y + 0.9)
-		new_y = old_y;
-	else if (diry < 0 && player->h->up && (player->h->up->i == '1' || player->h->up->i == 'B') && new_y < player->h->y)
-		new_y = old_y;
 	player->x = new_x;
+	new_y = old_y + diry * player->ms;
+	if (diry > 0 && player->h->down \
+		&& (player->h->down->i == '1' || player->h->down->i == 'B' \
+		|| player->h->down->i == 'D' || player->h->down->i == 'C') \
+		&& new_y >= player->h->y + 1)
+		new_y = old_y;
+	else if (diry < 0 && player->h->up \
+		&& (player->h->up->i == '1' || player->h->up->i == 'B' \
+		|| player->h->up->i == 'D' || player->h->up->i == 'C') \
+		&& new_y <= player->h->y)
+		new_y = old_y;
 	player->y = new_y;
 }
 
-static t_map	*check_height_cases(t_player *player, int new_tile_x, int new_tile_y)
+static t_map	*check_height_cases(t_player *player, \
+	int new_tile_x, int new_tile_y)
 {
 	t_map *(new_tile) = NULL;
 	if (new_tile_y < player->h->y)
@@ -76,7 +75,8 @@ static t_map	*check_height_cases(t_player *player, int new_tile_x, int new_tile_
 
 static void	direction(t_player *player, double dirx, double diry)
 {
-	t_map *new_tile;
+	t_map	*new_tile;
+	char	new_tile_i;
 
 	new_tile = NULL;
 	walk(player, dirx, diry);
@@ -85,8 +85,8 @@ static void	direction(t_player *player, double dirx, double diry)
 	if (new_tile_x != (int)player->h->x || new_tile_y != (int)player->h->y)
 	{
 		new_tile = check_height_cases(player, new_tile_x, new_tile_y);
-		char (new_tile_i);
-		if (new_tile && (new_tile->i != '1' && new_tile->i != 'B'))
+		if (new_tile && (new_tile->i != '1' && new_tile->i != 'B' \
+			&& new_tile->i != 'D' && new_tile->i != 'C'))
 		{
 			new_tile_i = player->h->i;
 			player->h->i = new_tile->i;
@@ -107,7 +107,5 @@ int	movement_handling(t_all *all)
 		direction(&all->player, -p->planex, -p->planey);
 	else if (all->movement.move[XK_d])
 		direction(&all->player, p->planex, p->planey);
-	if (all->movement.move[XK_e])
-		exit((ft_clearall(all), EXIT_FAILURE));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 12:08:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:38:30 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <math.h>
+# include <time.h>
+# include <sys/time.h>
 # include "libft.h"
 # include "mlx.h"
 # include <X11/keysym.h>
@@ -57,6 +59,7 @@ typedef struct s_info
 	int		column;
 	int		line;
 	int		fd;
+	int		box;
 	char	*map;
 }	t_info;
 
@@ -69,15 +72,20 @@ typedef struct s_image {
 	char	*img_path;
 	int		w;
 	int		h;
+	double	scale;
+	double	mv;
 }	t_image;
 
-typedef struct s_card
+typedef struct s_obj
 {
 	double	x;
 	double	y;
-	t_map	*c;
+	int		w;
+	int		h;
+	int		status;
+	t_map	*m;
 	t_image	img;
-}	t_card;
+}	t_obj;
 
 typedef struct s_knife
 {
@@ -101,7 +109,7 @@ typedef struct s_player
 	double		ms;
 	double		rs;
 	t_map		*h;
-	t_card		access;
+	t_obj		access;
 	t_knife		knife;
 }	t_player;
 
@@ -125,8 +133,8 @@ typedef struct s_window
 
 typedef struct s_raycasting
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	double	tex_x;
 	int		mapx;
 	int		mapy;
@@ -188,7 +196,10 @@ typedef struct s_all
 	t_image			image;
 	t_movement		movement;
 	t_texture		tex;
+	t_obj			*boxes;
+	t_obj			door;
 	int				i;
+	int				frame;
 	int				step;
 	int				ac;
 	float			vision;
@@ -196,14 +207,22 @@ typedef struct s_all
 	double			time;
 	double			oldtime;
 	double			zbuffer[1920];
+	double			open_progress;
 }	t_all;
 
-void			line_height_calculation(t_all *all, t_raycasting *r,\
+void			update_doors(t_all *all, double dt);
+void			render_3dsprite(t_all *all, t_window *win, t_obj *obj, \
+					t_player *p);
+void			render_2dsprite(t_window *win, t_image *weapon);
+void			player_handling(t_all *all);
+void			floor_ceiling_raycasting(t_all *all, t_raycasting *r, \
+					t_map *cp, t_player *p);
+void			line_height_calculation(t_all *all, t_raycasting *r, \
 					t_player *p);
 t_map			*dda_function(t_raycasting *r, t_map *tmp, char c);
 void			init_dda(t_raycasting *r, t_player *p);
 void			set_playerpos_and_fov(t_player *p, t_raycasting *r,	int w);
-void			rendering_image(t_image *tex, t_all *all, int xscreen,\
+void			rendering_image(t_image *tex, t_all *all, int xscreen, \
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
 void			check_decor(char *line, t_texture *tex);

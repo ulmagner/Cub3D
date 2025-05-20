@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/13 12:15:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:26:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,27 +102,26 @@ void	print_map(t_map **head, t_info *info)
 	}
 }
 
+int	init_char(t_all *all, t_info *info)
+{
+	all->boxes = ft_calloc(info->box, sizeof(t_obj));
+	if (!all->boxes)
+		return (0);
+	return (1);
+}
+
 int	map_handling(t_info *info, t_map **map, t_all *all)
 {
-	//int	i;
-	//int	j;
 	if (!get_info(info))
 		return (0);
-	/* if (!init_char(all, info))       --->    initiation of entities using calloc \
-	 *											+ information retreaved in get_info() funciton.
+	if (!init_char(all, info))
 		return (0);
-	j = -1;
-	while (++j < info->oeil)
-	{
-		i = -1;
-		while (++i < info->ennemies)
-			all->oeil[j][i].anim = get_randoms(0, 5, 7);     ----->     for independent entities randomize \
-																		their animation for a better visualization.
-	}*/
+	info->box = 0;
 	if (!fill_map(info, map, all))
 		return (0);
 	if (!check_close_map(map, all))
 		return (0);
+	printf("%d\n", info->box);
 	print_map(map, info);
 	return (1);
 }

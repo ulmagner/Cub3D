@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 13:49:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:58:19 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	init_dda(t_raycasting *r, t_player *p)
 void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 {
 	r->perpwalldist = (r->sidedisty - r->deltadisty);
-	if(r->side == 0)
+	if (r->side == 0)
 		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	double corrected_dist = fmax(r->perpwalldist, 1);
+	double (corrected_dist) = fmax(r->perpwalldist, 1);
 	r->lineheight = (int)(all->window.main_h / corrected_dist);
 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawstart < 0)
@@ -91,7 +91,7 @@ t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
 		}
 		if (!tmp)
 			break ;
-		if (tmp && tmp->i == c)
+		if (tmp && (tmp->i == c || tmp->i == 'D'))
 			r->hit = true;
 	}
 	return (tmp);
