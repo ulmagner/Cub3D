@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:54:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 14:00:17 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:44:26 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 		draw_start = 0;
 	if (draw_end >= all->window.main_h)
 		draw_end = all->window.main_h - 1;
-	// double tex_pos = (draw_start < 0) ? (-draw_start) * step : 0;
-	// double tex_pos = (draw_start < r->drawend - scaled_line) ? (draw_start - (r->drawend - scaled_line)) * step : 0;
 	double tex_pos = (draw_start - (r->drawend - scaled_line)) * step;
 	if (tex_pos < 0)
 		tex_pos = 0;

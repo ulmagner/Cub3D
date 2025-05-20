@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:15:57 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 22:22:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 		all->player.x = info->i_x;
 		all->player.y = info->i_y;
 		all->player.knife.i = 0;
-		all->player.knife.animation = malloc(sizeof(int) * 2);
+		all->player.knife.animation = ft_calloc(2, sizeof(int));
 		if (!all->player.knife.animation)
 			return (0);
 		all->player.knife.normal = false;
 		all->player.knife.lim = 0;
+		all->player.knife.aspect = false;
 	}
 	/*
 	if (node->i == 'F')

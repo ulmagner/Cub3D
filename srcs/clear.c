@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 18:43:08 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 22:16:20 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_clearall(t_all *all)
 {
 	int	(i) = -1;
 	ft_freemap(&all->map);
-	// ft_freeplayer(&all->player);
+	ft_freeplayer(&all->player);
 	/*
 	if (all->trap)
 		free(all->trap);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 13:51:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:16:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,54 +132,54 @@ void	render_2dsprite(t_window *win, t_image *weapon)
 	}
 }
 
-void	render_3dsprite(t_all *all, t_card *s, t_image *tex)
-{
-	double sprite_x = s->x - all->player.x;
-	double sprite_y = s->y - all->player.y;
+// void	render_3dsprite(t_all *all, t_card *s, t_image *tex)
+// {
+// 	double sprite_x = s->x - all->player.x;
+// 	double sprite_y = s->y - all->player.y;
 
-	// inverse camera matrix
-	double inv_det = 1.0 / (all->player.planex * all->player.dy - all->player.dx * all->player.planey);
-	double transform_x = inv_det * (all->player.dy * sprite_x - all->player.dx * sprite_y);
-	double transform_y = inv_det * (-all->player.planey * sprite_x + all->player.planex * sprite_y);
+// 	// inverse camera matrix
+// 	double inv_det = 1.0 / (all->player.planex * all->player.dy - all->player.dx * all->player.planey);
+// 	double transform_x = inv_det * (all->player.dy * sprite_x - all->player.dx * sprite_y);
+// 	double transform_y = inv_det * (-all->player.planey * sprite_x + all->player.planex * sprite_y);
 
-	if (transform_y <= 0)
-		return; // Sprite is behind the player
+// 	if (transform_y <= 0)
+// 		return; // Sprite is behind the player
 
-	int screen_x = (int)((all->window.main_w / 2) * (1 + transform_x / transform_y));
+// 	int screen_x = (int)((all->window.main_w / 2) * (1 + transform_x / transform_y));
 
-	int sprite_height = abs((int)(all->window.main_h / transform_y));
-	int draw_start_y = -sprite_height / 2 + all->window.main_h / 2;
-	int draw_end_y = sprite_height / 2 + all->window.main_h / 2;
+// 	int sprite_height = abs((int)(all->window.main_h / transform_y));
+// 	int draw_start_y = -sprite_height / 2 + all->window.main_h / 2;
+// 	int draw_end_y = sprite_height / 2 + all->window.main_h / 2;
 
-	int sprite_width = sprite_height; // assuming square
-	int draw_start_x = -sprite_width / 2 + screen_x;
-	int draw_end_x = sprite_width / 2 + screen_x;
+// 	int sprite_width = sprite_height; // assuming square
+// 	int draw_start_x = -sprite_width / 2 + screen_x;
+// 	int draw_end_x = sprite_width / 2 + screen_x;
 
-	double step = 1.0 * tex->h / sprite_height;
-	double tex_pos = (draw_start_y - all->window.main_h / 2 + sprite_height / 2) * step;
+// 	double step = 1.0 * tex->h / sprite_height;
+// 	double tex_pos = (draw_start_y - all->window.main_h / 2 + sprite_height / 2) * step;
 
-	for (int stripe = draw_start_x; stripe < draw_end_x; stripe++)
-	{
-		if (stripe < 0 || stripe >= all->window.main_w)
-			continue;
-		if (transform_y >= all->zbuffer[stripe])
-			continue;
-		int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + screen_x)) * tex->w / sprite_width) / 256;
+// 	for (int stripe = draw_start_x; stripe < draw_end_x; stripe++)
+// 	{
+// 		if (stripe < 0 || stripe >= all->window.main_w)
+// 			continue;
+// 		if (transform_y >= all->zbuffer[stripe])
+// 			continue;
+// 		int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + screen_x)) * tex->w / sprite_width) / 256;
 
-		double tex_y_pos = tex_pos;
-		for (int y = draw_start_y; y < draw_end_y; y++)
-		{
-			if (y < 0 || y >= all->window.main_h)
-				continue;
-			int tex_y = (int)tex_y_pos & (tex->h - 1);
-			tex_y_pos += step;
+// 		double tex_y_pos = tex_pos;
+// 		for (int y = draw_start_y; y < draw_end_y; y++)
+// 		{
+// 			if (y < 0 || y >= all->window.main_h)
+// 				continue;
+// 			int tex_y = (int)tex_y_pos & (tex->h - 1);
+// 			tex_y_pos += step;
 
-			unsigned int color = get_pixel_color(tex, tex_x, tex_y);
-			if ((color & 0x00FFFFFF) != 0) // skip transparent
-				ft_pixel_put(&all->window, stripe, y, color);
-		}
-	}
-}
+// 			unsigned int color = get_pixel_color(tex, tex_x, tex_y);
+// 			if ((color & 0x00FFFFFF) != 0) // skip transparent
+// 				ft_pixel_put(&all->window, stripe, y, color);
+// 		}
+// 	}
+// }
 
 int	looping(t_all *all)
 {
@@ -250,14 +250,23 @@ int	looping(t_all *all)
 	}
 	// render_3dsprite(all, &all->player.access, &all->player.access.img);
 
-	if (!all->player.knife.normal)
+	if (!all->player.knife.normal || all->player.knife.aspect)
 		all->player.knife.animation[all->player.knife.i] = (all->player.knife.animation[all->player.knife.i] + 1) % 37;
 	else
 		all->player.knife.animation[all->player.knife.i] = 5 + (all->player.knife.animation[all->player.knife.i] - 5 + 1) % 3;
+	if (all->movement.move[XK_f])
+	{
+		all->player.knife.aspect = true;
+		all->player.knife.animation[all->player.knife.i] = (all->player.knife.animation[all->player.knife.i] + 1) % 37;
+	}
 	if (all->player.knife.animation[all->player.knife.i] % 37 == 0)
 		all->player.knife.lim++;
 	if (all->player.knife.lim == 2)
+	{
 		all->player.knife.normal = true;
+		all->player.knife.lim--;
+		all->player.knife.aspect = false;
+	}
 	render_2dsprite(&all->window, &all->tex.tiles[3][all->player.knife.i][all->player.knife.animation[all->player.knife.i]]);
 	all->oldtime = all->time;
 	movement_handling(all);

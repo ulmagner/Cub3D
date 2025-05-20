@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:35:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/09 18:32:35 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/19 22:17:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ void	ft_freeinfo(t_info *info)
 
 void	ft_freeplayer(t_player *player)
 {
-	(void) player;
-	/*if (player->animation)
-		free(player->animation);*/
+	if (player->knife.animation)
+		free(player->knife.animation);
 }
 
 void	ft_freetex(t_texture *tex)
