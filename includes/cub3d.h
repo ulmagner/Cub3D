@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 17:38:30 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:25:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_knife
 	int		lim;
 	bool	aspect;
 	bool	normal;
+	int		frame_delay;
 }	t_knife;
 
 typedef struct s_player
@@ -210,6 +211,9 @@ typedef struct s_all
 	double			open_progress;
 }	t_all;
 
+int				hook_handling(t_all *all);
+int				looping(t_all *all);
+int				mouse_move(int x, int y, t_all *all);
 void			update_doors(t_all *all, double dt);
 void			render_3dsprite(t_all *all, t_window *win, t_obj *obj, \
 					t_player *p);
@@ -232,8 +236,6 @@ void			check_floor(char *line, t_texture *tex);
 void			check_wall(char *line, t_texture *tex);
 int				get_paths(char *file, t_texture *tex);
 int				split_tile(t_texture *tex, t_all *all);
-int				movement_p(int keycode, t_all *all);
-int				movement_r(int keycode, t_all *all);
 int				movement_handling(t_all *all);
 void			ft_pixel_put(t_window *window, int x, int y, int color);
 unsigned int	get_pixel_color(t_image *image, int x, int y);

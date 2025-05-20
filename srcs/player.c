@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:56:14 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:01:44 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:21:33 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,29 @@
 static void	knife_animation(t_window *win, t_knife *knife, \
 	t_texture *tex, t_all *all)
 {
-	if (!knife->normal || knife->aspect)
-		knife->animation[knife->i] = (knife->animation[knife->i] + 1) % 37;
-	else
-		knife->animation[knife->i] \
-			= 5 + (knife->animation[knife->i] - 5 + 1) % 3;
-	if (all->movement.move[XK_f])
+	knife->frame_delay++;
+	if (knife->frame_delay >= 2)
 	{
-		knife->aspect = true;
-		knife->animation[knife->i] = (knife->animation[knife->i] + 1) % 37;
-	}
-	if (knife->animation[knife->i] % 37 == 0)
-		knife->lim++;
-	if (knife->lim == 2)
-	{
-		knife->normal = true;
-		knife->lim--;
-		knife->aspect = false;
+		knife->frame_delay = 0;
+		if (!knife->normal || knife->aspect)
+			knife->animation[knife->i] = (knife->animation[knife->i] + 1) % 37;
+		else
+			knife->animation[knife->i] = 5 + \
+				(knife->animation[knife->i] - 5 + 1) % 3;
+
+		if (all->movement.move[XK_f])
+		{
+			knife->aspect = true;
+			knife->animation[knife->i] = (knife->animation[knife->i] + 1) % 37;
+		}
+		if (knife->animation[knife->i] % 37 == 0)
+			knife->lim++;
+		if (knife->lim == 2)
+		{
+			knife->normal = true;
+			knife->lim--;
+			knife->aspect = false;
+		}
 	}
 	render_2dsprite(win, &tex->tiles[3][knife->i][knife->animation[knife->i]]);
 }

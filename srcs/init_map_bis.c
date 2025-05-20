@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 17:51:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:16:24 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 		all->player.knife.normal = false;
 		all->player.knife.lim = 0;
 		all->player.knife.aspect = false;
+		all->player.knife.frame_delay = 0;
 	}
 	if (node->i == 'B')
 	{

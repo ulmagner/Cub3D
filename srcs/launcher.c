@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:03:35 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:24:32 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,28 +183,8 @@ int	looping(t_all *all)
 	if (all->movement.move[XK_m])
 		minimap(all);
 	mlx_put_image_to_window(all->window.mlx, all->window.main, all->window.image.img, 0, 0);
-	// calcul_dist(all);
-	// set_view_to_ppos(&all->view, &all->player, all);
 	// if (!display_map(all, &all->window))
 	// 	exit((ft_clearall(all), EXIT_FAILURE));
-	return (1);
-}
-
-static int	close_window(t_all *all)
-{
-	return (exit((ft_clearall(all), EXIT_FAILURE)), 0);
-}
-
-int	hook_handling(t_all *all)
-{
-	mlx_hook(all->window.main, 2, 1L << 0, movement_p, all);
-	mlx_hook(all->window.main, 3, 1L << 1, movement_r, all);
-	// mlx_hook(all->window.main, 4, 1L << 2, action_p, all);
-	// mlx_hook(all->window.main, 5, 1L << 3, action_r, all);
-	mlx_hook(all->window.main, 17, 1L << 17, close_window, all);
-	mlx_hook(all->window.main, 6, 1L << 6, mouse_move, all);
-	mlx_loop_hook(all->window.mlx, looping, all);
-	mlx_loop(all->window.mlx);
 	return (1);
 }
 
@@ -228,10 +208,6 @@ int	launcher(t_all *all)
 	}
 	if (!all->player.knife.animation)
 		return (0);
-	// init_view(all, &all->view);
-	// init_distances(all, &all->info);
-	// init_variables(all);
-
 	if (!hook_handling(all))
 		return (0);
 	return (1);
