@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 15:55:46 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:54:04 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,32 @@ static void	floodfill(t_map *player, t_all *all)
 		floodfill(player->down, all);
 }
 
-static int	start_floodfill(t_map *curr, t_all *all)
+static void	start_floodfill(t_map *curr, t_all *all)
 {
-	t_map	*p;
-
-	if (curr->i == 'E' || curr->i == 'W' || curr->i == 'S' || curr->i == 'N')
+	t_map *(p) = curr;
+	floodfill(p, all);
+	if (curr->i == 'E')
 	{
-		p = curr;
-		floodfill(p, all);
-		if (curr->i == 'E')
-		{
-			all->player.dx = -1;
-			all->player.dy = 0;
-		}
-		if (curr->i == 'W')
-		{
-			all->player.dx = 1;
-			all->player.dy = 0;
-		}
-		if (curr->i == 'N')
-		{
-			all->player.dx = 0;
-			all->player.dy = -1;
-		}
-		if (curr->i == 'S')
-		{
-			all->player.dx = 0;
-			all->player.dy = 1;
-		}
-		all->player.planex = -all->player.dy * 0.66;
-		all->player.planey = all->player.dx * 0.66;
-		return (1);
+		all->player.dx = -1;
+		all->player.dy = 0;
 	}
-	return (0);
+	if (curr->i == 'W')
+	{
+		all->player.dx = 1;
+		all->player.dy = 0;
+	}
+	if (curr->i == 'N')
+	{
+		all->player.dx = 0;
+		all->player.dy = -1;
+	}
+	if (curr->i == 'S')
+	{
+		all->player.dx = 0;
+		all->player.dy = 1;
+	}
+	all->player.planex = -all->player.dy * 0.66;
+	all->player.planey = all->player.dx * 0.66;
 }
 
 int	check_close_map(t_map **map, t_all *all)
@@ -76,8 +69,12 @@ int	check_close_map(t_map **map, t_all *all)
 	curr = *map;
 	while (curr)
 	{
-		if (start_floodfill(curr, all))
+		if (curr->i == 'E' || curr->i == 'W' \
+			|| curr->i == 'S' || curr->i == 'N')
+		{
+			start_floodfill(curr, all);
 			break ;
+		}
 		curr = curr->right;
 	}
 	return (1);

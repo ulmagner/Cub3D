@@ -6,23 +6,16 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 22:16:20 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:59:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	ft_freewindow(t_window *window, t_all *all)
+static void	ft_freewindow(t_window *window)
 {
-	// if (all->ground.img)
-	// 	mlx_destroy_image(all->window.mlx, all->ground.img);
-	// if (all->plan.img)
-	// 	mlx_destroy_image(all->window.mlx, all->plan.img);
-	// if (all->game.img)
-	// 	mlx_destroy_image(all->window.mlx, all->game.img);
-	(void) all;
 	if (window->image.img)
-		mlx_destroy_image(all->window.mlx, window->image.img);
+		mlx_destroy_image(window->mlx, window->image.img);
 	if (window->mlx)
 	{
 		if (window->main)
@@ -31,7 +24,6 @@ static void	ft_freewindow(t_window *window, t_all *all)
 		free(window->mlx);
 	}
 }
-
 
 static void	ft_freeimage(t_all *all, int i)
 {
@@ -60,29 +52,14 @@ static void	ft_freeimage(t_all *all, int i)
 
 void	ft_clearall(t_all *all)
 {
-	int	(i) = -1;
+	int (i) = -1;
 	ft_freemap(&all->map);
 	ft_freeplayer(&all->player);
-	/*
-	if (all->trap)
-		free(all->trap);
-	if (all->slime)
-		free(all->slime);
-	if (all->oeil)
-	{
-		while (++i < all->info.oeil)
-			if (all->oeil[i])
-				free(all->oeil[i]);
-		free(all->oeil);
-	}
-	i = -1;
-	free(all->dist.p_c);
-	free(all->dist.p_t);
-	free(all->dist.p_o);*/
+	if (all->boxes)
+		free(all->boxes);
 	ft_freeimage(all, i);
 	ft_freeinfo(&all->info);
 	ft_freetex(&all->tex);
-	ft_freewindow(&all->window, all);
+	ft_freewindow(&all->window);
 	close(all->info.fd);
 }
-

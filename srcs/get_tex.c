@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:43:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:42:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:51:36 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void	check_knife(char *line, t_texture *tex)
 {
 	if (ft_strnstr(line, "knife", ft_strlen(line)))
 	{
-		// if (ft_strnstr(line, "aspect", ft_strlen(line)))
-		// 	tex->nbr_a[5]++;
-		// else
-			tex->nbr_a[4]++;
+		tex->nbr_a[4]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[3]++;
 	}

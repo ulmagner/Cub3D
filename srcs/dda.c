@@ -6,13 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 17:58:19 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:37:43 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int w)
+static void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int w)
 {
 	r->camerax = 2 * r->x / (double)w - 1;
 	r->raydirx = p->dx + p->planex * r->camerax;
@@ -23,7 +23,7 @@ void	set_playerpos_and_fov(t_player *p, t_raycasting *r, int w)
 	r->deltadisty = fabs(1 / r->raydiry);
 }
 
-void	init_dda(t_raycasting *r, t_player *p)
+static void	init_dda(t_raycasting *r, t_player *p)
 {
 	if (r->raydirx < 0)
 	{
@@ -47,27 +47,7 @@ void	init_dda(t_raycasting *r, t_player *p)
 	}
 }
 
-void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
-{
-	r->perpwalldist = (r->sidedisty - r->deltadisty);
-	if (r->side == 0)
-		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	double (corrected_dist) = fmax(r->perpwalldist, 1);
-	r->lineheight = (int)(all->window.main_h / corrected_dist);
-	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
-	if (r->drawstart < 0)
-		r->drawstart = 0;
-	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
-	if (r->drawend >= all->window.main_h)
-		r->drawend = all->window.main_h - 1;
-	if (r->side == 0)
-		r->tex_x = p->y + r->perpwalldist * r->raydiry;
-	else
-		r->tex_x = p->x + r->perpwalldist * r->raydirx;
-	r->tex_x -= floor(r->tex_x);
-}
-
-t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
+static t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
 {
 	while (!r->hit && tmp)
 	{
@@ -89,10 +69,57 @@ t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
 				tmp = tmp->up;
 			r->side = 1;
 		}
-		if (!tmp)
-			break ;
 		if (tmp && (tmp->i == c || tmp->i == 'D'))
 			r->hit = true;
 	}
 	return (tmp);
+}
+
+static void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
+{
+	r->perpwalldist = (r->sidedisty - r->deltadisty);
+	if (r->side == 0)
+		r->perpwalldist = (r->sidedistx - r->deltadistx);
+	double (corrected_dist) = fmax(r->perpwalldist, 1);
+	r->lineheight = (int)(all->window.main_h / corrected_dist);
+	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
+	if (r->drawstart < 0)
+		r->drawstart = 0;
+	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
+	if (r->drawend >= all->window.main_h)
+		r->drawend = all->window.main_h - 1;
+	if (r->side == 0)
+		r->tex_x = p->y + r->perpwalldist * r->raydiry;
+	else
+		r->tex_x = p->x + r->perpwalldist * r->raydirx;
+	r->tex_x -= floor(r->tex_x);
+}
+
+void	raycasting(t_all *all, t_player *p, t_raycasting *r)
+{
+	int (w) = all->window.main_w;
+	t_map *(cp) = p->h;
+	while (r->x < w)
+	{
+		cp = p->h;
+		r->hit = false;
+		set_playerpos_and_fov(p, r, w);
+		init_dda(r, p);
+		cp = dda_function(r, cp, '1');
+		line_height_calculation(all, r, p);
+		all->zbuffer[r->x] = r->perpwalldist;
+		if (cp->i == '1')
+			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 1);
+		if (cp->i == 'D' && all->open_progress < 1.0)
+		{
+			r->perpwalldist -= all->open_progress;
+			if (r->perpwalldist < 0)
+				r->perpwalldist = 0;
+			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
+		}
+		r->y = r->drawend + 1;
+		while (r->y < all->window.main_h)
+			floor_ceiling_raycasting(all, r, cp, p);
+		r->x++;
+	}
 }

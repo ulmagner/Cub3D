@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:08:01 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:58:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,23 @@ static void	walk(t_player *player, double dirx, double diry)
 	double (old_y) = player->y;
 	double (new_x) = old_x + dirx * player->ms;
 	double (new_y) = old_y + diry * player->ms;
-	if (dirx > 0 && player->h->right \
-		&& (player->h->right->i == '1' || player->h->right->i == 'B' \
-		|| player->h->right->i == 'D' || player->h->right->i == 'C') \
-		&& new_x >= player->h->x + 1)
+	if (dirx > 0 && player->h->right && (player->h->right->i == '1' \
+		|| player->h->right->i == 'B' || player->h->right->i == 'D' \
+		|| player->h->right->i == 'C') && new_x >= player->h->x + 1)
 		new_x = old_x;
-	else if (dirx < 0 && player->h->left \
-		&& (player->h->left->i == '1' || player->h->left->i == 'B' \
-		|| player->h->left->i == 'D' || player->h->left->i == 'C') \
-		&& new_x <= player->h->x)
+	else if (dirx < 0 && player->h->left && (player->h->left->i == '1' \
+		|| player->h->left->i == 'B' || player->h->left->i == 'D' \
+		|| player->h->left->i == 'C') && new_x <= player->h->x)
 		new_x = old_x;
 	player->x = new_x;
 	new_y = old_y + diry * player->ms;
-	if (diry > 0 && player->h->down \
-		&& (player->h->down->i == '1' || player->h->down->i == 'B' \
-		|| player->h->down->i == 'D' || player->h->down->i == 'C') \
-		&& new_y >= player->h->y + 1)
+	if (diry > 0 && player->h->down && (player->h->down->i == '1' || \
+		player->h->down->i == 'B' || player->h->down->i == 'D' || \
+		player->h->down->i == 'C') && new_y >= player->h->y + 1)
 		new_y = old_y;
-	else if (diry < 0 && player->h->up \
-		&& (player->h->up->i == '1' || player->h->up->i == 'B' \
-		|| player->h->up->i == 'D' || player->h->up->i == 'C') \
-		&& new_y <= player->h->y)
+	else if (diry < 0 && player->h->up && (player->h->up->i == '1' \
+		|| player->h->up->i == 'B' || player->h->up->i == 'D' \
+		|| player->h->up->i == 'C') && new_y <= player->h->y)
 		new_y = old_y;
 	player->y = new_y;
 }
@@ -51,7 +47,6 @@ static t_map	*check_height_cases(t_player *player, \
 		new_tile = player->h->up;
 	else if (new_tile_y > player->h->y)
 		new_tile = player->h->down;
-
 	if (new_tile_y == player->h->y)
 	{
 		if (new_tile_x < player->h->x)

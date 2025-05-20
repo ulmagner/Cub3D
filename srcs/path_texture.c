@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:51 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/18 00:37:49 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:31:33 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ static int	parse_file(char **line, t_texture *tex, char **path)
 	check_card(*line, tex);
 	check_knife(*line, tex);
 	check_decor(*line, tex);
-	// check_slime(*line, tex);
-	// check_player(*line, tex);
-	// check_ennemies(*line, tex);
-	// check_trap(*line, tex);
-	// check_plan(*line, tex);
 	if (*line[0] == '.')
 		tex->nbr_image++;
 	tmp = ft_strjoin(*path, *line + 1);

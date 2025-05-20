@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:25:54 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:49:52 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,11 @@ typedef struct s_all
 	double			open_progress;
 }	t_all;
 
+int				init_window(t_all *all);
+int				init_char(t_all *all, t_info *info);
+int				mouse_move(int x, int y, t_all *all);
+void			minimap(t_all *all);
+void			raycasting(t_all *all, t_player *p, t_raycasting *r);
 int				hook_handling(t_all *all);
 int				looping(t_all *all);
 int				mouse_move(int x, int y, t_all *all);
@@ -221,11 +226,6 @@ void			render_2dsprite(t_window *win, t_image *weapon);
 void			player_handling(t_all *all);
 void			floor_ceiling_raycasting(t_all *all, t_raycasting *r, \
 					t_map *cp, t_player *p);
-void			line_height_calculation(t_all *all, t_raycasting *r, \
-					t_player *p);
-t_map			*dda_function(t_raycasting *r, t_map *tmp, char c);
-void			init_dda(t_raycasting *r, t_player *p);
-void			set_playerpos_and_fov(t_player *p, t_raycasting *r,	int w);
 void			rendering_image(t_image *tex, t_all *all, int xscreen, \
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);

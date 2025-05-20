@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:16:24 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:58:33 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 		all->boxes[info->box].y = node->y;
 		all->boxes[info->box].status = 0;
 		all->boxes[info->box++].m = node;
-	}
-	if (node->i == 'C')
-	{
-		all->player.access.status = 0;
-		all->player.access.m = node;
-		all->player.access.x = info->i_x;
-		all->player.access.y = info->i_y;
 	}
 	if (node->i == 'D')
 	{
@@ -64,6 +57,13 @@ static t_map	*ft_newnode(t_info *info, int *i, t_all *all)
 	node->left = NULL;
 	node->up = NULL;
 	node->down = NULL;
+	if (node->i == 'C')
+	{
+		all->player.access.status = 0;
+		all->player.access.m = node;
+		all->player.access.x = info->i_x;
+		all->player.access.y = info->i_y;
+	}
 	get_dynamique_info(node, info, all);
 	return (node);
 }
@@ -117,4 +117,3 @@ int	make_list(int *i, t_map **node, t_all *all)
 		return (0);
 	return (1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 17:17:42 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:59:16 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ int	get_map(t_info *info, int *l, int *c)
 		return (ft_printf(2, "Error\nplanS\n"), 0);
 	return (1);
 }
-
