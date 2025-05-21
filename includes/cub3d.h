@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 15:38:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:51:25 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ typedef struct s_info
 	int		i_x;
 	int		i_y;
 	int		size_map;
-	int		column;
+	int		*column;
 	int		line;
 	int		fd;
+	int		fdd;
 	int		box;
 	char	*map;
+	char	**sp_map;
 }	t_info;
 
 typedef struct s_image {
@@ -244,7 +246,7 @@ unsigned int	get_pixel_color(t_image *image, int x, int y);
 int				launcher(t_all *all);
 int				error_handling(int ac, char **av, t_info *info);
 int				empty_string(t_info *info);
-int				get_map(t_info *info, int *l, int *c);
+int				get_map(t_info *info);
 void			ft_freetex(t_texture *tex);
 void			ft_clearall(t_all *all);
 void			ft_freeplayer(t_player *player);
@@ -255,7 +257,7 @@ int				check_close_map(t_map **map, t_all *all);
 void			chain_map(t_map **curr, t_map **head, t_map *node);
 void			chain_map_updown(t_map *node, t_info *info, \
 					t_map **head, t_map **curr);
-int				make_list(int *i, t_map **node, t_all *all);
+int				make_list(t_map **node, t_all *all);
 void			print_map(t_map **head, t_info *info);
 int				map_handling(t_info *info, t_map **map, t_all *all);
 int				main(int ac, char **av);

@@ -6,47 +6,41 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:50:20 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 21:44:09 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static t_map	**init_row_lst(t_info *info)
-{
-	t_map	**row;
-	int		i;
-
-	i = -1;
-	row = malloc(sizeof(t_map *) * info->column);
-	if (!row)
-		return (NULL);
-	while (++i < info->column)
-		row[i] = NULL;
-	return (row);
-}
-
 static int	get_info(t_info *info)
 {
-	int		line;
-	int		column;
-
-	line = 0;
-	column = 0;
 	if (!empty_string(info))
 		return (0);
-	if (!get_map(info, &line, &column))
+	if (!get_map(info))
 		return (0);
-	info->i_x = 0;
-	info->i_y = 0;
+	info->sp_map = ft_split(info->map, '\n');
+	if (!info->sp_map)
+		return (0);
 	info->size_map = ft_strlen(info->map);
-	info->line = line;
-	info->column = column;
-	if (info->map[info->size_map - 1] != '\n')
-		info->size_map++;
-	if (info->column <= 1 || info->line <= 1
-		|| (info->column * info->line != info->size_map - line))
-		return (ft_printf(2, "Error\nInvalid map\n"), 0);
+	info->column = ft_calloc(info->line, sizeof(int));
+	if (!info->column)
+		return (0);
+	int i = -1;
+	int l = 0;
+	while (info->map[++i])
+	{
+		if (info->map[i] == '\n')
+			l++;
+		else
+			info->column[l]++;
+	}
+	printf("\n\n%s\n\n", info->map);
+	for (int i = 0; i < info->line; i++)
+	{
+		for (int j = 0; j < info->column[i]; j++)
+			printf("%c", info->sp_map[i][j]);
+		printf("\n");
+	}
 	return (1);
 }
 
@@ -54,29 +48,28 @@ static int	fill_map(t_info *info, t_map **head, t_all *all)
 {
 	t_map	*curr;
 	t_map	*node;
-	t_map	**row;
-	int		i;
 
 	*head = NULL;
 	curr = NULL;
 	node = NULL;
-	i = -1;
-	row = init_row_lst(info);
-	if (!row)
-		return (0);
-	while (++i < info->size_map - 1)
+	info->i_y = -1;
+	while (++(info->i_y) < info->line)
 	{
-		if (!make_list(&i, &node, all))
-			return (free(row), 0);
-		chain_map(&curr, head, node);
-		chain_map_updown(node, info, head, &curr);
+		info->i_x = -1;
+		while (++(info->i_x) < info->column[info->i_y])
+		{
+			if (!make_list(&node, all))
+				return (0);
+			chain_map(&curr, head, node);
+			chain_map_updown(node, info, head, &curr);
+		}
 	}
 	if (*head)
 	{
 		curr->right = NULL;
 		(*head)->left = curr;
 	}
-	return (free(row), 1);
+	return (1);
 }
 
 void	print_map(t_map **head, t_info *info)
@@ -85,18 +78,20 @@ void	print_map(t_map **head, t_info *info)
 	t_map	*col;
 
 	row = *head;
+	int (l) = 0;
 	while (row)
 	{
 		col = row;
 		while (col)
 		{
 			ft_printf(1, "%c", col->i);
-			if (col->x == info->column - 1)
+			if (col->x == info->column[l] - 1)
 				break ;
 			col = col->right;
 		}
+		l++;
 		ft_printf(1, "\n");
-		if (col->y == info->line - 1)
+		if (l == info->line)
 			break ;
 		row = row->down;
 	}

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:59:16 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:51:06 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_ep_doubles(t_info *info)
 	return (1);
 }
 
-int	get_map(t_info *info, int *l, int *c)
+int	get_map(t_info *info)
 {
 	char	*tmp;
 	int		i;
@@ -49,12 +49,11 @@ int	get_map(t_info *info, int *l, int *c)
 	char *(line) = ft_get_next_line(info->fd);
 	if (!line)
 		return (ft_printf(2, "Error\nplan empty\n"), 0);
-	*c = ft_strlen(line) - 1;
 	while (line != NULL)
 	{
 		i = -1;
 		while (line[++i])
-			if (!ft_isstrchr("01CBNSEWD\n", line[i]))
+			if (!ft_isstrchr("01CBNSEWD \n", line[i]))
 				return (free(line), ft_printf(2, "Error\nplan\n"), 0);
 		tmp = ft_strjoin(info->map, line);
 		if (!tmp)
@@ -62,7 +61,7 @@ int	get_map(t_info *info, int *l, int *c)
 		free(info->map);
 		info->map = tmp;
 		free(line);
-		(*l)++;
+		info->line++;
 		line = ft_get_next_line(info->fd);
 	}
 	if (!check_ep_doubles(info))

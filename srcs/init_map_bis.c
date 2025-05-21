@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:12:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:58:33 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:47:07 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,17 @@ static int	get_dynamique_info(t_map *node, t_info *info, t_all *all)
 	return (1);
 }
 
-static t_map	*ft_newnode(t_info *info, int *i, t_all *all)
+static t_map	*ft_newnode(t_info *info, t_all *all)
 {
 	t_map	*node;
 
 	node = malloc(sizeof(t_map));
 	if (!node)
 		return (NULL);
-	node->i = info->map[*i];
+	node->i = info->sp_map[info->i_y][info->i_x];
 	node->is_visited = 0;
 	node->x = info->i_x;
 	node->y = info->i_y;
-	node->x_pxl = node->x * 64;
-	node->y_pxl = node->y * 64;
 	node->right = NULL;
 	node->left = NULL;
 	node->up = NULL;
@@ -103,16 +101,9 @@ void	chain_map_updown(t_map *node, t_info *info, t_map **head, t_map **curr)
 	*curr = node;
 }
 
-int	make_list(int *i, t_map **node, t_all *all)
+int	make_list(t_map **node, t_all *all)
 {
-	if (all->info.i_x == all->info.column)
-	{
-		all->info.i_x = 0;
-		all->info.i_y++;
-		(*i)++;
-	}
-	*node = ft_newnode(&all->info, i, all);
-	all->info.i_x++;
+	*node = ft_newnode(&all->info, all);
 	if (!*node)
 		return (0);
 	return (1);

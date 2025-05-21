@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 17:50:22 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 21:37:16 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,6 @@ void	raycasting(t_all *all, t_player *p, t_raycasting *r)
 				r->perpwalldist = 0;
 			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
 		}
-		// else if (cp->i == 'd' && all->open_progress < 1.0)
-		// {
-		// 	r->perpwalldist += all->open_progress;
-		// 	if (r->perpwalldist >1)
-		// 		r->perpwalldist = 1;
-		// 	rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
-		// }
 		r->y = r->drawend + 1;
 		while (r->y < all->window.main_h)
 			floor_ceiling_raycasting(all, r, cp, p);

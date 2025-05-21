@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:49:10 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:50:02 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:46:23 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int	init_char(t_all *all, t_info *info)
 {
-	all->boxes = ft_calloc(info->box, sizeof(t_obj));
-	if (!all->boxes)
-		return (0);
+	if (info->box)
+	{
+		all->boxes = ft_calloc(info->box, sizeof(t_obj));
+		if (!all->boxes)
+			return (0);
+	}
 	return (1);
 }
 

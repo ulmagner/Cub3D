@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 20:00:15 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 21:41:19 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	launcher(t_all *all)
 	all->player.access.img.scale = 2.3;
 	all->player.access.img.mv = all->player.access.img.h;
 	all->player.knife.animation = ft_calloc(2, sizeof(int));
+	if (!all->player.knife.animation)
+		return (0);
 	all->open_progress = 0.0;
 	int (i) = -1;
 	while (++i < all->info.box)

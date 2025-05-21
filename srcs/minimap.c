@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:41:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 17:55:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 21:17:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ void	minimap(t_all *all)
 {
 	int		x;
 	int		y;
+	int		l;
 	t_map	*row;
 	t_map	*col;
 	t_color	color;
 
 	row = all->map;
 	y = 0;
+	l = 0;
 	while (row)
 	{
 		col = row;
@@ -68,13 +70,14 @@ void	minimap(t_all *all)
 		{
 			color = assign_color(color, col->i, &x);
 			copy_to_minimap(&all->window, x, y, &color);
-			if (col->x == all->info.column - 1)
+			if (col->x == all->info.column[l] - 1)
 				break ;
 			col = col->right;
 		}
-		if (col->y == all->info.line - 1)
-			break ;
+		l++;
 		y += 20;
+		if (col->y == all->info.line)
+			break ;
 		row = row->down;
 	}
 }
