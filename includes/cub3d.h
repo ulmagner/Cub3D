@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 20:51:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 22:56:38 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ typedef struct s_image {
 	char	*img_path;
 	int		w;
 	int		h;
+	int		mvscreen_scale;
+	int		obj_screen_x;
 	double	scale;
 	double	mv;
 }	t_image;
@@ -85,6 +87,10 @@ typedef struct s_obj
 	int		w;
 	int		h;
 	int		status;
+	int		draw_startx;
+	int		draw_endx;
+	int		draw_starty;
+	int		draw_endy;
 	t_map	*m;
 	t_image	img;
 }	t_obj;
