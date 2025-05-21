@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:41:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:46:09 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:46:59 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	copy_to_minimap(t_window *window, int x_ref, \
 	}
 }
 
-static t_color	assign_color(t_color color, char c, t_all *all, int *x)
+static t_color	assign_color(t_color color, char c, int *x)
 {
 	*x += 20;
 	color = (t_color){254, 254, 254, 254};
@@ -41,7 +41,7 @@ static t_color	assign_color(t_color color, char c, t_all *all, int *x)
 		color = (t_color){0, 255, 255, 0};
 	if (c == 'D')
 		color = (t_color){0, 0, 255, 255};
-	if (c == 'C' && !all->player.access.status)
+	if (c == 'C')
 		color = (t_color){0, 0, 255, 0};
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		color = (t_color){0, 0, 0, 255};
@@ -64,7 +64,7 @@ void	minimap(t_all *all)
 		x = -20;
 		while (col)
 		{
-			color = assign_color(color, col->i, all, &x);
+			color = assign_color(color, col->i, &x);
 			copy_to_minimap(&all->window, x, y, &color);
 			if (col->x == all->info.column - 1)
 				break ;

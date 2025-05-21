@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:49:52 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:38:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_player
 	double		planey;
 	double		mapx;
 	double		mapy;
+	double		tmp_x;
+	double		tmp_y;
 	double		ms;
 	double		rs;
 	t_map		*h;

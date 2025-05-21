@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:47:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:47:26 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:20:19 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	mouse_move(int x, int y, t_all *all)
 			/ (double)all->window.main_w * 20.0;
 		all->window.mouse.y = (double)delta_y \
 			/ (double)all->window.main_h * 10.0;
-		rot_speed = 0.03;
+		rot_speed = 0.01;
 		angle = all->window.mouse.x * rot_speed;
 		if (x < all->window.mouse.x)
 			angle = -angle;

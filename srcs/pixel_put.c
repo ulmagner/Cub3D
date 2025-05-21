@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:54:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:31:04 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:29:47 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	render_2dsprite(t_window *win, t_image *weapon)
 
 void	render_3dsprite(t_all *all, t_window *win, t_obj *obj, t_player *p)
 {
-	obj->x = obj->m->x - p->x;
-	obj->y = obj->m->y - p->y;
+	obj->x = (obj->m->x + 0.5) - p->x;
+	obj->y = (obj->m->y + 0.5) - p->y;
 	double (invdet) = 1.0 / (p->planex * p->dy - p->dx * p->planey);
 	double (transx) = invdet * (p->dy * obj->x - p->dx * obj->y);
 	double (transy) = invdet * (-p->planey * obj->x + p->planex * obj->y);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:56:14 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:57:51 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:46:32 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,6 @@ static void	knife_animation(t_window *win, t_knife *knife, \
 	render_2dsprite(win, &tex->tiles[3][knife->i][knife->animation[knife->i]]);
 }
 
-static bool	get_access_card(t_player *player)
-{
-	if (player->h->right->i == 'C')
-		return (true);
-	else if (player->h->left->i == 'C')
-		return (true);
-	if (player->h->down->i == 'C')
-		return (true);
-	else if (player->h->up->i == 'C')
-		return (true);
-	return (false);
-}
-
 void	update_doors(t_all *all, double dt)
 {
 	t_obj *(d) = &all->door;
@@ -63,6 +50,18 @@ void	update_doors(t_all *all, double dt)
 	{
 		all->open_progress = 1.0;
 		all->door.m->i = '0';
+	}
+}
+
+static void	try_access_card(t_all *all)
+{
+	double (dx) = all->player.access.m->x + 0.5 - all->player.x;
+	double (dy) = all->player.access.m->y + 0.5 - all->player.y;
+	double (dist) = sqrt(dx * dx + dy * dy);
+	if (dist < 2)
+	{
+		all->player.access.status = 1;
+		all->player.access.m->i = '0';
 	}
 }
 
@@ -78,8 +77,8 @@ static void	try_open_door(t_all *all)
 void	player_handling(t_all *all)
 {
 	knife_animation(&all->window, &all->player.knife, &all->tex, all);
-	if (get_access_card(&all->player) && all->movement.move[XK_e])
-		all->player.access.status = 1;
+	if (all->movement.move[XK_e])
+		try_access_card(all);
 	if (all->movement.move[XK_space] && all->player.access.status == 1)
 		try_open_door(all);
 }

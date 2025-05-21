@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:49:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:00:15 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	looping(t_all *all)
 	t_player *(p) = &all->player;
 	t_raycasting *(r) = &all->ray;
 	r->x = 0;
-	p->ms = 0.1;
+	p->ms = 0.2;
 	if (++(all->i) - all->frame < (int)(100 / 60))
 		return (0);
 	all->time = get_current_time();

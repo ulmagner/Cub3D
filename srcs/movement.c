@@ -6,11 +6,31 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:58:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:38:40 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static bool	tile_is_wall(t_map *tmp, int x, int y)
+{
+	while (tmp)
+	{
+		if (x > tmp->x)
+			tmp = tmp->right;
+		else if (x < tmp->x)
+			tmp = tmp->left;
+		else if (y > tmp->y)
+			tmp = tmp->down;
+		else if (y < tmp->y)
+			tmp = tmp->up;
+		if (x == tmp->x && y == tmp->y)
+			break ;
+	}
+	if (tmp && (tmp->i == '1' || tmp->i == 'D' || tmp->i == 'B' || tmp->i == 'C'))
+		return (true);
+	return (false);
+}
 
 static void	walk(t_player *player, double dirx, double diry)
 {
@@ -18,6 +38,7 @@ static void	walk(t_player *player, double dirx, double diry)
 	double (old_y) = player->y;
 	double (new_x) = old_x + dirx * player->ms;
 	double (new_y) = old_y + diry * player->ms;
+
 	if (dirx > 0 && player->h->right && (player->h->right->i == '1' \
 		|| player->h->right->i == 'B' || player->h->right->i == 'D' \
 		|| player->h->right->i == 'C') && new_x >= player->h->x + 1)
@@ -26,7 +47,6 @@ static void	walk(t_player *player, double dirx, double diry)
 		|| player->h->left->i == 'B' || player->h->left->i == 'D' \
 		|| player->h->left->i == 'C') && new_x <= player->h->x)
 		new_x = old_x;
-	player->x = new_x;
 	new_y = old_y + diry * player->ms;
 	if (diry > 0 && player->h->down && (player->h->down->i == '1' || \
 		player->h->down->i == 'B' || player->h->down->i == 'D' || \
@@ -36,6 +56,13 @@ static void	walk(t_player *player, double dirx, double diry)
 		|| player->h->up->i == 'B' || player->h->up->i == 'D' \
 		|| player->h->up->i == 'C') && new_y <= player->h->y)
 		new_y = old_y;
+	if (tile_is_wall(player->h, (int)new_x, (int)new_y))
+	{
+		player->x = old_x;
+		player->y = old_y;
+		return ;
+	}
+	player->x = new_x;
 	player->y = new_y;
 }
 
