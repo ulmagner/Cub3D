@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:41:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 16:46:59 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:55:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static t_color	assign_color(t_color color, char c, int *x)
 		color = (t_color){0, 255, 255, 0};
 	if (c == 'D')
 		color = (t_color){0, 0, 255, 255};
+	if (c == 'd')
+		color = (t_color){0, 255, 0, 255};
 	if (c == 'C')
 		color = (t_color){0, 0, 255, 0};
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 16:38:40 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:24:53 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,12 @@ static void	direction(t_player *player, double dirx, double diry)
 		if (new_tile && (new_tile->i != '1' && new_tile->i != 'B' \
 			&& new_tile->i != 'D' && new_tile->i != 'C'))
 		{
-			new_tile_i = player->h->i;
-			player->h->i = new_tile->i;
-			new_tile->i = new_tile_i;
+			if (new_tile->i != 'd')
+			{
+				new_tile_i = player->h->i;
+				player->h->i = new_tile->i;
+				new_tile->i = new_tile_i;
+			}
 			player->h = new_tile;
 		}
 	}

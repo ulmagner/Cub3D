@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:37:43 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:50:22 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,27 @@ static void	init_dda(t_raycasting *r, t_player *p)
 	}
 }
 
-static t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
+static void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
+{
+	r->perpwalldist = (r->sidedisty - r->deltadisty);
+	if (r->side == 0)
+		r->perpwalldist = (r->sidedistx - r->deltadistx);
+	double (corrected_dist) = fmax(r->perpwalldist, 1);
+	r->lineheight = (int)(all->window.main_h / corrected_dist);
+	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
+	if (r->drawstart < 0)
+		r->drawstart = 0;
+	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
+	if (r->drawend >= all->window.main_h)
+		r->drawend = all->window.main_h - 1;
+	if (r->side == 0)
+		r->tex_x = p->y + r->perpwalldist * r->raydiry;
+	else
+		r->tex_x = p->x + r->perpwalldist * r->raydirx;
+	r->tex_x -= floor(r->tex_x);
+}
+
+static t_map	*dda_function(t_raycasting *r, t_map *tmp, char c, t_all *all)
 {
 	while (!r->hit && tmp)
 	{
@@ -71,28 +91,19 @@ static t_map	*dda_function(t_raycasting *r, t_map *tmp, char c)
 		}
 		if (tmp && (tmp->i == c || tmp->i == 'D'))
 			r->hit = true;
+		else if (tmp->i == 'd')
+		{
+			line_height_calculation(all, r, &all->player);
+			if (all->open_progress > 0.0)
+			{
+				r->perpwalldist += all->open_progress;
+				if (r->perpwalldist > 1)
+					r->perpwalldist = 1;
+				rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
+			}
+		}
 	}
 	return (tmp);
-}
-
-static void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
-{
-	r->perpwalldist = (r->sidedisty - r->deltadisty);
-	if (r->side == 0)
-		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	double (corrected_dist) = fmax(r->perpwalldist, 1);
-	r->lineheight = (int)(all->window.main_h / corrected_dist);
-	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
-	if (r->drawstart < 0)
-		r->drawstart = 0;
-	r->drawend = r->lineheight / 2 + all->window.main_h / 2;
-	if (r->drawend >= all->window.main_h)
-		r->drawend = all->window.main_h - 1;
-	if (r->side == 0)
-		r->tex_x = p->y + r->perpwalldist * r->raydiry;
-	else
-		r->tex_x = p->x + r->perpwalldist * r->raydirx;
-	r->tex_x -= floor(r->tex_x);
 }
 
 void	raycasting(t_all *all, t_player *p, t_raycasting *r)
@@ -105,7 +116,7 @@ void	raycasting(t_all *all, t_player *p, t_raycasting *r)
 		r->hit = false;
 		set_playerpos_and_fov(p, r, w);
 		init_dda(r, p);
-		cp = dda_function(r, cp, '1');
+		cp = dda_function(r, cp, '1', all);
 		line_height_calculation(all, r, p);
 		all->zbuffer[r->x] = r->perpwalldist;
 		if (cp->i == '1')
@@ -117,6 +128,13 @@ void	raycasting(t_all *all, t_player *p, t_raycasting *r)
 				r->perpwalldist = 0;
 			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
 		}
+		// else if (cp->i == 'd' && all->open_progress < 1.0)
+		// {
+		// 	r->perpwalldist += all->open_progress;
+		// 	if (r->perpwalldist >1)
+		// 		r->perpwalldist = 1;
+		// 	rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
+		// }
 		r->y = r->drawend + 1;
 		while (r->y < all->window.main_h)
 			floor_ceiling_raycasting(all, r, cp, p);

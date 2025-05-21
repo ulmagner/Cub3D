@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:43:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/20 18:51:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:05:55 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	check_decor(char *line, t_texture *tex)
 {
 	if (ft_strnstr(line, "decor", ft_strlen(line)))
 	{
-		if (ft_strnstr(line, "box", ft_strlen(line)))
+		if (ft_strnstr(line, "barrel", ft_strlen(line)))
 			tex->nbr_a[5]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[4]++;

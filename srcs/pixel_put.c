@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:54:57 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 15:29:47 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:35:07 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 		col_tex_y = (int)tex_pos & (tex->w - 1);
 		tex_pos += step;
 		color = get_pixel_color(tex, col_tex_x, col_tex_y);
+		if ((color & 0x00FFFFFF) == 0)
+			continue ;
 		ft_pixel_put(&all->window, xscreen, y, color);
 		y++;
 	}
@@ -112,6 +114,8 @@ void	render_3dsprite(t_all *all, t_window *win, t_obj *obj, t_player *p)
 			int d = (y - mvscreen_scale) * 256 - win->main_h * 128 + obj->h * 128;
 			int tex_y = (((d * obj->img.h) / obj->h) / 256);
 			unsigned int color = get_pixel_color(&obj->img, tex_x, tex_y);
+			if ((color & 0x00FFFFFF) == 0)
+				continue ;
 			ft_pixel_put(win, stripe, y, color);
 		}
 	}
