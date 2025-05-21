@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 21:44:09 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 00:40:18 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ void	print_map(t_map **head, t_info *info)
 				break ;
 			col = col->right;
 		}
-		l++;
 		ft_printf(1, "\n");
-		if (l == info->line)
+		if (l == info->line - 1)
 			break ;
+		l++;
 		row = row->down;
 	}
 }
