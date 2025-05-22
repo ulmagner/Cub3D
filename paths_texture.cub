@@ -1,4 +1,7 @@
 .textures/wall/wallN.xpm
+-textures/wall/wallS.xpm
+-textures/wall/wallW.xpm
+-textures/wall/wallE.xpm
 .textures/floor/white.xpm
 -textures/floor/green.xpm
 .textures/card/card.xpm

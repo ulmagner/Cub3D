@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:41:48 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 21:33:23 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:52:45 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	main(int ac, char **av)
 	all = (t_all){0};
 	if (!error_handling(ac, av, &all.info))
 		return (ft_clearall(&all), EXIT_FAILURE);
-	if (!get_paths(av[ac - 1], &all.tex))
-		return (ft_clearall(&all), EXIT_FAILURE);
 	if (!map_handling(&all.info, &all.map, &all))
+		return (ft_clearall(&all), EXIT_FAILURE);
+	if (!get_paths(av[ac - 1], &all.tex, &all))
 		return (ft_clearall(&all), EXIT_FAILURE);
 	if (!launcher(&all))
 		return (ft_clearall(&all), EXIT_FAILURE);

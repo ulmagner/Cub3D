@@ -6,26 +6,27 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:43:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 18:05:55 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:15:54 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_wall(char *line, t_texture *tex)
+void	check_wall(char *line, t_texture *tex, t_all *all)
 {
 	if (ft_strnstr(line, "wall", ft_strlen(line)))
 	{
 		if (ft_strnstr(line, "N", ft_strlen(line)))
 			tex->nbr_a[0]++;
-		// else if (ft_strnstr(line, "bas", ft_strlen(line)))
-		// 	tex->nbr_a[1]++;
-		// else if (ft_strnstr(line, "gauche", ft_strlen(line)))
-		// 	tex->nbr_a[2]++;
-		// else if (ft_strnstr(line, "droite", ft_strlen(line)))
-		// 	tex->nbr_a[3]++;
-		// else if (ft_strnstr(line, "corner", ft_strlen(line)))
-		// 	tex->nbr_a[4]++;
+		else if (ft_strnstr(line, "S", ft_strlen(line)))
+			tex->nbr_a[1]++;
+		else if (ft_strnstr(line, "W", ft_strlen(line)))
+			tex->nbr_a[2]++;
+		else if (ft_strnstr(line, "E", ft_strlen(line)))
+		{
+			all->w++;
+			tex->nbr_a[3]++;
+		}
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[0]++;
 	}
@@ -36,9 +37,9 @@ void	check_floor(char *line, t_texture *tex)
 	if (ft_strnstr(line, "floor", ft_strlen(line)))
 	{
 		if (ft_strnstr(line, "white", ft_strlen(line)))
-			tex->nbr_a[1]++;
+			tex->nbr_a[4]++;
 		if (ft_strnstr(line, "green", ft_strlen(line)))
-			tex->nbr_a[2]++;
+			tex->nbr_a[5]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[1]++;
 	}
@@ -49,7 +50,7 @@ void	check_card(char *line, t_texture *tex)
 	if (ft_strnstr(line, "card", ft_strlen(line)))
 	{
 		if (ft_strnstr(line, "card", ft_strlen(line)))
-			tex->nbr_a[3]++;
+			tex->nbr_a[6]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[2]++;
 	}
@@ -59,7 +60,7 @@ void	check_knife(char *line, t_texture *tex)
 {
 	if (ft_strnstr(line, "knife", ft_strlen(line)))
 	{
-		tex->nbr_a[4]++;
+		tex->nbr_a[7]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[3]++;
 	}
@@ -70,7 +71,7 @@ void	check_decor(char *line, t_texture *tex)
 	if (ft_strnstr(line, "decor", ft_strlen(line)))
 	{
 		if (ft_strnstr(line, "barrel", ft_strlen(line)))
-			tex->nbr_a[5]++;
+			tex->nbr_a[8]++;
 		if (line[0] == '-' || line[0] == '.')
 			tex->nbr_i[4]++;
 	}

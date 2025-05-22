@@ -6,14 +6,16 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 11:50:32 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:19:14 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	get_info(t_info *info)
+static int	get_info(t_info *info, t_all *all)
 {
+	if (!get_tex_mandatory(all, info))
+		return (0);
 	if (!empty_string(info))
 		return (0);
 	if (!get_map(info))
@@ -92,7 +94,7 @@ void	print_map(t_map **head, t_info *info)
 
 int	map_handling(t_info *info, t_map **map, t_all *all)
 {
-	if (!get_info(info))
+	if (!get_info(info, all))
 		return (0);
 	if (!init_char(all, info))
 		return (0);

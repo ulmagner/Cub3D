@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 12:08:29 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:48:17 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,13 @@ typedef struct s_info
 	int		fd;
 	int		fdd;
 	int		box;
+	int		parsing_nbr;
 	char	*map;
 	char	**sp_map;
+	char	*npath;
+	char	*spath;
+	char	*wpath;
+	char	*epath;
 }	t_info;
 
 typedef struct s_image {
@@ -209,6 +214,8 @@ typedef struct s_all
 	t_texture		tex;
 	t_obj			*boxes;
 	t_obj			door;
+	t_color			floor;
+	t_color			ceiling;
 	int				i;
 	int				frame;
 	int				step;
@@ -219,8 +226,13 @@ typedef struct s_all
 	double			oldtime;
 	double			zbuffer[1920];
 	double			open_progress;
+	int				w;
+	int				n;
+	int				s;
+	int				e;
 }	t_all;
 
+int				get_tex_mandatory(t_all *all, t_info *info);
 double			get_x(t_player *p, double old_x, double new_x, \
 					double dirx);
 void			line_height_calculation(t_all *all, t_raycasting *r, \
@@ -248,8 +260,8 @@ void			check_decor(char *line, t_texture *tex);
 void			check_knife(char *line, t_texture *tex);
 void			check_card(char *line, t_texture *tex);
 void			check_floor(char *line, t_texture *tex);
-void			check_wall(char *line, t_texture *tex);
-int				get_paths(char *file, t_texture *tex);
+void			check_wall(char *line, t_texture *tex, t_all *all);
+int				get_paths(char *file, t_texture *tex, t_all *all);
 int				split_tile(t_texture *tex, t_all *all);
 int				movement_handling(t_all *all);
 void			ft_pixel_put(t_window *window, int x, int y, int color);
