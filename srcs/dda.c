@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 21:37:16 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:45:09 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	init_dda(t_raycasting *r, t_player *p)
 	}
 }
 
-static void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
+void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 {
 	r->perpwalldist = (r->sidedisty - r->deltadisty);
 	if (r->side == 0)
@@ -89,19 +89,7 @@ static t_map	*dda_function(t_raycasting *r, t_map *tmp, char c, t_all *all)
 				tmp = tmp->up;
 			r->side = 1;
 		}
-		if (tmp && (tmp->i == c || tmp->i == 'D'))
-			r->hit = true;
-		else if (tmp->i == 'd')
-		{
-			line_height_calculation(all, r, &all->player);
-			if (all->open_progress > 0.0)
-			{
-				r->perpwalldist += all->open_progress;
-				if (r->perpwalldist > 1)
-					r->perpwalldist = 1;
-				rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
-			}
-		}
+		hit(tmp, r, all, c);
 	}
 	return (tmp);
 }

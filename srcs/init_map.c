@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 00:40:18 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:50:32 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,14 @@ static int	get_info(t_info *info)
 	info->column = ft_calloc(info->line, sizeof(int));
 	if (!info->column)
 		return (0);
-	int i = -1;
-	int l = 0;
+	int (i) = -1;
+	int (l) = 0;
 	while (info->map[++i])
 	{
 		if (info->map[i] == '\n')
 			l++;
 		else
 			info->column[l]++;
-	}
-	printf("\n\n%s\n\n", info->map);
-	for (int i = 0; i < info->line; i++)
-	{
-		for (int j = 0; j < info->column[i]; j++)
-			printf("%c", info->sp_map[i][j]);
-		printf("\n");
 	}
 	return (1);
 }
@@ -106,8 +99,7 @@ int	map_handling(t_info *info, t_map **map, t_all *all)
 	info->box = 0;
 	if (!fill_map(info, map, all))
 		return (0);
-	if (!check_close_map(map, all))
-		return (0);
+	check_close_map(map, all);
 	print_map(map, info);
 	return (1);
 }

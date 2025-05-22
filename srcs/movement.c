@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 18:24:53 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:08:11 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,36 @@ static bool	tile_is_wall(t_map *tmp, int x, int y)
 		if (x == tmp->x && y == tmp->y)
 			break ;
 	}
-	if (tmp && (tmp->i == '1' || tmp->i == 'D' || tmp->i == 'B' || tmp->i == 'C'))
+	if (tmp && (tmp->i == '1' || tmp->i == 'D' \
+		|| tmp->i == 'B' || tmp->i == 'C'))
 		return (true);
 	return (false);
 }
 
-static void	walk(t_player *player, double dirx, double diry)
+static void	walk(t_player *p, double dirx, double diry)
 {
-	double (old_x) = player->x;
-	double (old_y) = player->y;
-	double (new_x) = old_x + dirx * player->ms;
-	double (new_y) = old_y + diry * player->ms;
-
-	if (dirx > 0 && player->h->right && (player->h->right->i == '1' \
-		|| player->h->right->i == 'B' || player->h->right->i == 'D' \
-		|| player->h->right->i == 'C') && new_x >= player->h->x + 1)
-		new_x = old_x;
-	else if (dirx < 0 && player->h->left && (player->h->left->i == '1' \
-		|| player->h->left->i == 'B' || player->h->left->i == 'D' \
-		|| player->h->left->i == 'C') && new_x <= player->h->x)
-		new_x = old_x;
-	new_y = old_y + diry * player->ms;
-	if (diry > 0 && player->h->down && (player->h->down->i == '1' || \
-		player->h->down->i == 'B' || player->h->down->i == 'D' || \
-		player->h->down->i == 'C') && new_y >= player->h->y + 1)
+	double (old_x) = p->x;
+	double (old_y) = p->y;
+	double (new_x) = old_x + dirx * p->ms;
+	double (new_y) = old_y + diry * p->ms;
+	new_x = get_x(p, old_x, new_x, dirx);
+	new_y = old_y + diry * p->ms;
+	if (diry > 0 && p->h->down && (p->h->down->i == '1' || \
+		p->h->down->i == 'B' || p->h->down->i == 'D' || \
+		p->h->down->i == 'C') && new_y >= p->h->y + 1)
 		new_y = old_y;
-	else if (diry < 0 && player->h->up && (player->h->up->i == '1' \
-		|| player->h->up->i == 'B' || player->h->up->i == 'D' \
-		|| player->h->up->i == 'C') && new_y <= player->h->y)
+	else if (diry < 0 && p->h->up && (p->h->up->i == '1' \
+		|| p->h->up->i == 'B' || p->h->up->i == 'D' \
+		|| p->h->up->i == 'C') && new_y <= p->h->y)
 		new_y = old_y;
-	if (tile_is_wall(player->h, (int)new_x, (int)new_y))
+	if (tile_is_wall(p->h, (int)new_x, (int)new_y))
 	{
-		player->x = old_x;
-		player->y = old_y;
+		p->x = old_x;
+		p->y = old_y;
 		return ;
 	}
-	player->x = new_x;
-	player->y = new_y;
+	p->x = new_x;
+	p->y = new_y;
 }
 
 static t_map	*check_height_cases(t_player *player, \

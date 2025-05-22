@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:41:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 21:17:22 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:51:27 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,12 @@ static t_color	assign_color(t_color color, char c, int *x)
 void	minimap(t_all *all)
 {
 	int		x;
-	int		y;
-	int		l;
-	t_map	*row;
 	t_map	*col;
 	t_color	color;
 
-	row = all->map;
-	y = 0;
-	l = 0;
+	int (y) = 0;
+	int (l) = 0;
+	t_map *(row) = all->map;
 	while (row)
 	{
 		col = row;

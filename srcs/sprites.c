@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 23:15:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 23:16:15 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:56:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 {
-	int	color;
-	int	col_tex_y;
-
+	int (color) = 0;
+	int (col_tex_y) = 0;
 	t_raycasting *(r) = &all->ray;
 	int (col_tex_x) = (int)(r->tex_x * (double)tex->w);
 	if (col_tex_x < 0)
@@ -29,8 +28,8 @@ void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 		- all->window.main_h / 2 + r->lineheight / 2) * step;
 	int (draw_start) = all->window.main_h / 2 - scaled_line / 2;
 	int (draw_end) = draw_start + scaled_line;
-	int (y) = draw_start;
-	while (y < draw_end)
+	int (y) = draw_start - 1;
+	while (++y < draw_end)
 	{
 		col_tex_y = (int)tex_pos & (tex->w - 1);
 		tex_pos += step;
@@ -38,7 +37,6 @@ void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 		if ((color & 0x00FFFFFF) == 0)
 			continue ;
 		ft_pixel_put(&all->window, xscreen, y, color);
-		y++;
 	}
 }
 
@@ -65,31 +63,30 @@ void	render_2dsprite(t_window *win, t_image *weapon)
 
 static void	draw_sprite(t_obj *obj, t_all *all, t_window *win, double transy)
 {
-	int (stripe) = obj->draw_startx;
+	int (stripe) = obj->draw_startx - 1;
 	int (y) = 0;
 	int (tex_x) = 0;
 	int (d) = 0;
 	unsigned int (color) = 0;
 	int (tex_y) = 0;
-	while (stripe < obj->draw_endx)
+	while (++stripe < obj->draw_endx)
 	{
 		tex_x = (int)(256 * (stripe - (-obj->w / 2 + obj->img.obj_screen_x)) \
 			* obj->img.w / obj->w) / 256;
 		if (transy > 0 && stripe > 0 && stripe < win->main_w \
 			&& transy < all->zbuffer[stripe])
 		{
-			y = obj->draw_starty;
-			while (y < obj->draw_endy)
+			y = obj->draw_starty - 1;
+			while (++y < obj->draw_endy)
 			{
-				d = (y - obj->img.mvscreen_scale) * 256 - win->main_h * 128 + obj->h * 128;
+				d = (y - obj->img.mvscreen_scale) * 256 \
+					- win->main_h * 128 + obj->h * 128;
 				tex_y = (((d * obj->img.h) / obj->h) / 256);
 				color = get_pixel_color(&obj->img, tex_x, tex_y);
 				if ((color & 0x00FFFFFF) != 0)
 					ft_pixel_put(win, stripe, y, color);
-				y++;
 			}
 		}
-		stripe++;
 	}
 }
 
@@ -102,7 +99,6 @@ void	render_3dsprite(t_all *all, t_window *win, t_obj *obj, t_player *p)
 	double (transy) = invdet * (-p->planey * obj->x + p->planex * obj->y);
 	obj->img.mvscreen_scale = obj->h / 2;
 	obj->img.obj_screen_x = (int)((win->main_w / 2) * (1 + transx / transy));
-
 	obj->h = abs((int)(win->main_h / transy)) / obj->img.scale;
 	obj->draw_starty = -obj->h / 2 + win->main_h / 2 + obj->img.mvscreen_scale;
 	if (obj->draw_starty < 0)

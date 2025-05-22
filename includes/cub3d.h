@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 22:56:38 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:08:29 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,11 @@ typedef struct s_all
 	double			open_progress;
 }	t_all;
 
+double			get_x(t_player *p, double old_x, double new_x, \
+					double dirx);
+void			line_height_calculation(t_all *all, t_raycasting *r, \
+					t_player *p);
+void			hit(t_map *tmp, t_raycasting *r, t_all *all, char c);
 int				init_window(t_all *all);
 int				init_char(t_all *all, t_info *info);
 int				mouse_move(int x, int y, t_all *all);
@@ -259,7 +264,7 @@ void			ft_freeplayer(t_player *player);
 void			ft_freeinfo(t_info *info);
 void			ft_tabfree(char **tab);
 void			ft_freemap(t_map **map);
-int				check_close_map(t_map **map, t_all *all);
+void			check_close_map(t_map **map, t_all *all);
 void			chain_map(t_map **curr, t_map **head, t_map *node);
 void			chain_map_updown(t_map *node, t_info *info, \
 					t_map **head, t_map **curr);

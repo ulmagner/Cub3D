@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:56:14 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 18:02:52 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:06:27 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	try_open_door(t_all *all, int status)
 	double (dx) = all->door.m->x + 0.5 - all->player.x;
 	double (dy) = all->door.m->y + 0.5 - all->player.y;
 	double (dist) = sqrt(dx * dx + dy * dy);
-	if (dist < 4)
+	if (dist < 2 && dist > 1)
 		all->door.status = status;
 }
 
@@ -87,7 +87,8 @@ void	player_handling(t_all *all)
 	knife_animation(&all->window, &all->player.knife, &all->tex, all);
 	if (all->movement.move[XK_e])
 		try_access_card(all);
-	if (all->movement.move[XK_e] && all->player.access.status == 1 && all->door.status == 0)
+	if (all->movement.move[XK_e] && all->player.access.status == 1 \
+		&& all->door.status == 0)
 		try_open_door(all, 1);
 	else if (all->movement.move[XK_e] && all->door.status == 1)
 		try_open_door(all, 0);

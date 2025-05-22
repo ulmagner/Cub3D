@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 21:41:19 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:40:04 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	launcher(t_all *all)
 	if (!split_tile(&all->tex, all))
 		return (0);
 	all->player.access.img = all->tex.tiles[2][0][0];
-	all->player.access.img.scale = 2.3;
+	all->player.access.img.scale = 7;
 	all->player.access.img.mv = all->player.access.img.h;
 	all->player.knife.animation = ft_calloc(2, sizeof(int));
 	if (!all->player.knife.animation)
