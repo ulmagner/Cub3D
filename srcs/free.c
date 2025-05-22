@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:35:34 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/19 22:17:15 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/22 00:55:23 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ void	ft_freemap(t_map **map)
 
 void	ft_freeinfo(t_info *info)
 {
+	if (info->column)
+		free(info->column);
 	if (info->map)
 		free(info->map);
+	if (info->sp_map)
+		ft_tabfree(info->sp_map);
 }
 
 void	ft_freeplayer(t_player *player)
