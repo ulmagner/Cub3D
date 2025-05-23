@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 18:39:45 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:46:59 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int	launcher(t_all *all)
 		return (0);
 	if (!split_tile(&all->tex, all))
 		return (0);
-	all->player.access.img = all->tex.tiles[2][0][0];
+	if (!walls_tiles(all, &all->tex))
+		return (0);
+	all->player.access.img = all->tex.tiles[1][0][0];
 	all->player.access.img.scale = 7;
 	all->player.access.img.mv = all->player.access.img.h;
 	all->player.knife.animation = ft_calloc(2, sizeof(int));
@@ -73,7 +75,7 @@ int	launcher(t_all *all)
 	int (i) = -1;
 	while (++i < all->info.box)
 	{
-		all->boxes[i].img = all->tex.tiles[4][0][0];
+		all->boxes[i].img = all->tex.tiles[3][0][0];
 		all->boxes[i].img.scale = 2;
 		all->boxes[i].img.mv = all->boxes[i].img.h;
 	}

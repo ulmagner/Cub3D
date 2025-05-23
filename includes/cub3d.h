@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 17:48:17 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:57:46 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ typedef struct s_texture
 	int			nbr_image;
 	char		**path_texture;
 	t_image		***tiles;
+	t_image		*walls;
 	t_fail		fail;
 }	t_texture;
 
@@ -232,6 +233,9 @@ typedef struct s_all
 	int				e;
 }	t_all;
 
+int				create_image(t_image *image, t_window *window);
+int				ft_isspace(char c);
+int				walls_tiles(t_all *all, t_texture *tex);
 int				get_tex_mandatory(t_all *all, t_info *info);
 double			get_x(t_player *p, double old_x, double new_x, \
 					double dirx);
@@ -260,15 +264,13 @@ void			check_decor(char *line, t_texture *tex);
 void			check_knife(char *line, t_texture *tex);
 void			check_card(char *line, t_texture *tex);
 void			check_floor(char *line, t_texture *tex);
-void			check_wall(char *line, t_texture *tex, t_all *all);
-int				get_paths(char *file, t_texture *tex, t_all *all);
+int				get_paths(char *file, t_texture *tex);
 int				split_tile(t_texture *tex, t_all *all);
 int				movement_handling(t_all *all);
 void			ft_pixel_put(t_window *window, int x, int y, int color);
 unsigned int	get_pixel_color(t_image *image, int x, int y);
 int				launcher(t_all *all);
 int				error_handling(int ac, char **av, t_info *info);
-int				empty_string(t_info *info);
 int				get_map(t_info *info);
 void			ft_freetex(t_texture *tex);
 void			ft_clearall(t_all *all);

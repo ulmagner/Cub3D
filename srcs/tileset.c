@@ -6,13 +6,13 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:24:23 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 19:20:48 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:27:01 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	create_image(t_image *image, t_window *window)
+int	create_image(t_image *image, t_window *window)
 {
 	image->img = mlx_xpm_file_to_image(window->mlx,
 			image->img_path, &image->w, &image->h);

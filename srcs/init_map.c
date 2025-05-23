@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 16:19:14 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:28:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	get_info(t_info *info, t_all *all)
 {
 	if (!get_tex_mandatory(all, info))
 		return (0);
-	if (!empty_string(info))
+	info->map = ft_calloc(1, sizeof(char));
+	if (!info->map)
 		return (0);
 	if (!get_map(info))
 		return (0);

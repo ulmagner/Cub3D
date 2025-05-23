@@ -6,11 +6,17 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:54 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 11:43:52 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:50:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ft_isspace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || \
+			c == '\v' || c == '\f' || c == '\r');
+}
 
 void	hit(t_map *tmp, t_raycasting *r, t_all *all, char c)
 {
@@ -24,7 +30,7 @@ void	hit(t_map *tmp, t_raycasting *r, t_all *all, char c)
 			r->perpwalldist += all->open_progress;
 			if (r->perpwalldist > 1)
 				r->perpwalldist = 1;
-			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
+			rendering_image(&all->tex.walls[0], all, r->x, 0.5);
 		}
 	}
 }

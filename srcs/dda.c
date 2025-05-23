@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:28 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 11:45:09 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:48:32 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ void	raycasting(t_all *all, t_player *p, t_raycasting *r)
 		line_height_calculation(all, r, p);
 		all->zbuffer[r->x] = r->perpwalldist;
 		if (cp->i == '1')
-			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 1);
+			rendering_image(&all->tex.walls[0], all, r->x, 1);
 		if (cp->i == 'D' && all->open_progress < 1.0)
 		{
 			r->perpwalldist -= all->open_progress;
 			if (r->perpwalldist < 0)
 				r->perpwalldist = 0;
-			rendering_image(&all->tex.tiles[1][0][0], all, r->x, 0.5);
+			rendering_image(&all->tex.walls[0], all, r->x, 0.5);
 		}
 		r->y = r->drawend + 1;
 		while (r->y < all->window.main_h)

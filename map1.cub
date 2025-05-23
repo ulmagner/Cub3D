@@ -1,6 +1,6 @@
-N ./textures/wall/wallN.xpm
+NO ./textures/wall/wallN.xpm
 SO ./textures/wall/wallS.xpm
-W ./textures/wall/wallW.xpm
+WE ./textures/wall/wallW.xpm
 EA ./textures/wall/wallE.xpm
 F 220,100,0
 C 225,30,0

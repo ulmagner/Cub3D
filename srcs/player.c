@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:56:14 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 12:06:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:26:34 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	knife_animation(t_window *win, t_knife *knife, \
 			knife->aspect = false;
 		}
 	}
-	render_2dsprite(win, &tex->tiles[3][knife->i][knife->animation[knife->i]]);
+	render_2dsprite(win, &tex->tiles[2][knife->i][knife->animation[knife->i]]);
 }
 
 void	update_doors(t_all *all, double dt)
