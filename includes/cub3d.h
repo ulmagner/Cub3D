@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 10:57:46 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:58:00 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,10 +227,8 @@ typedef struct s_all
 	double			oldtime;
 	double			zbuffer[1920];
 	double			open_progress;
-	int				w;
-	int				n;
-	int				s;
-	int				e;
+	int				df;
+	int				dc;
 }	t_all;
 
 int				create_image(t_image *image, t_window *window);

@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:56:14 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 11:26:34 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:20:38 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	try_open_door(t_all *all, int status)
 	double (dx) = all->door.m->x + 0.5 - all->player.x;
 	double (dy) = all->door.m->y + 0.5 - all->player.y;
 	double (dist) = sqrt(dx * dx + dy * dy);
-	if (dist < 2 && dist > 1)
+	if (dist < 3 && dist > 2)
 		all->door.status = status;
 }
 

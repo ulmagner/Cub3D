@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:34:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 11:28:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:27:03 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void floor_ceiling_raycasting(t_all *all, t_raycasting *r,
 	int(tex_y) = (int)(cur_floor_y * TILE_SIZE) % TILE_SIZE;
 	int(color_floor) = get_pixel_color(&all->tex.tiles[0][1][0], tex_x, tex_y);
 	ft_pixel_put(&all->window, r->x, r->y, color_floor);
-	int(color_ceiling) = get_pixel_color(&all->tex.tiles[0][1][0], tex_x, tex_y);
+	int(color_ceiling) = get_pixel_color(&all->tex.tiles[0][0][0], tex_x, tex_y);
 	ft_pixel_put(&all->window, r->x, all->window.main_h - r->y, color_ceiling);
 	r->y++;
 }
