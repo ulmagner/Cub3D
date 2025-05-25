@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:54 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 12:36:48 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:49:28 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_isspace(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n' || \
-			c == '\v' || c == '\f' || c == '\r');
+	return (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r');
 }
 
 void	hit(t_map *tmp, t_raycasting *r, t_all *all, char c)
@@ -37,7 +37,7 @@ void	hit(t_map *tmp, t_raycasting *r, t_all *all, char c)
 
 static void	trim_newline(char *str)
 {
-	int	len = ft_strlen(str);
+	int (len) = ft_strlen(str);
 	if (len > 0 && str[len - 1] == '\n')
 		str[len - 1] = '\0';
 }

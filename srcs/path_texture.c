@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:41:51 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 11:29:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:55:02 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,6 @@ int	get_paths(char *file, t_texture *tex)
 	char *(line) = ft_get_next_line(fd);
 	if (!line)
 		return (close(fd), free(path), 0);
-	int (q) = -1;
-	while (line[++q] != '.')
-		;
-	line = ft_strdup(line + q);
-	if (!line)
-		return (0);
-	printf("%s\n", line);
 	while (line)
 	{
 		if (!parse_file(&line, tex, &path))

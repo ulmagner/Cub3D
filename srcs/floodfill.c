@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 11:49:50 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:42:53 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	check_close_map(t_map **map, t_all *all)
 		{
 			if (col->x == all->info.column[l] - 1)
 				break ;
-			if (col->i == 'E' || col->i == 'W' \
+			if (col->i == 'E' || col->i == 'W'
 				|| col->i == 'S' || col->i == 'N')
 			{
 				start_floodfill(col, all, &l);

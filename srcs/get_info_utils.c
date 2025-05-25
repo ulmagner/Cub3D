@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:04:17 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 13:36:36 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:06:49 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,17 @@ char	**color_split(char *line, char id)
 
 int	parse_color(char *line, t_color *color, char id)
 {
-	char **split = color_split(line, id);
+	char **(split) = color_split(line, id);
 	if (!split)
 		return (0);
-	char *s0 = ft_strtrim(split[0], " \n");
-	char *s1 = ft_strtrim(split[1], " \n");
-	char *s2 = ft_strtrim(split[2], " \n");
+	char *(s0) = ft_strtrim(split[0], " \n");
+	char *(s1) = ft_strtrim(split[1], " \n");
+	char *(s2) = ft_strtrim(split[2], " \n");
 	if (!s0 || !s1 || !s2)
 	{
 		free(s0);
 		free(s1);
-		free(s2);
-		return (ft_tabfree(split), 0);
+		return (free(s2), ft_tabfree(split), 0);
 	}
 	int (r) = ft_atoi(s0);
 	int (g) = ft_atoi(s1);
@@ -125,8 +124,9 @@ int	get_tex_mandatory(t_all *all, t_info *info)
 		free(line);
 		line = ft_get_next_line(info->fd);
 	}
+	if (line)
+		free(line);
 	if (info->parsing_nbr != 6)
 		return (ft_printf(2, "Error\nToo much info\n"), 0);
 	return (1);
 }
-

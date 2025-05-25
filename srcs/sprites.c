@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 23:15:58 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 11:56:44 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:47:21 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	rendering_image(t_image *tex, t_all *all, int xscreen, double scale)
 		col_tex_x = tex->w - col_tex_x - 1;
 	int (scaled_line) = (int)(r->lineheight * scale);
 	double (step) = 1.0 * tex->h / scaled_line;
-	double (tex_pos) = (all->window.main_h / 2 - scaled_line / 2 \
-		- all->window.main_h / 2 + r->lineheight / 2) * step;
+	double (tex_pos) = (all->window.main_h / 2 - scaled_line / 2
+			- all->window.main_h / 2 + r->lineheight / 2) * step;
 	int (draw_start) = all->window.main_h / 2 - scaled_line / 2;
 	int (draw_end) = draw_start + scaled_line;
 	int (y) = draw_start - 1;
@@ -71,15 +71,15 @@ static void	draw_sprite(t_obj *obj, t_all *all, t_window *win, double transy)
 	int (tex_y) = 0;
 	while (++stripe < obj->draw_endx)
 	{
-		tex_x = (int)(256 * (stripe - (-obj->w / 2 + obj->img.obj_screen_x)) \
-			* obj->img.w / obj->w) / 256;
-		if (transy > 0 && stripe > 0 && stripe < win->main_w \
+		tex_x = (int)(256 * (stripe - (-obj->w / 2 + obj->img.obj_screen_x))
+				* obj->img.w / obj->w) / 256;
+		if (transy > 0 && stripe > 0 && stripe < win->main_w
 			&& transy < all->zbuffer[stripe])
 		{
 			y = obj->draw_starty - 1;
 			while (++y < obj->draw_endy)
 			{
-				d = (y - obj->img.mvscreen_scale) * 256 \
+				d = (y - obj->img.mvscreen_scale) * 256
 					- win->main_h * 128 + obj->h * 128;
 				tex_y = (((d * obj->img.h) / obj->h) / 256);
 				color = get_pixel_color(&obj->img, tex_x, tex_y);

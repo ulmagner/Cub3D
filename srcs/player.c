@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:56:14 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 12:20:38 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:45:31 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	knife_animation(t_window *win, t_knife *knife, \
+static void	knife_animation(t_window *win, t_knife *knife,
 	t_texture *tex, t_all *all)
 {
 	knife->frame_delay++;
@@ -22,8 +22,8 @@ static void	knife_animation(t_window *win, t_knife *knife, \
 		if (!knife->normal || knife->aspect)
 			knife->animation[knife->i] = (knife->animation[knife->i] + 1) % 37;
 		else
-			knife->animation[knife->i] = 5 + \
-				(knife->animation[knife->i] - 5 + 1) % 3;
+			knife->animation[knife->i] = 5
+				+ (knife->animation[knife->i] - 5 + 1) % 3;
 		if (all->movement.move[XK_f])
 		{
 			knife->aspect = true;
@@ -87,7 +87,7 @@ void	player_handling(t_all *all)
 	knife_animation(&all->window, &all->player.knife, &all->tex, all);
 	if (all->movement.move[XK_e])
 		try_access_card(all);
-	if (all->movement.move[XK_e] && all->player.access.status == 1 \
+	if (all->movement.move[XK_e] && all->player.access.status == 1
 		&& all->door.status == 0)
 		try_open_door(all, 1);
 	else if (all->movement.move[XK_e] && all->door.status == 1)

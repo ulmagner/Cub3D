@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 13:32:05 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:54:44 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	check_ep_doubles(t_info *info)
+int	check_ep_doubles(t_info *info)
 {
 	int	i;
 	int	p;
@@ -21,7 +21,7 @@ static int	check_ep_doubles(t_info *info)
 	i = -1;
 	while (info->map[++i])
 	{
-		if (info->map[i] == 'N' || info->map[i] == 'S' || info->map[i] == 'E' \
+		if (info->map[i] == 'N' || info->map[i] == 'S' || info->map[i] == 'E'
 			|| info->map[i] == 'W')
 			p++;
 		if (info->map[i] == 'B')
@@ -58,8 +58,5 @@ int	get_map(t_info *info)
 		}
 		line = ft_get_next_line(info->fd);
 	}
-	if (!check_ep_doubles(info))
-		return (ft_printf(2, "Error\nplanS\n"), 0);
-	printf("%s\n", info->map);
 	return (1);
 }

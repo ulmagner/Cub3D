@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 12:08:11 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:50:49 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static bool	tile_is_wall(t_map *tmp, int x, int y)
 		if (x == tmp->x && y == tmp->y)
 			break ;
 	}
-	if (tmp && (tmp->i == '1' || tmp->i == 'D' \
-		|| tmp->i == 'B' || tmp->i == 'C'))
+	if (tmp && (tmp->i == '1' || tmp->i == 'D'
+			|| tmp->i == 'B' || tmp->i == 'C'))
 		return (true);
 	return (false);
 }
@@ -41,13 +41,13 @@ static void	walk(t_player *p, double dirx, double diry)
 	double (new_y) = old_y + diry * p->ms;
 	new_x = get_x(p, old_x, new_x, dirx);
 	new_y = old_y + diry * p->ms;
-	if (diry > 0 && p->h->down && (p->h->down->i == '1' || \
-		p->h->down->i == 'B' || p->h->down->i == 'D' || \
-		p->h->down->i == 'C') && new_y >= p->h->y + 1)
+	if (diry > 0 && p->h->down && (p->h->down->i == '1'
+			|| p->h->down->i == 'B' || p->h->down->i == 'D'
+			|| p->h->down->i == 'C') && new_y >= p->h->y + 1)
 		new_y = old_y;
-	else if (diry < 0 && p->h->up && (p->h->up->i == '1' \
-		|| p->h->up->i == 'B' || p->h->up->i == 'D' \
-		|| p->h->up->i == 'C') && new_y <= p->h->y)
+	else if (diry < 0 && p->h->up && (p->h->up->i == '1'
+			|| p->h->up->i == 'B' || p->h->up->i == 'D'
+			|| p->h->up->i == 'C') && new_y <= p->h->y)
 		new_y = old_y;
 	if (tile_is_wall(p->h, (int)new_x, (int)new_y))
 	{
@@ -59,7 +59,7 @@ static void	walk(t_player *p, double dirx, double diry)
 	p->y = new_y;
 }
 
-static t_map	*check_height_cases(t_player *player, \
+static t_map	*check_height_cases(t_player *player,
 	int new_tile_x, int new_tile_y)
 {
 	t_map *(new_tile) = NULL;
@@ -100,8 +100,8 @@ static void	direction(t_player *player, double dirx, double diry)
 	if (new_tile_x != (int)player->h->x || new_tile_y != (int)player->h->y)
 	{
 		new_tile = check_height_cases(player, new_tile_x, new_tile_y);
-		if (new_tile && (new_tile->i != '1' && new_tile->i != 'B' \
-			&& new_tile->i != 'D' && new_tile->i != 'C'))
+		if (new_tile && (new_tile->i != '1' && new_tile->i != 'B'
+				&& new_tile->i != 'D' && new_tile->i != 'C'))
 		{
 			if (new_tile->i != 'd')
 			{

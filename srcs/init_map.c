@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:39:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 10:28:56 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:42:08 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	get_info(t_info *info, t_all *all)
 	info->map = ft_calloc(1, sizeof(char));
 	if (!info->map)
 		return (0);
-	if (!get_map(info))
-		return (0);
+	if (!get_map(info) || !check_ep_doubles(info))
+		return (ft_printf(2, "Error\nplanS\n"), 0);
 	info->sp_map = ft_split(info->map, '\n');
 	if (!info->sp_map)
 		return (0);

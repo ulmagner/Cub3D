@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/23 11:58:00 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:49:58 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef struct s_info
 	char	*epath;
 }	t_info;
 
-typedef struct s_image {
+typedef struct s_image
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -231,13 +232,14 @@ typedef struct s_all
 	int				dc;
 }	t_all;
 
+int				check_ep_doubles(t_info *info);
 int				create_image(t_image *image, t_window *window);
 int				ft_isspace(char c);
 int				walls_tiles(t_all *all, t_texture *tex);
 int				get_tex_mandatory(t_all *all, t_info *info);
-double			get_x(t_player *p, double old_x, double new_x, \
+double			get_x(t_player *p, double old_x, double new_x,
 					double dirx);
-void			line_height_calculation(t_all *all, t_raycasting *r, \
+void			line_height_calculation(t_all *all, t_raycasting *r,
 					t_player *p);
 void			hit(t_map *tmp, t_raycasting *r, t_all *all, char c);
 int				init_window(t_all *all);
@@ -249,13 +251,13 @@ int				hook_handling(t_all *all);
 int				looping(t_all *all);
 int				mouse_move(int x, int y, t_all *all);
 void			update_doors(t_all *all, double dt);
-void			render_3dsprite(t_all *all, t_window *win, t_obj *obj, \
+void			render_3dsprite(t_all *all, t_window *win, t_obj *obj,
 					t_player *p);
 void			render_2dsprite(t_window *win, t_image *weapon);
 void			player_handling(t_all *all);
-void			floor_ceiling_raycasting(t_all *all, t_raycasting *r, \
+void			floor_ceiling_raycasting(t_all *all, t_raycasting *r,
 					t_map *cp, t_player *p);
-void			rendering_image(t_image *tex, t_all *all, int xscreen, \
+void			rendering_image(t_image *tex, t_all *all, int xscreen,
 					double scale);
 t_map			*get_node_at(t_map *head, int x, int y);
 void			check_decor(char *line, t_texture *tex);
@@ -278,7 +280,7 @@ void			ft_tabfree(char **tab);
 void			ft_freemap(t_map **map);
 void			check_close_map(t_map **map, t_all *all);
 void			chain_map(t_map **curr, t_map **head, t_map *node);
-void			chain_map_updown(t_map *node, t_info *info, \
+void			chain_map_updown(t_map *node, t_info *info,
 					t_map **head, t_map **curr);
 int				make_list(t_map **node, t_all *all);
 void			print_map(t_map **head, t_info *info);

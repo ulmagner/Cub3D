@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:41:29 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/22 11:51:27 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:42:43 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	copy_to_minimap(t_window *window, int x_ref, \
+static void	copy_to_minimap(t_window *window, int x_ref,
 	int y_ref, t_color *color)
 {
 	int		c;

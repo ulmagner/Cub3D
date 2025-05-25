@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:47:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/21 17:08:35 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/05/25 15:43:34 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ int	mouse_move(int x, int y, t_all *all)
 	{
 		delta_x = x - all->window.last_mouse_x;
 		delta_y = y - all->window.last_mouse_y;
-		all->window.mouse.x = (double)delta_x \
+		all->window.mouse.x = (double)delta_x
 			/ (double)all->window.main_w * 20.0;
-		all->window.mouse.y = (double)delta_y \
+		all->window.mouse.y = (double)delta_y
 			/ (double)all->window.main_h * 10.0;
 		rot_speed = 0.006;
 		angle = all->window.mouse.x * rot_speed;
 		if (x < all->window.mouse.x)
 			angle = -angle;
 		rotate_player(p, angle);
-		mlx_mouse_move(all->window.mlx, all->window.main, \
+		mlx_mouse_move(all->window.mlx, all->window.main,
 			all->window.main_w / 2, all->window.main_h / 2);
 	}
 	return (1);
