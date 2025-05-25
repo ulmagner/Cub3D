@@ -6,7 +6,7 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:54 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 12:49:28 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:37:19 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	walls_tiles(t_all *all, t_texture *tex)
 	while (++i < 4)
 	{
 		if (!create_image(&tex->walls[i], &all->window))
-			return (0);
+			return (free_walls(tex, all, i), 0);
 	}
 	return (1);
 }

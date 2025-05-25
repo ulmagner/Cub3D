@@ -6,11 +6,19 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 15:53:41 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:40:56 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_walls(t_texture *tex, t_all *all, int i)
+{
+	while (--i >= 0)
+		mlx_destroy_image(all->window.mlx, tex->walls[i].img);
+	free(tex->walls);
+	tex->walls = NULL;
+}
 
 static void	ft_freewindow(t_window *window)
 {
@@ -50,6 +58,17 @@ static void	ft_freeimage(t_all *all, int i)
 	free(all->tex.tiles);
 }
 
+static void	ft_freewwalls(t_all *all)
+{
+	int (i) = -1;
+	if (!all->tex.walls)
+		return ;
+	while (++i < 4)
+		mlx_destroy_image(all->window.mlx, all->tex.walls[i].img);
+	free(all->tex.walls);
+	all->tex.walls = NULL;
+}
+
 void	ft_clearall(t_all *all)
 {
 	int (i) = -1;
@@ -58,6 +77,7 @@ void	ft_clearall(t_all *all)
 	if (all->boxes)
 		free(all->boxes);
 	ft_freeimage(all, i);
+	ft_freewwalls(all);
 	ft_freeinfo(&all->info);
 	ft_freetex(&all->tex);
 	ft_freewindow(&all->window);

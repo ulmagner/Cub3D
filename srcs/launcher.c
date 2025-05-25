@@ -6,7 +6,7 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:46:24 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 15:43:16 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/05/25 16:54:08 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	launcher(t_all *all)
 {
 	if (!init_window(all))
 		return (0);
-	if (!split_tile(&all->tex, all))
-		return (0);
 	if (!walls_tiles(all, &all->tex))
+		return (0);
+	if (!split_tile(&all->tex, all))
 		return (0);
 	all->player.access.img = all->tex.tiles[1][0][0];
 	all->player.access.img.scale = 7;
