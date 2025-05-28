@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floor_ceiling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:34:42 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 15:45:01 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/05/28 11:31:49 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	init_floor_ceiling(t_raycasting *r, t_map *cp,
 // ft_pixel_put(&all->window, r->x, all->window.main_h - r->y, color);
 // color = (all->ceiling.r << 16) | (all->ceiling.g << 8) | all->ceiling.b;
 //  ft_pixel_put(&all->window, r->x, r->y, color);
+
 void	floor_ceiling_raycasting(t_all *all, t_raycasting *r,
 								t_map *cp, t_player *p)
 {
