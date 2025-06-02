@@ -3,45 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:19:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 15:42:53 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/02 10:59:29 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	floodfill(t_map *player, t_all *all, int *l)
+static void	floodfill(t_map *player, t_all *all)
 {
-	if (((player->x == 0 || player->x == all->info.column[*l] - 1)
-			&& (player->i != '1' && player->i != 'D'))
-		|| ((player->y == 0 || player->y == all->info.line - 1)
-			&& (player->i != '1' && player->i != 'D')))
+	if ((player->up && (player->up->i != '0' && player->up->i != '1'
+				&& player->up->i != 'D' && player->up->i != 'B'
+				&& player->up->i != 'C' && (player->up->i != 'N'
+					&& player->up->i != 'W' && player->up->i != 'E'
+					&& player->up->i != 'S')))
+		|| (player->down && (player->down->i != '0'
+				&& player->down->i != '1' && player->down->i != 'D'
+				&& player->down->i != 'B' && player->down->i != 'C'
+				&& (player->down->i != 'N' && player->down->i != 'S'
+					&& player->down->i != 'W'
+					&& player->down->i != 'E')))
+		|| (player->left && (player->left->i != '0' && player->left->i != '1'
+				&& player->left->i != 'D' && player->left->i != 'B'
+				&& player->left->i != 'C' && (player->left->i != 'N'
+					&& player->left->i != 'E' && player->left->i != 'W'
+					&& player->left->i != 'S')))
+		|| ((player->right && player->x < player->right->x)
+			&& (player->right->i != '0' && player->right->i != '1'
+				&& player->right->i != 'D' && player->right->i != 'B'
+				&& player->right->i != 'C' && (player->right->i != 'N'
+					&& player->right->i != 'S' && player->right->i != 'E'
+					&& player->right->i != 'W')))
+		|| (!player->down || !player->up || !player->left
+			|| (player->right && player->x > player->right->x)))
 		exit(((ft_clearall(all)), EXIT_FAILURE));
-	player->is_visited = 1;
-	if (player->right->i != '1' && player->right && !player->right->is_visited)
-		floodfill(player->right, all, l);
-	if (player->left->i != '1' && player->left && !player->left->is_visited)
-		floodfill(player->left, all, l);
-	if (player->up->i != '1' && player->up && !player->up->is_visited)
-	{
-		(*l)--;
-		floodfill(player->up, all, l);
-		(*l)++;
-	}
-	if (player->down->i != '1' && player->down && !player->down->is_visited)
-	{
-		(*l)++;
-		floodfill(player->down, all, l);
-		(*l)--;
-	}
 }
 
-static void	start_floodfill(t_map *curr, t_all *all, int *l)
+static void	get_cam(t_map *curr, t_all *all)
 {
-	t_map *(p) = curr;
-	floodfill(p, all, l);
 	if (curr->i == 'E')
 	{
 		all->player.dx = -1;
@@ -68,24 +69,23 @@ static void	start_floodfill(t_map *curr, t_all *all, int *l)
 
 void	check_close_map(t_map **map, t_all *all)
 {
-	t_map	*row;
 	t_map	*col;
 
-	row = *map;
+	t_map *(row) = *map;
 	int (l) = 0;
 	while (row)
 	{
 		col = row;
 		while (col)
 		{
+			if (col->i == '0' || col->i == 'D'
+				|| col->i == 'C' || col->i == 'B')
+				floodfill(col, all);
+			if (col->i == 'N' || col->i == 'S'
+				|| col->i == 'W' || col->i == 'E')
+				get_cam(col, all);
 			if (col->x == all->info.column[l] - 1)
 				break ;
-			if (col->i == 'E' || col->i == 'W'
-				|| col->i == 'S' || col->i == 'N')
-			{
-				start_floodfill(col, all, &l);
-				break ;
-			}
 			col = col->right;
 		}
 		if (l == all->info.line - 1)
