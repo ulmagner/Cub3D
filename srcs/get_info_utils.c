@@ -6,45 +6,45 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:04:17 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 16:06:49 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/06 10:12:36 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	parse_texture(char *line, char **path, const char *id)
+int	parse_texture(t_info *info, char **path, const char *id)
 {
 	int (i) = 0;
-	while (line[i] && ft_isspace(line[i]))
+	while (info->gnl[i] && ft_isspace(info->gnl[i]))
 		i++;
-	if (ft_strncmp(&line[i], id, ft_strlen(id)) != 0)
+	if (ft_strncmp(&info->gnl[i], id, ft_strlen(id)) != 0)
 		return (0);
 	i += ft_strlen(id);
-	while (line[i] && ft_isspace(line[i]))
+	while (info->gnl[i] && ft_isspace(info->gnl[i]))
 		i++;
-	*path = ft_strdup(&line[i]);
+	*path = ft_strdup(&info->gnl[i]);
 	if (!*path)
 		return (0);
 	return (1);
 }
 
-char	**color_split(char *line, char id)
+char	**color_split(t_info *info, char id)
 {
 	char	**split;
 
 	int (i) = 0;
-	while (line[i] && ft_isspace(line[i]))
+	while (info->gnl[i] && ft_isspace(info->gnl[i]))
 		i++;
-	if (line[i++] != id)
+	if (info->gnl[i++] != id)
 		return (printf("????\n"), NULL);
-	while (line[i] && ft_isspace(line[i]))
+	while (info->gnl[i] && ft_isspace(info->gnl[i]))
 		i++;
 	int (j) = i - 1;
-	while (line[++j])
-		if (!ft_isdigit(line[j]) && line[j] != ',' && !ft_isspace(line[j]))
-			return (printf("%c???\n", line[j]), NULL);
-	split = ft_split(line + i, ',');
-	if (!split || ft_countwords(line + i, ',') != 3)
+	while (info->gnl[++j])
+		if (!ft_isdigit(info->gnl[j]) && info->gnl[j] != ',' && !ft_isspace(info->gnl[j]))
+			return (printf("%c???\n", info->gnl[j]), NULL);
+	split = ft_split(info->gnl + i, ',');
+	if (!split || ft_countwords(info->gnl + i, ',') != 3)
 	{
 		if (split)
 			ft_tabfree(split);
@@ -53,9 +53,9 @@ char	**color_split(char *line, char id)
 	return (split);
 }
 
-int	parse_color(char *line, t_color *color, char id)
+int	parse_color(t_info *info, t_color *color, char id)
 {
-	char **(split) = color_split(line, id);
+	char **(split) = color_split(info, id);
 	if (!split)
 		return (0);
 	char *(s0) = ft_strtrim(split[0], " \n");
@@ -82,50 +82,48 @@ int	parse_color(char *line, t_color *color, char id)
 	return (1);
 }
 
-int	check_duplicates(char *line, t_info *info, t_all *all)
+int	check_duplicates(t_info *info, t_all *all)
 {
-	if (!info->npath && parse_texture(line, &info->npath, "NO"))
+	if (!info->npath && parse_texture(info, &info->npath, "NO"))
 		info->parsing_nbr++;
-	else if (!info->spath && parse_texture(line, &info->spath, "SO"))
+	else if (!info->spath && parse_texture(info, &info->spath, "SO"))
 		info->parsing_nbr++;
-	else if (!info->wpath && parse_texture(line, &info->wpath, "WE"))
+	else if (!info->wpath && parse_texture(info, &info->wpath, "WE"))
 		info->parsing_nbr++;
-	else if (!info->epath && parse_texture(line, &info->epath, "EA"))
+	else if (!info->epath && parse_texture(info, &info->epath, "EA"))
 		info->parsing_nbr++;
-	else if (!all->df && parse_color(line, &all->floor, 'F'))
+	else if (!all->df && parse_color(info, &all->floor, 'F'))
 	{
 		all->df = 1;
 		info->parsing_nbr++;
 	}
-	else if (!all->dc && parse_color(line, &all->ceiling, 'C'))
+	else if (!all->dc && parse_color(info, &all->ceiling, 'C'))
 	{
 		all->dc = 1;
 		info->parsing_nbr++;
 	}
 	else
-		return (ft_printf(2, "%cError\nWrong information line\n", line[0]), 0);
+		return (ft_printf(2, "%cError\nWrong information info->gnl\n", info->gnl[0]), 0);
 	return (1);
 }
 
 int	get_tex_mandatory(t_all *all, t_info *info)
 {
-	char *(line) = ft_get_next_line(info->fd);
-	if (!line)
+	info->gnl = ft_get_next_line(info->fd);
+	if (!info->gnl)
 		return (ft_printf(2, "Error\nplan empty\n"), 0);
-	while (line != NULL)
+	while (info->gnl != NULL)
 	{
 		if (info->parsing_nbr == 6)
 			break ;
-		if (line[0] != '\n')
+		if (info->gnl[0] != '\n')
 		{
-			if (!check_duplicates(line, info, all))
-				return (free(line), 0);
+			if (!check_duplicates(info, all))
+				return (free(info->gnl), 0);
 		}
-		free(line);
-		line = ft_get_next_line(info->fd);
+		free(info->gnl);
+		info->gnl = ft_get_next_line(info->fd);
 	}
-	if (line)
-		free(line);
 	if (info->parsing_nbr != 6)
 		return (ft_printf(2, "Error\nToo much info\n"), 0);
 	return (1);

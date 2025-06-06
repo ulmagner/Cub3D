@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:10:15 by ulysse            #+#    #+#             */
-/*   Updated: 2024/08/24 18:20:25 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/06/06 09:51:58 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 long	ft_atoi(const char *nptr)
 {
-	int		sign;
-	long	converted;
-	int		i;
-
-	sign = 1;
-	converted = 0;
-	i = 0;
+	int (sign) = 1;
+	long (converted) = 0;
+	int (i) = 0;
+	int (count) = 0;
 	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
 		i++;
 	if (nptr[i] == '-')
@@ -35,6 +32,9 @@ long	ft_atoi(const char *nptr)
 		converted *= 10;
 		converted += ((char)nptr[i] - '0');
 		i++;
+		count++;
 	}
+	if (!count)
+		return (-1);
 	return ((long)converted * sign);
 }

@@ -6,7 +6,7 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 16:36:37 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/06 10:08:18 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_info
 	char	*spath;
 	char	*wpath;
 	char	*epath;
+	char	*gnl;
 }	t_info;
 
 typedef struct s_image
