@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:33:43 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 16:40:56 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/12 12:38:44 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	ft_clearall(t_all *all)
 	ft_freeinfo(&all->info);
 	ft_freetex(&all->tex);
 	ft_freewindow(&all->window);
-	close(all->info.fd);
+	if (all->info.fd != -1)
+		close(all->info.fd);
 }
