@@ -6,7 +6,7 @@
 /*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:21:48 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/12 12:37:59 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:41:57 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	error_handling(int ac, char **av, t_info *info)
 {
-	if (ac < 3)
+	if (ac < 2)
 		return (0);
 	if (ft_strncmp(av[1] + (ft_strlen(av[1]) - 4), ".cub", 4))
 		return (0);

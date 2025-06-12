@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:04:17 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/06 10:12:36 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/12 12:49:48 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	**color_split(t_info *info, char id)
 		i++;
 	int (j) = i - 1;
 	while (info->gnl[++j])
-		if (!ft_isdigit(info->gnl[j]) && info->gnl[j] != ',' && !ft_isspace(info->gnl[j]))
+		if (!ft_isdigit(info->gnl[j]) && info->gnl[j] != ','
+			&& !ft_isspace(info->gnl[j]))
 			return (printf("%c???\n", info->gnl[j]), NULL);
 	split = ft_split(info->gnl + i, ',');
 	if (!split || ft_countwords(info->gnl + i, ',') != 3)
@@ -103,7 +104,8 @@ int	check_duplicates(t_info *info, t_all *all)
 		info->parsing_nbr++;
 	}
 	else
-		return (ft_printf(2, "%cError\nWrong information info->gnl\n", info->gnl[0]), 0);
+		return (ft_printf(2, "%cError\nWrong information info->gnl\n",
+				info->gnl[0]), 0);
 	return (1);
 }
 
@@ -119,7 +121,7 @@ int	get_tex_mandatory(t_all *all, t_info *info)
 		if (info->gnl[0] != '\n')
 		{
 			if (!check_duplicates(info, all))
-				return (free(info->gnl), 0);
+				return (0);
 		}
 		free(info->gnl);
 		info->gnl = ft_get_next_line(info->fd);
