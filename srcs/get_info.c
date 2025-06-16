@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 18:14:21 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/06 10:13:46 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/16 09:59:56 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	get_map(t_info *info)
 		i = -1;
 		while (info->gnl[++i])
 			if (!ft_isstrchr("01CBNSEWD \n", info->gnl[i]))
-				return (free(info->gnl), ft_printf(2, "Error\nplan\n"), 0);
+				return (ft_printf(2, "Error\nplan\n"), 0);
 		if (info->gnl[0] != '\n')
 		{
 			tmp = ft_strjoin(info->map, info->gnl);
 			if (!tmp)
-				return (free(info->gnl), 0);
+				return (0);
 			free(info->map);
 			info->map = tmp;
 			info->line++;
