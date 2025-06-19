@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:54:39 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/02 11:20:16 by ulmagner         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:02:57 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,25 @@ static void	direction(t_player *player, double dirx, double diry)
 		}
 	}
 }
+
+// int	movement_handling(t_all *all)
+// {
+// 	t_player *(p) = &all->player;
+// 	double (angle) = 0.05;
+// 	if (all->movement.move[XK_z])
+// 		direction(p, p->dx, p->dy);
+// 	else if (all->movement.move[XK_s])
+// 		direction(p, -p->dx, -p->dy);
+// 	if (all->movement.move[XK_q])
+// 		direction(&all->player, -p->planex, -p->planey);
+// 	else if (all->movement.move[XK_d])
+// 		direction(&all->player, p->planex, p->planey);
+// 	if (all->movement.move[XK_Left])
+// 		rotate_player(p, -angle);
+// 	else if (all->movement.move[XK_Right])
+// 		rotate_player(p, angle);
+// 	return (1);
+// }
 
 int	movement_handling(t_all *all)
 {
