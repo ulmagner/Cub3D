@@ -6,7 +6,7 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/06 10:08:18 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/19 12:23:42 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ typedef struct s_all
 	int				dc;
 }	t_all;
 
+void			rotate_player(t_player *p, double angle);
 void			free_walls(t_texture *tex, t_all *all, int i);
 int				check_ep_doubles(t_info *info);
 int				create_image(t_image *image, t_window *window);

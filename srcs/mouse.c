@@ -6,13 +6,13 @@
 /*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:47:09 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 15:43:34 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/06/19 12:23:29 by mulysse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	rotate_player(t_player *p, double angle)
+void	rotate_player(t_player *p, double angle)
 {
 	double (old_dx) = p->dx;
 	double (old_planex) = p->planex;
