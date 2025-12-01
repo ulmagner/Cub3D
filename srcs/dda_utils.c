@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:41:54 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/05/25 16:37:19 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/12/01 11:22:19 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	line_height_calculation(t_all *all, t_raycasting *r, t_player *p)
 	r->perpwalldist = (r->sidedisty - r->deltadisty);
 	if (r->side == 0)
 		r->perpwalldist = (r->sidedistx - r->deltadistx);
-	double (corrected_dist) = fmax(r->perpwalldist, 1);
-	r->lineheight = (int)(all->window.main_h / corrected_dist);
+	r->lineheight = (int)(all->window.main_h / r->perpwalldist);
 	r->drawstart = -r->lineheight / 2 + all->window.main_h / 2;
 	if (r->drawstart < 0)
 		r->drawstart = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mulysse <mulysse@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ulmagner <ulmagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 22:40:37 by ulmagner          #+#    #+#             */
-/*   Updated: 2025/06/19 12:23:42 by mulysse          ###   ########.fr       */
+/*   Updated: 2025/12/01 11:17:12 by ulmagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "mlx.h"
 # include <X11/keysym.h>
 # define TILE_SIZE 64
+# define TEX_NBR 6
 
 typedef struct s_map
 {
