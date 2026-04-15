@@ -9,3 +9,4 @@ E key to interect
 F key to inspect knife CS like
 W A S D keys to move
 use mouse to move camera or Arrow Keys
+M key to open minimap
